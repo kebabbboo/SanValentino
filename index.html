@@ -3,97 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invito speciale 💘</title>
+<title>Lilian ❤️</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
 
-    .card {
-        background: white;
-        padding: 25px;
-        border-radius: 20px;
-        width: 90%;
-        max-width: 360px;
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
-    h1 {
-        color: #ff4d6d;
-    }
+h1 {
+    color: #ff4d6d;
+}
 
-    p {
-        font-size: 18px;
-        color: #333;
-    }
+p {
+    font-size: 18px;
+    color: #333;
+}
 
-    .buttons {
-        margin-top: 25px;
-        height: 120px;
-        position: relative;
-    }
+.buttons {
+    margin-top: 25px;
+    height: 120px;
+    position: relative;
+}
 
-    button {
-        padding: 14px 26px;
-        border: none;
-        border-radius: 30px;
-        font-size: 16px;
-        cursor: pointer;
-        position: absolute;
-    }
+button {
+    padding: 14px 26px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+}
 
-    .yes {
-        background: #ff4d6d;
-        color: white;
-        left: 50%;
-        top: 0;
-        transform: translateX(-50%);
-    }
+#yesBtn {
+    background: #ff4d6d;
+    color: white;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
 
-    .no {
-        background: #ddd;
-        color: #555;
-        left: 50%;
-        top: 60px;
-        transform: translateX(-50%);
-        touch-action: none;
-    }
+#noBtn {
+    background: #ddd;
+    color: #555;
+    left: 50%;
+    top: 60px;
+    transform: translateX(-50%);
+    touch-action: none;
+}
 
-    .hidden {
-        display: none;
-    }
+.hidden {
+    display: none;
+}
 
-    .heart {
-        position: fixed;
-        bottom: -20px;
-        font-size: 20px;
-        color: #ff4d6d;
-        animation: float 4s linear forwards;
-        pointer-events: none;
-    }
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: float 4s linear forwards;
+    pointer-events: none;
+}
 
-    @keyframes float {
-        to {
-            transform: translateY(-100vh);
-            opacity: 0;
-        }
+@keyframes float {
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
     }
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-    <h1>Ciao amore ❤️</h1>
+    <h1>Ciao Lilian ❤️</h1>
+
     <p>
         Domanda importante 😌<br><br>
         Vuoi essere la mia<br>
@@ -101,11 +101,11 @@
     </p>
 
     <div class="buttons">
-        <button class="yes" onclick="sayYes()">SÌ 💘</button>
-        <button class="no" id="noBtn">NO 🙄</button>
+        <button id="yesBtn">SÌ 💘</button>
+        <button id="noBtn">NO 🙄</button>
     </div>
 
-    <p id="tease" class="hidden">Eh no… non scappi così 😏</p>
+    <p id="tease" class="hidden">Dai… lo sappiamo entrambi 😏</p>
 
     <div id="final" class="hidden">
         <h1>YEEEE ❤️</h1>
@@ -117,45 +117,54 @@
     </div>
 </div>
 
+<!-- Musica romantica -->
+<audio id="music" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-    const noBtn = document.getElementById("noBtn");
-    const tease = document.getElementById("tease");
-    const container = document.querySelector(".buttons");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const final = document.getElementById("final");
+const tease = document.getElementById("tease");
+const music = document.getElementById("music");
 
-    function moveNo(e) {
-        e.preventDefault();
-        tease.classList.remove("hidden");
+let noCount = 0;
 
-        const maxX = container.clientWidth - noBtn.offsetWidth;
-        const maxY = container.clientHeight - noBtn.offsetHeight;
+yesBtn.addEventListener("click", () => {
+    final.classList.remove("hidden");
+    music.play();
+    startHearts();
+});
 
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
+noBtn.addEventListener("click", () => {
+    noCount++;
+    tease.classList.remove("hidden");
 
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
+    if (noCount < 3) {
+        noBtn.style.transform =
+            `translate(${Math.random()*200 - 100}px, ${Math.random()*40 - 20}px)`;
+    } else {
+        noBtn.textContent = "Ok… SÌ ❤️";
+        noBtn.style.background = "#ff4d6d";
+        noBtn.style.color = "white";
+        noBtn.onclick = () => yesBtn.click();
     }
+});
 
-    noBtn.addEventListener("touchstart", moveNo);
-    noBtn.addEventListener("mouseenter", moveNo);
-
-    function sayYes() {
-        document.getElementById("final").classList.remove("hidden");
-        startHearts();
-    }
-
-    function startHearts() {
-        setInterval(() => {
-            const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.textContent = "❤️";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
-        }, 300);
-    }
+function startHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = ["❤️","💖","💕","💗"][Math.floor(Math.random()*4)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }, 300);
+}
 </script>
 
 </body>
 </html>
+
