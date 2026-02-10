@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invito speciale 💘</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 360px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+        color: #ff4d6d;
+    }
+
+    p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .buttons {
+        margin-top: 25px;
+        height: 120px;
+        position: relative;
+    }
+
+    button {
+        padding: 14px 26px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    .yes {
+        background: #ff4d6d;
+        color: white;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+    }
+
+    .no {
+        background: #ddd;
+        color: #555;
+        left: 50%;
+        top: 60px;
+        transform: translateX(-50%);
+        touch-action: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .heart {
+        position: fixed;
+        bottom: -20px;
+        font-size: 20px;
+        color: #ff4d6d;
+        animation: float 4s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes float {
+        to {
+            transform: translateY(-100vh);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Ciao amore ❤️</h1>
+    <p>
+        Domanda importante 😌<br><br>
+        Vuoi essere la mia<br>
+        <strong>Valentina di San Valentino?</strong> 💕
+    </p>
+
+    <div class="buttons">
+        <button class="yes" onclick="sayYes()">SÌ 💘</button>
+        <button class="no" id="noBtn">NO 🙄</button>
+    </div>
+
+    <p id="tease" class="hidden">Eh no… non scappi così 😏</p>
+
+    <div id="final" class="hidden">
+        <h1>YEEEE ❤️</h1>
+        <p>
+            Lo sapevo 😌<br><br>
+            Preparati a una serata piena di coccole,<br>
+            risate e amore 💖
+        </p>
+    </div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const tease = document.getElementById("tease");
+    const container = document.querySelector(".buttons");
+
+    function moveNo(e) {
+        e.preventDefault();
+        tease.classList.remove("hidden");
+
+        const maxX = container.clientWidth - noBtn.offsetWidth;
+        const maxY = container.clientHeight - noBtn.offsetHeight;
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("touchstart", moveNo);
+    noBtn.addEventListener("mouseenter", moveNo);
+
+    function sayYes() {
+        document.getElementById("final").classList.remove("hidden");
+        startHearts();
+    }
+
+    function startHearts() {
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.textContent = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }, 300);
+    }
+</script>
+
+</body>
+</html>
