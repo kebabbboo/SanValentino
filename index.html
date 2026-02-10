@@ -1,170 +1,360 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Lilian ❤️</title>
 
 <style>
-body {
+  * { box-sizing: border-box; }
+
+  body {
     margin: 0;
     height: 100vh;
+    font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
     overflow: hidden;
-}
+  }
 
-.card {
-    background: white;
-    padding: 25px;
+  .card {
+    background: #fff;
+    padding: 22px;
     border-radius: 20px;
-    width: 90%;
-    max-width: 360px;
+    width: 92%;
+    max-width: 380px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
+    position: relative;
+  }
 
-h1 {
-    color: #ff4d6d;
-}
+  h1 { color: #ff4d6d; margin: 6px 0 10px; }
+  p { font-size: 17px; color: #333; margin: 10px 0; line-height: 1.35; }
 
-p {
-    font-size: 18px;
-    color: #333;
-}
-
-.buttons {
-    margin-top: 25px;
+  .buttons {
+    margin-top: 18px;
     height: 120px;
     position: relative;
-}
+  }
 
-button {
-    padding: 14px 26px;
+  button {
+    padding: 13px 22px;
     border: none;
-    border-radius: 30px;
+    border-radius: 28px;
     font-size: 16px;
     cursor: pointer;
-    position: absolute;
-}
+  }
 
-#yesBtn {
+  #yesBtn {
     background: #ff4d6d;
     color: white;
+    position: absolute;
     left: 50%;
     top: 0;
     transform: translateX(-50%);
-}
+  }
 
-#noBtn {
-    background: #ddd;
+  #noBtn {
+    background: #e6e6e6;
     color: #555;
+    position: absolute;
     left: 50%;
-    top: 60px;
+    top: 62px;
     transform: translateX(-50%);
-    touch-action: none;
-}
+    touch-action: manipulation;
+  }
 
-.hidden {
-    display: none;
-}
+  .pill {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #fff0f3;
+    color: #b21e35;
+    font-size: 14px;
+    margin-top: 8px;
+  }
 
-.heart {
+  .hidden { display: none; }
+
+  /* Finale */
+  #final {
+    margin-top: 14px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 14px;
+  }
+
+  .photo {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin: 10px 0 6px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 12px;
+    text-align: left;
+  }
+
+  .panel {
+    background: #fff7f9;
+    border: 1px solid #ffd2dc;
+    border-radius: 16px;
+    padding: 12px;
+  }
+
+  .panel h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: #b21e35;
+    text-align: center;
+  }
+
+  .choices {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .choiceBtn {
+    background: #ffffff;
+    border: 1px solid #ffb3c1;
+    color: #b21e35;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+  }
+
+  .choiceBtn:active { transform: scale(0.98); }
+
+  .result {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #333;
+    text-align: center;
+  }
+
+  .sliderWrap {
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+  }
+
+  input[type="range"] { width: 100%; }
+
+  /* Cuori */
+  .heart {
     position: fixed;
-    bottom: -20px;
-    font-size: 20px;
-    animation: float 4s linear forwards;
+    bottom: -30px;
+    animation: floatUp 4.2s linear forwards;
     pointer-events: none;
-}
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,0.12));
+  }
 
-@keyframes float {
-    to {
-        transform: translateY(-100vh);
-        opacity: 0;
-    }
-}
+  @keyframes floatUp {
+    to { transform: translateY(-110vh); opacity: 0; }
+  }
 </style>
 </head>
 
 <body>
-
-<div class="card">
+  <div class="card">
     <h1>Ciao Lilian ❤️</h1>
 
     <p>
-        Domanda importante 😌<br><br>
-        Vuoi essere la mia<br>
-        <strong>Valentina di San Valentino?</strong> 💕
+      Domanda importantissima (e assolutamente non truccata) 😌<br><br>
+      Vuoi essere la mia <strong>Valentina di San Valentino?</strong> 💕
     </p>
 
     <div class="buttons">
-        <button id="yesBtn">SÌ 💘</button>
-        <button id="noBtn">NO 🙄</button>
+      <button id="yesBtn">SÌ 💘</button>
+      <button id="noBtn">NO 🙄</button>
     </div>
 
-    <p id="tease" class="hidden">Dai… lo sappiamo entrambi 😏</p>
+    <div id="status" class="pill hidden"></div>
 
     <div id="final" class="hidden">
-        <h1>YEEEE ❤️</h1>
-        <p>
-            Lo sapevo 😌<br><br>
-            Preparati a una serata piena di coccole,<br>
-            risate e amore 💖
-        </p>
-    </div>
-</div>
+      <h1>YEEEE ❤️</h1>
 
-<!-- Musica romantica -->
-<audio id="music" loop>
+      <!-- FOTO: sostituisci l'URL qui sotto con una vostra foto (meglio se online)
+           Esempio: caricala su Imgur/Drive pubblico o su una repo e metti il link diretto. -->
+      <img
+        id="photo"
+        class="photo"
+        alt="Noi 💖"
+        src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80"
+      />
+
+      <p id="finalText">
+        Lo sapevo 😌<br><br>
+        Preparati a una serata piena di coccole, risate e amore 💖
+      </p>
+
+      <div class="grid">
+        <div class="panel">
+          <h3>🎯 Scegli la tua missione</h3>
+          <div class="choices">
+            <button class="choiceBtn" data-choice="pizza">🍕 Pizza & Film</button>
+            <button class="choiceBtn" data-choice="cena">🍝 Cena Romantica</button>
+            <button class="choiceBtn" data-choice="sorpresa">🎁 Sorpresa</button>
+          </div>
+          <div id="choiceResult" class="result">Scegli e vediamo cosa ti aspetta… 😏</div>
+        </div>
+
+        <div class="panel">
+          <h3>💘 Misuratore di amore</h3>
+          <div class="sliderWrap">
+            <input id="loveRange" type="range" min="0" max="100" value="50" />
+            <div id="loveText" class="result">Direi che siamo già ad un ottimo livello 😌</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Musica: parte SOLO dopo click su SÌ (così non viene bloccata) -->
+  <audio id="music" loop>
     <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
-</audio>
+  </audio>
 
 <script>
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const final = document.getElementById("final");
-const tease = document.getElementById("tease");
-const music = document.getElementById("music");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const finalBox = document.getElementById("final");
+  const status = document.getElementById("status");
+  const music = document.getElementById("music");
 
-let noCount = 0;
+  const choiceResult = document.getElementById("choiceResult");
+  const loveRange = document.getElementById("loveRange");
+  const loveText = document.getElementById("loveText");
 
-yesBtn.addEventListener("click", () => {
-    final.classList.remove("hidden");
-    music.play();
-    startHearts();
-});
+  let noCount = 0;
+  let heartsStarted = false;
 
-noBtn.addEventListener("click", () => {
-    noCount++;
-    tease.classList.remove("hidden");
+  function vibrate(pattern) {
+    try {
+      if (navigator.vibrate) navigator.vibrate(pattern);
+    } catch (_) {}
+  }
 
-    if (noCount < 3) {
-        noBtn.style.transform =
-            `translate(${Math.random()*200 - 100}px, ${Math.random()*40 - 20}px)`;
-    } else {
-        noBtn.textContent = "Ok… SÌ ❤️";
-        noBtn.style.background = "#ff4d6d";
-        noBtn.style.color = "white";
-        noBtn.onclick = () => yesBtn.click();
-    }
-});
+  function showStatus(msg) {
+    status.textContent = msg;
+    status.classList.remove("hidden");
+  }
 
-function startHearts() {
+  function moveNoButton() {
+    // Sposta il bottone senza romperlo (rimane dentro la card)
+    const card = document.querySelector(".card").getBoundingClientRect();
+    const btn = noBtn.getBoundingClientRect();
+
+    // area “sicura” dentro la card
+    const padding = 12;
+    const maxLeft = card.width - btn.width - padding * 2;
+    const maxTop = 120; // lo teniamo nella zona bottoni
+
+    const left = padding + Math.random() * Math.max(10, maxLeft);
+    const top = 70 + Math.random() * Math.max(10, maxTop - 70);
+
+    noBtn.style.left = left + "px";
+    noBtn.style.top = top + "px";
+    noBtn.style.transform = "none";
+  }
+
+  function startHearts() {
+    if (heartsStarted) return;
+    heartsStarted = true;
+
     setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = ["❤️","💖","💕","💗"][Math.floor(Math.random()*4)];
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
-    }, 300);
-}
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = ["❤️","💖","💕","💗","💘"][Math.floor(Math.random()*5)];
+      heart.style.left = (Math.random() * 100) + "vw";
+      heart.style.fontSize = (Math.random() * 22 + 14) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4200);
+    }, 260);
+  }
+
+  function doYesFlow() {
+    finalBox.classList.remove("hidden");
+    showStatus("Ok. Questa è la scelta giusta 😌💘");
+    vibrate([40, 30, 40]);
+
+    // Musica: parte dopo gesto utente (click)
+    music.volume = 0.35;
+    music.play().catch(() => {
+      // se qualche browser blocca, non facciamo nulla (non crasha)
+    });
+
+    startHearts();
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+  }
+
+  // ✅ SÌ sempre funzionante
+  yesBtn.addEventListener("click", doYesFlow);
+
+  // ✅ NO: deve essere “premuto” 5 volte
+  noBtn.addEventListener("click", () => {
+    noCount++;
+    vibrate(25);
+
+    if (noCount < 5) {
+      const left = 5 - noCount;
+      showStatus(`No? Sei sicura? 😏 (mancano ${left})`);
+      moveNoButton();
+
+      // mini gag: cambia testo in base ai tentativi
+      const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
+      noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
+    } else {
+      showStatus("Ok ok… mi arrendo. Hai vinto tu ❤️");
+      noBtn.textContent = "Ok… SÌ ❤️";
+      noBtn.style.background = "#ff4d6d";
+      noBtn.style.color = "white";
+      noBtn.style.border = "none";
+      // Ora cliccando porta al SÌ
+      noBtn.onclick = () => doYesFlow();
+      vibrate([60, 40, 60]);
+    }
+  });
+
+  // Interattivo: “missione”
+  document.querySelectorAll(".choiceBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const c = btn.getAttribute("data-choice");
+      vibrate(20);
+
+      if (c === "pizza") {
+        choiceResult.textContent = "🍕 Pizza, film e abbracci illimitati. (Io porto i baci.)";
+      } else if (c === "cena") {
+        choiceResult.textContent = "🍝 Cena romantica + brindisi + ‘quanto sei bella’ ripetuto N volte 😌";
+      } else {
+        choiceResult.textContent = "🎁 Sorpresa: tu ti fai bella… al resto ci penso io 😏💘";
+      }
+    });
+  });
+
+  // Interattivo: slider amore
+  function updateLoveText(v) {
+    if (v < 20) return "Ok… timida. Ma ti recupero a colpi di coccole 😌";
+    if (v < 40) return "Stai iniziando a convincerti… bravissima 😏";
+    if (v < 60) return "Direi che siamo già ad un ottimo livello 😌";
+    if (v < 80) return "Wow. Qui siamo pericolosamente innamorati 💕";
+    return "Allarme: livello amore massimo. Procedo con baci immediati 💘";
+  }
+
+  loveRange.addEventListener("input", () => {
+    loveText.textContent = updateLoveText(Number(loveRange.value));
+  });
 </script>
 
 </body>
 </html>
-
