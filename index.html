@@ -16,7 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .card {
@@ -28,6 +28,9 @@
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     position: relative;
+   max-height: 88vh;   /* ✅ limita altezza su telefono */
+  overflow: auto;     /* ✅ abilita scroll dentro la card */
+  -webkit-overflow-scrolling: touch; /* ✅ scroll fluido su iPhone */
   }
 
   h1 { color: #ff4d6d; margin: 6px 0 10px; }
@@ -434,3 +437,4 @@
 
 </body>
 </html>
+
