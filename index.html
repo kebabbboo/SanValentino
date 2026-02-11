@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lilian ✨</title>
+<title>Ammor mi' ✨</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -647,6 +647,42 @@
     12%  { opacity:1; }
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
+ /* =========================
+   🍾 Champagne spray
+   ========================= */
+.champDrop{
+  position: fixed;
+  left: 0; top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  animation: champFly 920ms ease-out forwards;
+  filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
+}
+
+/* alcune gocce diventano "stelline" */
+.champDrop.star{
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent !important;
+  font-weight: 900;
+}
+
+@keyframes champFly{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.9); }
+  12%  { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+      scale(var(--s, 1.05));
+  }
+}
 </style>
 </head>
 
@@ -657,12 +693,12 @@
         <div class="badge">🥂 Invito a cena</div>
       </div>
 
-      <h1>Ciao Lilian ✨</h1>
-      <p class="muted">Un invito raffinato… e un piccolo gioco per scoprirlo 😌</p>
+      <h1>Ammor mi' ✨</h1>
+      <p class="muted">Un invito originale... 😌</p>
 
       <p>
-        Domanda importantissima:<br><br>
-        Vuoi essere la mia <strong>Valentina di San Valentino</strong>? ❤️
+        <br>Domanda importantissima:<br>
+        Vuoi essere la mia <strong>Valentina di San Valentino</strong>? 🩶
       </p>
 
       <div class="buttons">
@@ -675,7 +711,7 @@
       <div class="divider"></div>
 
       <div id="final" class="hidden">
-        <h1>Perfetto. ❤️</h1>
+        <h1>TADAAAAAAANN 🥵</h1>
 
         <div class="actionsRow">
           <button id="musicBtn" class="ghostBtn">♪ Pausa</button>
@@ -692,9 +728,10 @@
               <div class="big">Cena per due 🥂</div>
               <div class="small">
                 📍 <strong>Venerdì 14 Febbraio</strong><br>
-                🕯 Ore 20:30<br>
-                🍷 Location: <strong>Sorpresa</strong><br>
+                🕰️ Ore 21:00<br>
+                🍷 Location: <strong>Carlo Fiamma</strong><br>
                 ✨ Dress code: bella come sempre
+               (Andiamo con il pullman delle 20:25)
               </div>
             </div>
             <canvas id="scratchCanvas"></canvas>
@@ -712,13 +749,14 @@
 
         <p>
           Allora è deciso 😌<br><br>
-          Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
+          Una cena elegante (pizza tamarra), un brindisi (forse)… e poi il resto lo vediamo dopo 😮<br><br>
+          Se vuoi qui sotto puoi esprimere il tuo amore per me 👇🏼
         </p>
 
         <div class="grid">
           <div class="panel">
             <div class="panelHeader">
-              <h3 class="panelTitle">🔥 Misuratore di amore</h3>
+              <h3 class="panelTitle">🩶 Misuratore di amore</h3>
             </div>
             <div class="sliderWrap">
               <input id="loveRange" type="range" min="0" max="100" value="50" />
@@ -748,7 +786,7 @@
                 <button class="kissReset" id="resetKissBtn">Reset 😇</button>
               </div>
 
-              <div id="kissResult" class="result">Vai piano… o non rispondo più 😏</div>
+              <div id="kissResult" class="result">Se rimane 0 non andiamo da nessuna parte 🖕🏽</div>
             </div>
           </div>
         </div>
@@ -886,8 +924,8 @@
       const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
       noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
     } else {
-      showStatus("ok ok… mi arrendo 🔥");
-      noBtn.textContent = "Ok… SÌ ❤️";
+      showStatus("HAA godo ora devi accettare per forza 🤪");
+      noBtn.textContent = "Ok hai vinto tu, SÌ ❤️";
       noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
       noBtn.style.color = "#19171a";
       noBtn.onclick = () => doYesFlow();
@@ -910,11 +948,13 @@
 
   // ---------- Toast effects (diversi ogni click) ----------
   const toastPhrases = [
-    "Cin cin, Lilian 🥂",
+    "Cin cin, principessa mia 🥂",
     "A noi. Sempre. ✨",
     "Brindiamo a una serata perfetta 💖",
-    "Ok… ora sì che si fa sul serio 😌",
-    "Ti porto via. Fine. ❤️"
+    "Ok però ora non ti ubriacare.. 😐",
+    "Ooo ti ho detto basta se no ti ubriachi 😡"
+    "BASTAAAA 🤬"
+    "Vabbe ti amo, urbiachiamoci insieme 😁😁"
   ];
   let toastIndex = 0;
   let toastMode = 0;
@@ -1016,6 +1056,8 @@
       // ✅ NUOVO: pop + particelle dal bottone
       pulseToastBtn(toastBtn);
       toastParticlesFromButton(toastBtn);
+     champagneSprayFromButton(toastBtn);
+
 
       // effetto “rotante” (diverso a ogni click)
       toastMode = (toastMode + 1) % 3;
@@ -1026,6 +1068,51 @@
       vibrate(18);
     });
   }
+function champagneSprayFromButton(btn){
+  const r = btn.getBoundingClientRect();
+  const originX = r.left + r.width/2;
+  const originY = r.top + r.height/2;
+
+  const drops = 26; // quantità spray
+  for (let i = 0; i < drops; i++){
+    const d = document.createElement("div");
+
+    // 20% stelline glitter
+    const isStar = Math.random() < 0.20;
+    d.className = "champDrop" + (isStar ? " star" : "");
+
+    // look: oro/rosa perle + qualche bolla
+    if (isStar){
+      d.textContent = Math.random() < 0.5 ? "✦" : "✨";
+      d.style.color = Math.random() < 0.75 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.80)";
+      d.style.fontSize = (12 + Math.random()*14).toFixed(0) + "px";
+    } else {
+      const isBubble = Math.random() < 0.35; // qualche bolla trasparente
+      d.style.background = isBubble
+        ? "radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 65%)"
+        : (Math.random() < 0.8 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.65)");
+      const size = 6 + Math.random()*10;
+      d.style.width = size.toFixed(0) + "px";
+      d.style.height = size.toFixed(0) + "px";
+      d.style.boxShadow = isBubble
+        ? "0 0 0 1px rgba(241,223,177,.25) inset"
+        : "none";
+    }
+
+    // traiettoria: su + un po’ a ventaglio
+    const dx = (Math.random()*260 - 130);          // laterale
+    const dy = (-140 - Math.random()*260);         // verso l’alto
+    d.style.setProperty("--dx", dx.toFixed(0) + "px");
+    d.style.setProperty("--dy", dy.toFixed(0) + "px");
+    d.style.setProperty("--s", (0.9 + Math.random()*0.6).toFixed(2));
+
+    d.style.left = originX + "px";
+    d.style.top  = originY + "px";
+
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 940);
+  }
+}
 
   // Slider fill
   function paintLoveRange(){
@@ -1035,11 +1122,11 @@
   }
 
   function updateLoveText(v) {
-    if (v < 20) return "Ok… timida. Ma ti recupero a colpi di coccole 😌";
-    if (v < 40) return "Stai iniziando a convincerti… bravissima 😏";
+    if (v < 20) return "Mh, impossibile... hai sbagliato persona 😒";
+    if (v < 40) return "Stai iniziando a convincerti… brava 😏";
     if (v < 60) return "Direi che siamo già ad un ottimo livello 😌";
-    if (v < 80) return "Wow. Qui siamo pericolosamente innamorati 💕";
-    return "Allarme: livello amore massimo. Procedo con baci immediati 💘";
+    if (v < 80) return "Wow. Qua il livello è altissimo! 💕";
+    return "Ngul, livello amore massimo. Ti amo! 🩶";
   }
 
   paintLoveRange();
@@ -1064,11 +1151,11 @@
     const pct = Math.min(100, Math.round((kisses / kissGoal) * 100));
     kissFill.style.width = pct + "%";
 
-    if (kisses === 0) kissResult.textContent = "Vai piano… o non rispondo più 😏";
-    else if (kisses < 10) kissResult.textContent = "Ok… così mi piace 😌";
-    else if (kisses < 20) kissResult.textContent = "Qui la situazione sta diventando seria 💖";
-    else if (kisses < kissGoal) kissResult.textContent = "Ancora un po’… e sblocchi qualcosa 😏";
-    else kissResult.textContent = "✅ Sbloccato: ‘stasera non scappi’ 🥂❤️";
+    if (kisses === 0) kissResult.textContent = "Se rimane 0 non andiamo da nessuna parte 🖕🏽";
+    else if (kisses < 10) kissResult.textContent = "Ok… così mi stai iniziando a scaldare 😌";
+    else if (kisses < 20) kissResult.textContent = "Qui la situazione sta diventando piccante 😬";
+    else if (kisses < kissGoal) kissResult.textContent = "Uhhh, oh fuck oh yes 😏";
+    else kissResult.textContent = "Stasera sei mia!! Non scapperai!!! 🫣🤭";
   }
 
   function kissPop(){
@@ -1201,7 +1288,7 @@
       scratchedEnough = true;
 
       ctx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
-      scratchHint.textContent = "Svelato. 🥂✨";
+      scratchHint.textContent = "Svelato. 🥂✨<br>Si, è la stessa location di l'anno scorso perchè sono sempre senza mezzo e senza soldi 😄";
       vibrate([30, 30, 30]);
 
       scratchBurst();
@@ -1259,4 +1346,5 @@
 
 </body>
 </html>
+
 
