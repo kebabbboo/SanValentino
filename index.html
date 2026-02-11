@@ -21,7 +21,7 @@
 
     /* ✅ rosa ridotto (accent più tenue) */
     --rose:#ff5a76;
-    --roseSoft: rgba(255,90,118,.085);   /* era ~.14 */
+    --roseSoft: rgba(255,90,118,.085);
     --roseLine: rgba(255,90,118,.12);
 
     --text:#f5f2ea;
@@ -617,6 +617,36 @@
     15%{ opacity:1; }
     100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
   }
+
+  /* =========================
+     ✅ NUOVO: Toast pop + particelle dal bottone
+     ========================= */
+  .toastBtn.toastPop{
+    animation: toastPop 320ms ease-out;
+    box-shadow: 0 18px 40px rgba(216,182,122,.22), 0 0 22px rgba(241,223,177,.18);
+  }
+  @keyframes toastPop{
+    0%{ transform: translateY(0) scale(1); }
+    35%{ transform: translateY(-1px) scale(1.02); }
+    70%{ transform: translateY(0) scale(.995); }
+    100%{ transform: translateY(0) scale(1); }
+  }
+
+  .toastParticle{
+    position: fixed;
+    left: 0; top: 0;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    animation: toastParticle 900ms ease-out forwards;
+    filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
+  }
+  @keyframes toastParticle{
+    0%   { opacity:0; transform: translate(-50%,-50%) scale(.85); }
+    12%  { opacity:1; }
+    100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
+  }
 </style>
 </head>
 
@@ -726,8 +756,10 @@
     </div>
   </div>
 
-  <audio id="music" loop>
-    <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
+  <!-- ✅ MUSICA: metti un tuo file nel repo (es. assets/song.mp3) e cambia qui -->
+  <audio id="music" loop preload="auto">
+    <source src="assets/song.mp3" type="audio/mpeg"> -->
+   
   </audio>
 
 <script>
@@ -771,6 +803,9 @@
   let isScratching = false;
   let scratchedEnough = false;
   let ratio = 1;
+
+  // ✅ Audio: partire una volta dall'inizio
+  let musicStartedOnce = false;
 
   function vibrate(pattern) {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (_) {}
@@ -816,7 +851,13 @@
 
   async function safePlayMusic() {
     music.volume = 0.30;
-    try { await music.play(); } catch (_) {}
+    try {
+      if (!musicStartedOnce) {
+        music.currentTime = 0;
+        musicStartedOnce = true;
+      }
+      await music.play();
+    } catch (_) {}
   }
 
   function doYesFlow() {
@@ -893,7 +934,6 @@
   }
 
   function foilConfetti(host){
-    // non sono “confetti classici”: sono micro foil dots (sempre visibili e affidabili)
     const dots = 18;
     for (let i = 0; i < dots; i++){
       const d = document.createElement("div");
@@ -934,6 +974,37 @@
     btn.classList.add("ripple");
   }
 
+  /* =========================
+     ✅ NUOVO: pop + particelle dal bottone
+     ========================= */
+  function pulseToastBtn(btn){
+    btn.classList.remove("toastPop");
+    void btn.offsetWidth;
+    btn.classList.add("toastPop");
+  }
+
+  function toastParticlesFromButton(btn){
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width/2;
+    const y = r.top + r.height/2;
+
+    const symbols = ["🥂","✨","💫","⭐","💖","💕"];
+    const n = 16;
+
+    for (let i = 0; i < n; i++){
+      const p = document.createElement("div");
+      p.className = "toastParticle";
+      p.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      p.style.left = x + "px";
+      p.style.top  = y + "px";
+      p.style.fontSize = (14 + Math.random()*16).toFixed(0) + "px";
+      p.style.setProperty("--dx", (Math.random()*260 - 130).toFixed(0) + "px");
+      p.style.setProperty("--dy", (-70 - Math.random()*190).toFixed(0) + "px");
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 920);
+    }
+  }
+
   if (toastBtn) {
     toastBtn.addEventListener("click", (e) => {
       toastIndex = (toastIndex + 1) % toastPhrases.length;
@@ -941,6 +1012,10 @@
 
       // ripple sempre
       setRippleOnButton(toastBtn, e);
+
+      // ✅ NUOVO: pop + particelle dal bottone
+      pulseToastBtn(toastBtn);
+      toastParticlesFromButton(toastBtn);
 
       // effetto “rotante” (diverso a ogni click)
       toastMode = (toastMode + 1) % 3;
@@ -1029,7 +1104,6 @@
 
   /* ---------- Scratch ---------- */
   function scratchBurst(){
-    // più ricco del toast
     const symbols = ["✨","⭐","🌟","💫","❤️","🥂"];
     for (let i = 0; i < 22; i++) {
       const s = document.createElement("div");
