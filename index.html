@@ -54,8 +54,8 @@
     backdrop-filter: blur(10px);
     position: relative;
 
-    max-height: 80vh;         /* ✅ come richiesto */
-    overflow: auto;           /* ✅ scroll interno */
+    max-height: 80vh;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -79,19 +79,6 @@
     font-weight: 700;
     font-size: 12.5px;
     letter-spacing: .3px;
-  }
-
-  .miniChip{
-    display:inline-flex;
-    align-items:center;
-    gap: 7px;
-    padding: 8px 10px;
-    border-radius: 999px;
-    background: rgba(255,77,109,.10);
-    border: 1px solid rgba(255,77,109,.22);
-    color: rgba(255,220,230,.95);
-    font-size: 12px;
-    white-space: nowrap;
   }
 
   h1{
@@ -148,7 +135,6 @@
     font-weight: 800;
     letter-spacing: .2px;
   }
-  #yesBtn:hover{ filter: brightness(1.03); }
 
   #noBtn{
     position:absolute;
@@ -230,16 +216,6 @@
     letter-spacing: .2px;
   }
 
-  .tag{
-    font-size: 12px;
-    color: rgba(241,223,177,.92);
-    background: rgba(216,182,122,.10);
-    border: 1px solid rgba(216,182,122,.20);
-    padding: 4px 8px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-
   .result{
     margin-top: 8px;
     font-size: 14.5px;
@@ -248,26 +224,7 @@
     padding-left: 10px;
   }
 
-  .choices{
-    display:flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content:center;
-    padding-left: 10px;
-  }
-
-  .choiceBtn{
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(241,223,177,.20);
-    color: rgba(245,242,234,.94);
-    padding: 10px 14px;
-    border-radius: 999px;
-    font-size: 14px;
-    box-shadow: 0 10px 20px rgba(0,0,0,.20);
-  }
-  .choiceBtn:hover{ filter: brightness(1.03); }
-
-  /* Slider fill + thumb fuoco elegante */
+  /* Slider */
   .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
 
   #loveRange{
@@ -311,7 +268,7 @@
       0 0 16px rgba(255,110,70,.45);
   }
 
-  /* Scratch: ora cover opaca e canvas sopra */
+  /* Scratch */
   .scratchWrap{
     position:relative;
     border-radius: 18px;
@@ -319,12 +276,12 @@
     border: 1px dashed rgba(241,223,177,.55);
     background: rgba(0,0,0,.18);
     margin-left: 10px;
-    min-height: 120px; /* ✅ assicura spazio e copertura */
+    min-height: 130px;
   }
 
   .scratchPrize{
     position: relative;
-    z-index: 1; /* sotto al canvas */
+    z-index: 1;
     padding: 14px 14px 16px;
     text-align:center;
   }
@@ -349,7 +306,7 @@
     height:100%;
     touch-action:none;
     cursor:grab;
-    z-index: 5; /* ✅ sopra al premio */
+    z-index: 5;
   }
 
   .scratchHint{
@@ -361,7 +318,7 @@
     padding-left: 10px;
   }
 
-  /* cuori */
+  /* Cuori che salgono */
   .heart{
     position: fixed;
     bottom:-30px;
@@ -371,20 +328,108 @@
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
 
-  /* confetti (dentro la card) */
-  .confetti{
+  /* ✅ NUOVA animazione al completamento scratch: Sparkle Burst */
+  .burstPiece{
     position:absolute;
-    top:-10px;
-    width:10px;
-    height:14px;
-    border-radius: 4px;
-    opacity:.95;
-    animation: confettiFall 1.35s ease-in forwards;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     pointer-events:none;
-    z-index: 50; /* ✅ sopra */
+    z-index: 40;
+    opacity: 0;
+    animation: burst 900ms ease-out forwards;
+    text-shadow: 0 10px 16px rgba(0,0,0,.35);
   }
-  @keyframes confettiFall{
-    to{ transform: translateY(320px) rotate(280deg); opacity:0; }
+  @keyframes burst{
+    0%   { opacity:0; transform: translate(-50%,-50%) scale(.8); }
+    15%  { opacity:1; }
+    100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.15); }
+  }
+
+  /* ✅ KISS COUNTER nuovo */
+  .kissWrap{ padding-left: 10px; display:grid; gap: 10px; }
+  .kissTop{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .kissBig{
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: .6px;
+    color: rgba(241,223,177,.98);
+    line-height: 1;
+    display:flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .kissBig span{
+    font-size: 13px;
+    color: rgba(207,199,187,.95);
+    font-weight: 700;
+    letter-spacing: .2px;
+  }
+
+  .kissBar{
+    width:100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(216,182,122,.18);
+    overflow:hidden;
+  }
+  .kissFill{
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, rgba(241,223,177,.95), rgba(255,77,109,.65));
+    border-radius: 999px;
+    transition: width 180ms ease;
+  }
+
+  .kissBtns{
+    display:flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  .kissBtn{
+    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.55));
+    color:#16151a;
+    font-weight: 900;
+    box-shadow: 0 14px 26px rgba(216,182,122,.16);
+  }
+  .kissReset{
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(241,223,177,.20);
+    color: rgba(245,242,234,.92);
+  }
+
+  .pop{
+    animation: pop 220ms ease-out;
+  }
+  @keyframes pop{
+    0%{ transform: scale(1); }
+    50%{ transform: scale(1.06); }
+    100%{ transform: scale(1); }
+  }
+
+  /* mini cuoricini quando clicchi bacio */
+  .kissFloat{
+    position:absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events:none;
+    opacity: 0;
+    animation: kissFloat 900ms ease-out forwards;
+    z-index: 30;
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
+  }
+  @keyframes kissFloat{
+    0%{ opacity:0; transform: translateX(-50%) translateY(0) scale(.9); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
   }
 </style>
 </head>
@@ -394,7 +439,6 @@
     <div class="card" id="card">
       <div class="topRow">
         <div class="badge">🥂 Invito a cena</div>
-        <div class="miniChip">💖 elegante + playful</div>
       </div>
 
       <h1>Ciao Lilian ✨</h1>
@@ -429,10 +473,9 @@
         </p>
 
         <div class="grid">
-          <div class="panel">
+          <div class="panel" id="scratchPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">🎟️ Gratta e scopri</h3>
-              <span class="tag">premio segreto</span>
             </div>
 
             <div class="scratchWrap" id="scratchBox">
@@ -453,7 +496,6 @@
           <div class="panel">
             <div class="panelHeader">
               <h3 class="panelTitle">🔥 Misuratore di amore</h3>
-              <span class="tag">riempi la barra</span>
             </div>
             <div class="sliderWrap">
               <input id="loveRange" type="range" min="0" max="100" value="50" />
@@ -461,16 +503,30 @@
             </div>
           </div>
 
-          <div class="panel">
+          <div class="panel" id="kissPanel">
             <div class="panelHeader">
-              <h3 class="panelTitle">😚 Timer dei baci</h3>
-              <span class="tag">clicca!</span>
+              <h3 class="panelTitle">😚 Kiss Counter</h3>
             </div>
-            <div class="choices">
-              <button class="choiceBtn" id="kissBtn">Bacio +1 💋</button>
-              <button class="choiceBtn" id="resetKissBtn">Reset 😇</button>
+
+            <div class="kissWrap">
+              <div class="kissTop">
+                <div class="kissBig" id="kissBig">0 <span>baci</span></div>
+                <div style="color: rgba(207,199,187,.92); font-size: 13px; font-weight:700;">
+                  obiettivo: <span id="kissGoal">30</span>
+                </div>
+              </div>
+
+              <div class="kissBar">
+                <div class="kissFill" id="kissFill"></div>
+              </div>
+
+              <div class="kissBtns">
+                <button class="kissBtn" id="kissBtn">Bacio +1 💋</button>
+                <button class="kissReset" id="resetKissBtn">Reset 😇</button>
+              </div>
+
+              <div id="kissResult" class="result">Vai piano… o non rispondo più 😏</div>
             </div>
-            <div id="kissResult" class="result">Baci: 0</div>
           </div>
         </div>
       </div>
@@ -493,19 +549,27 @@
   const loveRange = document.getElementById("loveRange");
   const loveText = document.getElementById("loveText");
 
-  const kissBtn = document.getElementById("kissBtn");
-  const resetKissBtn = document.getElementById("resetKissBtn");
-  const kissResult = document.getElementById("kissResult");
-
+  const scratchPanel = document.getElementById("scratchPanel");
   const scratchBox = document.getElementById("scratchBox");
   const scratchCanvas = document.getElementById("scratchCanvas");
   const scratchHint = document.getElementById("scratchHint");
 
+  const kissPanel = document.getElementById("kissPanel");
+  const kissBtn = document.getElementById("kissBtn");
+  const resetKissBtn = document.getElementById("resetKissBtn");
+  const kissResult = document.getElementById("kissResult");
+  const kissFill = document.getElementById("kissFill");
+  const kissBig = document.getElementById("kissBig");
+  const kissGoalEl = document.getElementById("kissGoal");
+
   let noCount = 0;
   let heartsStarted = false;
-  let kisses = 0;
 
-  // Scratch (robusto)
+  // Kisses
+  let kisses = 0;
+  const kissGoal = 30;
+
+  // Scratch
   let ctx = null;
   let isScratching = false;
   let scratchedEnough = false;
@@ -612,59 +676,86 @@
     }
   });
 
-  // Kiss timer
-  function kissMessage(k) {
-    if (k < 10) return `Baci: ${k} (stai scaldando l’atmosfera 😏)`;
-    if (k < 20) return `Baci: ${k} (ok Lilian… qui è serio 💘)`;
-    if (k < 30) return `Baci: ${k} (allarme: rischio coccole infinite 🥹)`;
-    return `Baci: ${k} ✅ Sbloccato: "Ti porto io via, e basta." ❤️`;
+  /* ---------- KISS COUNTER (nuovo) ---------- */
+  kissGoalEl.textContent = String(kissGoal);
+
+  function updateKissUI(){
+    kissBig.textContent = `${kisses} `;
+    const span = document.createElement("span");
+    span.textContent = "baci";
+    kissBig.appendChild(span);
+
+    const pct = Math.min(100, Math.round((kisses / kissGoal) * 100));
+    kissFill.style.width = pct + "%";
+
+    if (kisses === 0) kissResult.textContent = "Vai piano… o non rispondo più 😏";
+    else if (kisses < 10) kissResult.textContent = "Ok… così mi piace 😌";
+    else if (kisses < 20) kissResult.textContent = "Qui la situazione sta diventando seria 💖";
+    else if (kisses < kissGoal) kissResult.textContent = "Ancora un po’… e sblocchi il ‘premio’ 😏";
+    else kissResult.textContent = "✅ Sbloccato: ‘stasera non scappi’ 🥂❤️";
   }
+
+  function kissPop(){
+    kissBig.classList.remove("pop");
+    void kissBig.offsetWidth;
+    kissBig.classList.add("pop");
+  }
+
+  function spawnKissFloat(){
+    const el = document.createElement("div");
+    el.className = "kissFloat";
+    el.textContent = ["💋","💕","💖","❤️","✨"][Math.floor(Math.random()*5)];
+    el.style.setProperty("--dx", (Math.random()*120 - 60) + "px");
+    kissPanel.appendChild(el);
+    setTimeout(() => el.remove(), 950);
+  }
+
+  updateKissUI();
 
   kissBtn.addEventListener("click", () => {
     kisses++;
-    vibrate(15);
-    kissResult.textContent = kissMessage(kisses);
+    vibrate(12);
+    updateKissUI();
+    kissPop();
+    spawnKissFloat();
   });
 
   resetKissBtn.addEventListener("click", () => {
     kisses = 0;
-    kissResult.textContent = "Baci: 0";
+    updateKissUI();
+    vibrate([20,20,20]);
   });
 
-  /* Confetti */
-  function launchConfetti() {
-    const colors = ["#f1dfb1", "#d8b67a", "#ff4d6d", "#ff9a9e", "#ffffff"];
-    const count = 34;
-
-    for (let i = 0; i < count; i++) {
-      const c = document.createElement("div");
-      c.className = "confetti";
-      c.style.left = (Math.random() * 92 + 4) + "%";
-      c.style.background = colors[Math.floor(Math.random() * colors.length)];
-      c.style.transform = `rotate(${Math.random() * 180}deg)`;
-      c.style.animationDuration = (1.0 + Math.random() * 1.0) + "s";
-      c.style.width = (8 + Math.random() * 6) + "px";
-      c.style.height = (10 + Math.random() * 8) + "px";
-      card.appendChild(c);
-      setTimeout(() => c.remove(), 2300);
+  /* ---------- SCRATCH: animazione finale (Sparkle Burst) ---------- */
+  function sparkleBurst(){
+    const pieces = 16;
+    const symbols = ["✨","⭐","💫","❤️","🥂"];
+    for (let i = 0; i < pieces; i++) {
+      const s = document.createElement("div");
+      s.className = "burstPiece";
+      s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      const dx = (Math.random()*240 - 120).toFixed(0) + "px";
+      const dy = (Math.random()*220 - 110).toFixed(0) + "px";
+      s.style.setProperty("--dx", dx);
+      s.style.setProperty("--dy", dy);
+      s.style.fontSize = (14 + Math.random()*14).toFixed(0) + "px";
+      scratchPanel.appendChild(s);
+      setTimeout(() => s.remove(), 950);
     }
   }
 
-  /* -------- SCRATCH (cover opaca + progress stabile) -------- */
   function resizeCanvasToBox() {
     const rect = scratchBox.getBoundingClientRect();
     ratio = Math.max(1, window.devicePixelRatio || 1);
 
-    // canvas in pixel reali
     scratchCanvas.width = Math.floor(rect.width * ratio);
     scratchCanvas.height = Math.floor(rect.height * ratio);
 
-    // dimensioni CSS
     scratchCanvas.style.width = rect.width + "px";
     scratchCanvas.style.height = rect.height + "px";
 
     ctx = scratchCanvas.getContext("2d");
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // lavoriamo in pixel reali
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // pixel reali
   }
 
   function drawCover() {
@@ -673,7 +764,7 @@
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
 
-    // ✅ cover 100% OPACA (non si vede il testo sotto)
+    // cover opaca (non si vede sotto)
     const g = ctx.createLinearGradient(0, 0, w, h);
     g.addColorStop(0, "#1c1b21");
     g.addColorStop(0.55, "#15141a");
@@ -683,7 +774,7 @@
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
-    // “foil” dorato discreto
+    // foil dorato leggero
     for (let i = 0; i < 120; i++) {
       ctx.fillStyle = `rgba(216,182,122,${Math.random() * 0.08})`;
       ctx.beginPath();
@@ -691,7 +782,6 @@
       ctx.fill();
     }
 
-    // testo “GRATTA”
     ctx.fillStyle = "rgba(241,223,177,0.95)";
     ctx.font = `900 ${Math.floor(18 * ratio)}px Arial`;
     ctx.textAlign = "center";
@@ -714,11 +804,11 @@
     ctx.arc(x, y, Math.floor(18 * ratio), 0, Math.PI * 2);
     ctx.fill();
 
-    checkScratchProgress();
+    checkScratchProgress(false);
   }
 
   let lastCheck = 0;
-  function checkScratchProgress(force=false) {
+  function checkScratchProgress(force){
     const now = Date.now();
     if (!force && now - lastCheck < 250) return;
     lastCheck = now;
@@ -728,12 +818,10 @@
 
     const img = ctx.getImageData(0, 0, w, h).data;
 
-    // campionamento stabile
-    const stride = 24; // più basso = più preciso (ma più lento)
+    const stride = 24;
     let cleared = 0;
     let total = 0;
 
-    // alpha sotto 25 = “grattato” (anti-alias)
     for (let i = 3; i < img.length; i += 4 * stride) {
       total++;
       if (img[i] < 25) cleared++;
@@ -745,12 +833,10 @@
       scratchedEnough = true;
       scratchHint.textContent = "Premio sbloccato 🥂✨";
       vibrate([30, 30, 30]);
-
-      // rimuovi cover completamente
       ctx.clearRect(0, 0, w, h);
 
-      // ✅ confetti (ora parte davvero)
-      launchConfetti();
+      // ✅ animazione sempre funzionante
+      sparkleBurst();
     }
   }
 
@@ -764,7 +850,7 @@
       isScratching = true;
       const p = getPoint(e);
       scratchAt(p.x, p.y);
-      vibrate(10);
+      vibrate(8);
     };
 
     const onMove = (e) => {
@@ -776,7 +862,6 @@
 
     const onUp = () => {
       isScratching = false;
-      // ✅ check finale quando alzi il dito
       if (ctx && !scratchedEnough) checkScratchProgress(true);
     };
 
