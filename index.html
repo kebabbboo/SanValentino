@@ -3,98 +3,127 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lilian ❤️</title>
+<title>Lilian ✨</title>
 
 <style>
   * { box-sizing: border-box; }
 
   :root{
-    --pink:#ff4d6d;
-    --pink2:#ff9a9e;
-    --cream:#fff7f9;
-    --line:#ffd2dc;
-    --text:#2c2c2c;
-    --muted:#6b6b6b;
-    --shadow: 0 14px 34px rgba(0,0,0,.18);
+    --bg1:#0f0f12;
+    --bg2:#1b1b22;
+    --gold:#d8b67a;
+    --gold2:#f1dfb1;
+    --rose:#ff4d6d;
+    --rose2:#ff9a9e;
+    --card:#111218cc;
+    --card2:#171824cc;
+    --text:#f5f2ea;
+    --muted:#cfc7bb;
+    --line:rgba(216,182,122,.25);
+    --shadow: 0 18px 45px rgba(0,0,0,.45);
   }
 
   body{
     margin:0;
-    height:100vh;
+    min-height:100vh;
     font-family: Arial, sans-serif;
-    background:
-      radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,.55), rgba(255,255,255,0)),
-      radial-gradient(1200px 900px at 90% 20%, rgba(255,255,255,.45), rgba(255,255,255,0)),
-      linear-gradient(135deg, var(--pink2), #fad0c4);
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:auto;
     padding: 18px 0;
+
+    background:
+      radial-gradient(1000px 700px at 20% 10%, rgba(216,182,122,.18), rgba(0,0,0,0)),
+      radial-gradient(900px 700px at 85% 15%, rgba(255,77,109,.14), rgba(0,0,0,0)),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
+    color: var(--text);
   }
 
-  /* cornice gradiente + card interna */
+  /* frame elegante oro */
   .frame{
     width: 92%;
-    max-width: 410px;
+    max-width: 430px;
     border-radius: 26px;
     padding: 2px;
-    background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(255,255,255,.25)) ;
+    background: linear-gradient(135deg, rgba(241,223,177,.9), rgba(216,182,122,.25), rgba(255,77,109,.18));
     box-shadow: var(--shadow);
   }
 
   .card{
-    background: rgba(255,255,255,.88);
-    backdrop-filter: blur(8px);
     border-radius: 24px;
     padding: 18px;
+    background: linear-gradient(180deg, var(--card), var(--card2));
+    backdrop-filter: blur(10px);
     position: relative;
 
-    max-height: 80vh; /* ✅ richiesto */
-    overflow: auto;
+    max-height: 80vh;         /* ✅ come richiesto */
+    overflow: auto;           /* ✅ scroll interno */
     -webkit-overflow-scrolling: touch;
   }
 
-  .topBadge{
-    display: inline-flex;
-    align-items: center;
+  .topRow{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
     gap: 8px;
     padding: 8px 12px;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(255,77,109,.16), rgba(255,154,158,.12));
-    border: 1px solid rgba(255,77,109,.22);
-    color: #b21e35;
+    background: rgba(216,182,122,.12);
+    border: 1px solid rgba(216,182,122,.26);
+    color: var(--gold2);
     font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 10px;
+    font-size: 12.5px;
+    letter-spacing: .3px;
+  }
+
+  .miniChip{
+    display:inline-flex;
+    align-items:center;
+    gap: 7px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(255,77,109,.10);
+    border: 1px solid rgba(255,77,109,.22);
+    color: rgba(255,220,230,.95);
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   h1{
     margin: 6px 0 8px;
-    color: var(--pink);
     font-size: 26px;
-    letter-spacing: .2px;
+    letter-spacing: .3px;
+    color: var(--gold2);
   }
 
   p{
     margin: 10px 0;
-    color: var(--text);
-    font-size: 16.5px;
+    font-size: 16px;
     line-height: 1.35;
+    color: rgba(245,242,234,.95);
   }
 
-  .sub{
-    color: var(--muted);
+  .muted{
+    color: rgba(207,199,187,.92);
     font-size: 14px;
     margin-top: 0;
   }
 
   .divider{
     height:1px;
-    background: linear-gradient(90deg, transparent, rgba(255,77,109,.35), transparent);
+    background: linear-gradient(90deg, transparent, rgba(216,182,122,.25), transparent);
     margin: 14px 0;
   }
 
+  /* Bottoni */
   .buttons{
     margin-top: 16px;
     height: 124px;
@@ -107,8 +136,8 @@
     padding: 13px 18px;
     font-size: 16px;
     cursor: pointer;
-    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-    user-select: none;
+    transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+    user-select:none;
   }
   button:active{ transform: translateY(1px) scale(.99); }
 
@@ -117,20 +146,22 @@
     left:50%;
     top:0;
     transform: translateX(-50%);
-    color: white;
-    background: linear-gradient(135deg, var(--pink), #ff2f57);
-    box-shadow: 0 10px 18px rgba(255,77,109,.35);
+    color: #19171a;
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    box-shadow: 0 14px 26px rgba(216,182,122,.25);
+    font-weight: 800;
+    letter-spacing: .2px;
   }
-  #yesBtn:hover{ filter: brightness(1.02); }
+  #yesBtn:hover{ filter: brightness(1.03); }
 
   #noBtn{
     position:absolute;
     left:50%;
     top:64px;
     transform: translateX(-50%);
-    background: rgba(240,240,240,.95);
-    border: 1px solid rgba(0,0,0,.06);
-    color:#555;
+    color: rgba(245,242,234,.92);
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
     touch-action: manipulation;
   }
 
@@ -141,18 +172,18 @@
     gap:8px;
     padding: 9px 12px;
     border-radius: 999px;
-    background: rgba(255,240,243,.92);
-    border: 1px solid rgba(255,77,109,.22);
-    color:#8f1730;
-    font-size: 13.5px;
+    background: rgba(216,182,122,.10);
+    border: 1px solid rgba(216,182,122,.22);
+    color: rgba(241,223,177,.95);
+    font-size: 13px;
     margin-top: 10px;
   }
 
   .hidden{ display:none; }
 
   #final{
-    margin-top: 14px;
-    padding-top: 10px;
+    margin-top: 12px;
+    padding-top: 8px;
   }
 
   .photo{
@@ -161,7 +192,7 @@
     object-fit: cover;
     border-radius: 18px;
     margin: 10px 0 6px;
-    box-shadow: 0 14px 28px rgba(0,0,0,.14);
+    box-shadow: 0 18px 35px rgba(0,0,0,.35);
     animation: photoIn 520ms ease both;
   }
   @keyframes photoIn{
@@ -169,32 +200,25 @@
     to{ opacity:1; transform: translateY(0) scale(1); }
   }
 
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 12px;
-  }
+  /* Panels */
+  .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
 
   .panel{
-    background: linear-gradient(180deg, rgba(255,247,249,.95), rgba(255,255,255,.9));
-    border: 1px solid rgba(255,210,220,.9);
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(216,182,122,.18);
     border-radius: 18px;
     padding: 12px;
     position: relative;
     overflow:hidden;
   }
 
-  /* accent bar laterale per “non monotono” */
   .panel::before{
     content:"";
     position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
+    left:0; top:0; bottom:0;
     width: 10px;
-    background: linear-gradient(180deg, rgba(255,77,109,.8), rgba(255,154,158,.7));
-    opacity: .85;
+    background: linear-gradient(180deg, rgba(241,223,177,.45), rgba(255,77,109,.25));
+    opacity:.8;
   }
 
   .panelHeader{
@@ -203,23 +227,24 @@
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 8px;
-    padding-left: 10px; /* lascia spazio all’accent bar */
+    padding-left: 10px;
   }
 
   .panelTitle{
     margin:0;
     font-size: 14.5px;
-    color:#8f1730;
+    color: rgba(241,223,177,.95);
     display:flex;
     align-items:center;
     gap: 8px;
+    letter-spacing: .2px;
   }
 
   .tag{
     font-size: 12px;
-    color:#8f1730;
-    background: rgba(255,77,109,.12);
-    border: 1px solid rgba(255,77,109,.18);
+    color: rgba(241,223,177,.92);
+    background: rgba(216,182,122,.10);
+    border: 1px solid rgba(216,182,122,.20);
     padding: 4px 8px;
     border-radius: 999px;
     white-space: nowrap;
@@ -228,7 +253,7 @@
   .result{
     margin-top: 8px;
     font-size: 14.5px;
-    color: var(--text);
+    color: rgba(245,242,234,.94);
     text-align:center;
     padding-left: 10px;
   }
@@ -242,30 +267,29 @@
   }
 
   .choiceBtn{
-    background: rgba(255,255,255,.95);
-    border: 1px solid rgba(255,179,193,.9);
-    color:#8f1730;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(241,223,177,.20);
+    color: rgba(245,242,234,.94);
     padding: 10px 14px;
     border-radius: 999px;
     font-size: 14px;
-    box-shadow: 0 8px 16px rgba(255,77,109,.10);
+    box-shadow: 0 10px 20px rgba(0,0,0,.20);
   }
-
-  .choiceBtn:hover{ filter: brightness(1.01); }
+  .choiceBtn:hover{ filter: brightness(1.03); }
   .choiceBtn:active{ transform: translateY(1px) scale(.99); }
 
-  /* ---- Slider: barra fill + thumb “fuoco” elegante ---- */
+  /* Slider: fill + thumb elegante fuoco */
   .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
 
   #loveRange{
     width:100%;
-    accent-color: var(--pink);
+    accent-color: var(--rose);
     -webkit-appearance:none;
     appearance:none;
     height: 10px;
     border-radius: 999px;
     outline:none;
-    background: linear-gradient(90deg, var(--pink) 50%, rgba(255,77,109,.18) 50%);
+    background: linear-gradient(90deg, var(--rose) 50%, rgba(255,77,109,.18) 50%);
   }
   #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
   #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
@@ -276,38 +300,37 @@
     width: 30px;
     height: 30px;
     border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.95);
+    border: 2px solid rgba(255,255,255,.75);
     cursor:pointer;
     margin-top: -10px;
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
       radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
     box-shadow:
-      0 10px 18px rgba(255,77,109,.22),
-      0 0 16px rgba(255,110,70,.50);
+      0 10px 18px rgba(255,77,109,.20),
+      0 0 16px rgba(255,110,70,.45);
   }
   #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
 
   #loveRange::-moz-range-thumb{
     width: 30px; height:30px; border-radius:999px;
-    border: 2px solid rgba(255,255,255,.95);
+    border: 2px solid rgba(255,255,255,.75);
     cursor:pointer;
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
       radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
     box-shadow:
-      0 10px 18px rgba(255,77,109,.22),
-      0 0 16px rgba(255,110,70,.50);
+      0 10px 18px rgba(255,77,109,.20),
+      0 0 16px rgba(255,110,70,.45);
   }
-  #loveRange:active::-moz-range-thumb{ transform: scale(1.06); }
 
-  /* ---- Gratta e scopri (ticket) ---- */
+  /* Scratch: ticket elegante */
   .scratchWrap{
     position:relative;
     border-radius: 18px;
     overflow:hidden;
-    border: 1px dashed rgba(255,77,109,.55);
-    background: rgba(255,255,255,.95);
+    border: 1px dashed rgba(241,223,177,.55);
+    background: rgba(0,0,0,.18);
     margin-left: 10px;
   }
 
@@ -318,15 +341,15 @@
 
   .scratchPrize .big{
     font-size: 18px;
-    color: #8f1730;
-    font-weight: 800;
+    color: rgba(241,223,177,.98);
+    font-weight: 900;
     margin-bottom: 6px;
-    letter-spacing: .3px;
+    letter-spacing: .6px;
   }
   .scratchPrize .small{
     font-size: 14px;
-    color: var(--text);
-    opacity:.9;
+    color: rgba(245,242,234,.94);
+    opacity:.95;
   }
 
   canvas#scratchCanvas{
@@ -341,7 +364,7 @@
   .scratchHint{
     margin-top: 8px;
     font-size: 13px;
-    color: #7a1c2c;
+    color: rgba(241,223,177,.9);
     text-align:center;
     opacity:.9;
     padding-left: 10px;
@@ -353,11 +376,11 @@
     bottom:-30px;
     animation: floatUp 4.2s linear forwards;
     pointer-events:none;
-    filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
 
-  /* confetti */
+  /* confetti (dentro la card) */
   .confetti{
     position:absolute;
     top:-10px;
@@ -369,7 +392,7 @@
     pointer-events:none;
   }
   @keyframes confettiFall{
-    to{ transform: translateY(260px) rotate(260deg); opacity:0; }
+    to{ transform: translateY(280px) rotate(260deg); opacity:0; }
   }
 </style>
 </head>
@@ -377,14 +400,17 @@
 <body>
   <div class="frame">
     <div class="card" id="card">
-      <div class="topBadge">💌 Invito speciale • solo per Lilian</div>
+      <div class="topRow">
+        <div class="badge">🥂 Invito a cena</div>
+        <div class="miniChip">💖 modalità: romantico + playful</div>
+      </div>
 
-      <h1>Ciao Lilian ❤️</h1>
-      <p class="sub">Ho preparato una piccola cosa… e adesso non puoi più “non vederla” 😌</p>
+      <h1>Ciao Lilian ✨</h1>
+      <p class="muted">Un invito elegante… con un pizzico di malizia 😌</p>
 
       <p>
-        Domanda importantissima (e assolutamente non truccata):<br><br>
-        Vuoi essere la mia <strong>Valentina di San Valentino?</strong> 💕
+        Domanda importantissima:<br><br>
+        Vuoi essere la mia <strong>Valentina di San Valentino</strong>? ❤️
       </p>
 
       <div class="buttons">
@@ -397,7 +423,7 @@
       <div class="divider"></div>
 
       <div id="final" class="hidden">
-        <h1>YEEEE ❤️</h1>
+        <h1>Perfetto. ❤️</h1>
 
         <!-- FOTO: se carichi una foto nel repo (es. foto.jpg) cambia src="foto.jpg" -->
         <img
@@ -408,8 +434,8 @@
         />
 
         <p id="finalText">
-          Lo sapevo 😌<br><br>
-          Preparati a una serata piena di coccole, risate e amore 💖
+          Allora è deciso 😌<br><br>
+          Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
         </p>
 
         <div class="grid">
@@ -422,7 +448,7 @@
             <div class="scratchWrap" id="scratchBox">
               <div class="scratchPrize">
                 <!-- 👇 Cambia questo testo come vuoi -->
-                <div class="big">PREMIO SEGRETO 💘</div>
+                <div class="big">PREMIO SEGRETO ✨</div>
                 <div class="small">
                   Hai vinto: una serata bellissima con me + coccole illimitate 😌❤️<br>
                   (e forse anche una sorpresa…)
@@ -461,6 +487,7 @@
     </div>
   </div>
 
+  <!-- Musica (parte solo dopo click su SÌ) -->
   <audio id="music" loop>
     <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
   </audio>
@@ -488,10 +515,10 @@
   let heartsStarted = false;
   let kisses = 0;
 
-  // Scratch state
+  // Scratch
   let isScratching = false;
   let scratchedEnough = false;
-  let ctx;
+  let ctx = null;
 
   function vibrate(pattern) {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (_) {}
@@ -536,10 +563,10 @@
 
   function doYesFlow() {
     finalBox.classList.remove("hidden");
-    showStatus("questa è la scelta giusta 😌💘");
+    showStatus("questa è la scelta giusta 😌");
     vibrate([40, 30, 40]);
 
-    music.volume = 0.35;
+    music.volume = 0.30;
     music.play().catch(() => {});
 
     startHearts();
@@ -549,7 +576,7 @@
     noBtn.disabled = true;
   }
 
-  // Slider: fill
+  // Slider fill
   function paintLoveRange(){
     const v = Number(loveRange.value);
     loveRange.style.background =
@@ -571,10 +598,9 @@
     paintLoveRange();
   });
 
-  // SÌ
+  // Buttons
   yesBtn.addEventListener("click", doYesFlow);
 
-  // NO: 5 click
   noBtn.addEventListener("click", () => {
     noCount++;
     vibrate(25);
@@ -586,16 +612,16 @@
       const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
       noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
     } else {
-      showStatus("ok ok… mi arrendo 🔥❤️");
+      showStatus("ok ok… mi arrendo 🔥");
       noBtn.textContent = "Ok… SÌ ❤️";
-      noBtn.style.background = "linear-gradient(135deg, #ff4d6d, #ff2f57)";
-      noBtn.style.color = "white";
+      noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
+      noBtn.style.color = "#19171a";
       noBtn.onclick = () => doYesFlow();
       vibrate([60, 40, 60]);
     }
   });
 
-  // Timer baci
+  // Kiss timer
   function kissMessage(k) {
     if (k < 10) return `Baci: ${k} (stai scaldando l’atmosfera 😏)`;
     if (k < 20) return `Baci: ${k} (ok Lilian… qui è serio 💘)`;
@@ -614,10 +640,10 @@
     kissResult.textContent = "Baci: 0";
   });
 
-  /* ---------- CONFETTI ---------- */
+  /* ---------- CONFETTI (fix) ---------- */
   function launchConfetti() {
-    const colors = ["#ff4d6d", "#ff9a9e", "#ffd2dc", "#ffbe5a", "#ffffff"];
-    const count = 26;
+    const colors = ["#f1dfb1", "#d8b67a", "#ff4d6d", "#ff9a9e", "#ffffff"];
+    const count = 30;
 
     for (let i = 0; i < count; i++) {
       const c = document.createElement("div");
@@ -625,25 +651,29 @@
       c.style.left = (Math.random() * 92 + 4) + "%";
       c.style.background = colors[Math.floor(Math.random() * colors.length)];
       c.style.transform = `rotate(${Math.random() * 180}deg)`;
-      c.style.animationDuration = (0.9 + Math.random() * 0.8) + "s";
+      c.style.animationDuration = (0.95 + Math.random() * 0.9) + "s";
       c.style.width = (8 + Math.random() * 6) + "px";
       c.style.height = (10 + Math.random() * 8) + "px";
       card.appendChild(c);
-      setTimeout(() => c.remove(), 1600);
+      setTimeout(() => c.remove(), 1900);
     }
   }
 
-  /* -------- GRATTA E SCOPRI -------- */
+  /* -------- SCRATCH (fix robusto) -------- */
   function resizeCanvasToBox() {
     const rect = scratchBox.getBoundingClientRect();
-    const ratio = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+    const ratio = Math.max(1, window.devicePixelRatio || 1);
 
+    // dimensioni reali canvas (pixel)
     scratchCanvas.width = Math.floor(rect.width * ratio);
     scratchCanvas.height = Math.floor(rect.height * ratio);
+
+    // dimensioni CSS
     scratchCanvas.style.width = rect.width + "px";
     scratchCanvas.style.height = rect.height + "px";
 
     ctx = scratchCanvas.getContext("2d");
+    // disegniamo in coordinate CSS, non in pixel
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   }
 
@@ -652,23 +682,24 @@
     const rect = scratchBox.getBoundingClientRect();
 
     const g = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-    g.addColorStop(0, "#ffb3c1");
-    g.addColorStop(0.5, "#ff4d6d");
-    g.addColorStop(1, "#ff9a9e");
+    g.addColorStop(0, "rgba(241,223,177,.95)");
+    g.addColorStop(0.55, "rgba(216,182,122,.45)");
+    g.addColorStop(1, "rgba(255,77,109,.22)");
 
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, rect.width, rect.height);
 
-    for (let i = 0; i < 80; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25})`;
+    // glitter discreto
+    for (let i = 0; i < 70; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18})`;
       ctx.beginPath();
-      ctx.arc(Math.random() * rect.width, Math.random() * rect.height, Math.random() * 2 + 0.5, 0, Math.PI * 2);
+      ctx.arc(Math.random() * rect.width, Math.random() * rect.height, Math.random() * 2 + 0.4, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    ctx.fillStyle = "rgba(255,255,255,0.96)";
-    ctx.font = "800 18px Arial";
+    ctx.fillStyle = "rgba(15,15,18,0.85)";
+    ctx.font = "900 18px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("GRATTA QUI ✨", rect.width / 2, rect.height / 2);
@@ -690,36 +721,43 @@
   }
 
   let lastCheck = 0;
+
   function checkScratchProgress() {
     const now = Date.now();
-    if (now - lastCheck < 350) return;
+    if (now - lastCheck < 250) return;
     lastCheck = now;
 
-    const rect = scratchBox.getBoundingClientRect();
-    const w = Math.floor(rect.width);
-    const h = Math.floor(rect.height);
+    // ✅ usa dimensioni reali del canvas (pixel) e campiona
+    const w = scratchCanvas.width;
+    const h = scratchCanvas.height;
 
     const img = ctx.getImageData(0, 0, w, h).data;
+    const step = 16; // campionamento: veloce e stabile
     let transparent = 0;
-    const total = img.length / 4;
+    let total = 0;
 
-    for (let i = 3; i < img.length; i += 4) {
+    for (let i = 3; i < img.length; i += 4 * step) {
+      total++;
       if (img[i] === 0) transparent++;
     }
 
-    const pct = transparent / total;
+    const pct = transparent / Math.max(1, total);
+
     if (pct > 0.45 && !scratchedEnough) {
       scratchedEnough = true;
-      scratchHint.textContent = "Premio sbloccato 😏💘";
+      scratchHint.textContent = "Premio sbloccato 🥂✨";
       vibrate([30, 30, 30]);
+
+      // pulisci cover
       ctx.clearRect(0, 0, w, h);
+
+      // 🎉 confetti (ora funziona)
       launchConfetti();
     }
   }
 
   function initScratch() {
     if (ctx) return;
-
     resizeCanvasToBox();
     drawCover();
 
