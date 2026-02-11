@@ -19,7 +19,6 @@
     --gold:#d8b67a;
     --gold2:#f1dfb1;
 
-    /* ✅ rosa ridotto (accent più tenue) */
     --rose:#ff5a76;
     --roseSoft: rgba(255,90,118,.085);
     --roseLine: rgba(255,90,118,.12);
@@ -294,7 +293,6 @@
     overflow:hidden;
   }
 
-  /* ✅ accent bar più gold, meno pink */
   .panel::before{
     content:"";
     position:absolute;
@@ -344,6 +342,31 @@
       radial-gradient(650px 240px at 25% 20%, rgba(216,182,122,.13), rgba(0,0,0,0)),
       radial-gradient(700px 260px at 85% 40%, rgba(255,90,118,.08), rgba(0,0,0,0)),
       linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+    position: relative;
+  }
+
+  /* ✅ AMBIENT GOLD GLOW */
+  .central::after{
+    content:"";
+    position:absolute;
+    inset:-26px;
+    border-radius: 26px;
+    background: radial-gradient(circle at 50% 35%,
+      rgba(241,223,177,.24),
+      rgba(216,182,122,.12),
+      rgba(241,223,177,0) 62%);
+    opacity: 0;
+    transform: scale(.98);
+    pointer-events:none;
+    filter: blur(6px);
+  }
+  .central.ambientGlow::after{
+    animation: ambientGlow 640ms ease-out both;
+  }
+  @keyframes ambientGlow{
+    0%   { opacity:0; transform: scale(.97); }
+    28%  { opacity:1; transform: scale(1); }
+    100% { opacity:0; transform: scale(1.04); }
   }
 
   .centralTitle{
@@ -431,7 +454,6 @@
   }
   .reserved.show{ opacity: 1; transform: translateY(0); }
 
-  /* Sparkle burst (riuso) */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -449,7 +471,6 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* Cuori + stelle che salgono */
   .floaty{
     position: fixed;
     bottom:-30px;
@@ -459,7 +480,6 @@
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
 
-  /* --- Toast special effects --- */
   .foilDot{
     position: absolute;
     left: 50%;
@@ -618,9 +638,7 @@
     100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
   }
 
-  /* =========================
-     ✅ NUOVO: Toast pop + particelle dal bottone
-     ========================= */
+  /* Toast pop */
   .toastBtn.toastPop{
     animation: toastPop 320ms ease-out;
     box-shadow: 0 18px 40px rgba(216,182,122,.22), 0 0 22px rgba(241,223,177,.18);
@@ -647,42 +665,74 @@
     12%  { opacity:1; }
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
- /* =========================
-   🍾 Champagne spray
-   ========================= */
-.champDrop{
-  position: fixed;
-  left: 0; top: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  transform: translate(-50%,-50%);
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
-  animation: champFly 920ms ease-out forwards;
-  filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
-}
 
-/* alcune gocce diventano "stelline" */
-.champDrop.star{
-  width: auto;
-  height: auto;
-  border-radius: 0;
-  background: transparent !important;
-  font-weight: 900;
-}
-
-@keyframes champFly{
-  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.9); }
-  12%  { opacity: 1; }
-  100% {
+  /* 🍾 Champagne spray */
+  .champDrop{
+    position: fixed;
+    left: 0; top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    z-index: 9999;
     opacity: 0;
-    transform:
-      translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
-      scale(var(--s, 1.05));
+    animation: champFly 1150ms cubic-bezier(.18,.75,.3,1) forwards; /* ✅ più elegante */
+    filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
   }
-}
+
+  .champDrop.star{
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent !important;
+    font-weight: 900;
+  }
+
+  @keyframes champFly{
+    0%   { opacity: 0; transform: translate(-50%,-50%) scale(.9); }
+    12%  { opacity: 1; }
+    100% {
+      opacity: 0;
+      transform:
+        translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+        scale(var(--s, 1.05));
+    }
+  }
+
+  /* 💛 Gold glow sul bottone Brindiamo */
+  .toastBtn.glow{
+    box-shadow:
+      0 18px 44px rgba(216,182,122,.28),
+      0 0 28px rgba(241,223,177,.22);
+  }
+  .toastBtn.glow::before{
+    content:"";
+    position:absolute;
+    inset:-18px;
+    border-radius:999px;
+    background: radial-gradient(circle at 50% 50%,
+      rgba(241,223,177,.32),
+      rgba(241,223,177,0) 65%);
+    opacity:0;
+    transform: scale(.95);
+    pointer-events:none;
+  }
+  .toastBtn.glow::before{
+    animation: goldGlow 520ms ease-out both;
+  }
+  @keyframes goldGlow{
+    0%   { opacity:0; transform: scale(.92); }
+    30%  { opacity:1; transform: scale(1); }
+    100% { opacity:0; transform: scale(1.06); }
+  }
+
+  /* ✅ riduci animazioni se richiesto dal sistema */
+  @media (prefers-reduced-motion: reduce){
+    .toastParticle, .champDrop, .burstPiece, .bubble, .foilDot, .floaty { animation: none !important; opacity: 0 !important; }
+    .toastBtn.toastPop { animation: none !important; }
+    .central.ambientGlow::after { animation: none !important; opacity: 0 !important; }
+  }
 </style>
 </head>
 
@@ -731,7 +781,7 @@
                 🕰️ Ore 21:00<br>
                 🍷 Location: <strong>Carlo Fiamma</strong><br>
                 ✨ Dress code: bella come sempre<br>
-               (Andiamo con il pullman delle 20:25)
+                (Andiamo con il pullman delle 20:25)
               </div>
             </div>
             <canvas id="scratchCanvas"></canvas>
@@ -743,8 +793,8 @@
 
         <img
           class="photo"
-          alt="Noi 💖"
-          src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80"
+          alt="Noi 🩶"
+          <img class="photo" alt="Noi 🩶" src="assets/noi.webp" />
         />
 
         <p>
@@ -796,8 +846,7 @@
 
   <!-- ✅ MUSICA: metti un tuo file nel repo (es. assets/song.mp3) e cambia qui -->
   <audio id="music" loop preload="auto">
-    <source src="assets/song.mp3" type="audio/mpeg"> 
-   
+    <source src="assets/song.mp3" type="audio/mpeg">
   </audio>
 
 <script>
@@ -841,11 +890,15 @@
   let isScratching = false;
   let scratchedEnough = false;
   let ratio = 1;
- let lastToastFx = 0;
-const TOAST_FX_COOLDOWN = 220; // ms
+
+  // ✅ Cooldown effetti brindisi (evita spam su mobile)
+  let lastToastFx = 0;
+  const TOAST_FX_COOLDOWN = 220; // ms
 
   // ✅ Audio: partire una volta dall'inizio
   let musicStartedOnce = false;
+
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   function vibrate(pattern) {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (_) {}
@@ -956,7 +1009,7 @@ const TOAST_FX_COOLDOWN = 220; // ms
     "Ok però ora non ti ubriacare.. 😐",
     "Ooo ti ho detto basta se no ti ubriachi 😡",
     "BASTAAAA 🤬",
-    "Vabbe ti amo, urbiachiamoci insieme 😁😁"
+    "Vabbe ti amo, ubriacchiamoci insieme 😁😁"
   ];
   let toastIndex = 0;
   let toastMode = 0;
@@ -1016,13 +1069,24 @@ const TOAST_FX_COOLDOWN = 220; // ms
     btn.classList.add("ripple");
   }
 
-  /* =========================
-     ✅ NUOVO: pop + particelle dal bottone
-     ========================= */
   function pulseToastBtn(btn){
     btn.classList.remove("toastPop");
     void btn.offsetWidth;
     btn.classList.add("toastPop");
+  }
+
+  // 💛 glow bottone + ambient
+  function goldGlow(btn){
+    btn.classList.remove("glow");
+    void btn.offsetWidth;
+    btn.classList.add("glow");
+    setTimeout(() => btn.classList.remove("glow"), 650);
+  }
+  function ambientGlow(host){
+    host.classList.remove("ambientGlow");
+    void host.offsetWidth;
+    host.classList.add("ambientGlow");
+    setTimeout(() => host.classList.remove("ambientGlow"), 750);
   }
 
   function toastParticlesFromButton(btn){
@@ -1040,86 +1104,92 @@ const TOAST_FX_COOLDOWN = 220; // ms
       p.style.left = x + "px";
       p.style.top  = y + "px";
       p.style.fontSize = (14 + Math.random()*16).toFixed(0) + "px";
-      p.style.setProperty("--dx", (Math.random()*260 - 130).toFixed(0) + "px");
-      p.style.setProperty("--dy", (-70 - Math.random()*190).toFixed(0) + "px");
+      p.style.setProperty("--dx", (Math.random()*220 - 110).toFixed(0) + "px");
+      p.style.setProperty("--dy", (-80 - Math.random()*190).toFixed(0) + "px");
       document.body.appendChild(p);
       setTimeout(() => p.remove(), 920);
     }
   }
 
+  function champagneSprayFromButton(btn){
+    const r = btn.getBoundingClientRect();
+    const originX = r.left + r.width/2;
+    const originY = r.top + r.height/2;
+
+    const drops = 20; // ✅ più smooth su mobile
+    for (let i = 0; i < drops; i++){
+      const d = document.createElement("div");
+
+      // 20% stelline glitter
+      const isStar = Math.random() < 0.20;
+      d.className = "champDrop" + (isStar ? " star" : "");
+
+      if (isStar){
+        d.textContent = Math.random() < 0.5 ? "✦" : "✨";
+        d.style.color = Math.random() < 0.78 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.70)";
+        d.style.fontSize = (12 + Math.random()*14).toFixed(0) + "px";
+      } else {
+        const isBubble = Math.random() < 0.65; // ✅ più bollicine
+        d.style.background = isBubble
+          ? "radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 65%)"
+          : (Math.random() < 0.92 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.55)");
+        const size = 6 + Math.random()*10;
+        d.style.width = size.toFixed(0) + "px";
+        d.style.height = size.toFixed(0) + "px";
+        d.style.boxShadow = isBubble
+          ? "0 0 0 1px rgba(241,223,177,.22) inset"
+          : "none";
+      }
+
+      // ✅ traiettoria più verticale (champagne vero)
+      const dx = (Math.random()*160 - 80);
+      const dy = (-220 - Math.random()*180);
+
+      d.style.setProperty("--dx", dx.toFixed(0) + "px");
+      d.style.setProperty("--dy", dy.toFixed(0) + "px");
+      d.style.setProperty("--s", (0.9 + Math.random()*0.6).toFixed(2));
+
+      d.style.left = originX + "px";
+      d.style.top  = originY + "px";
+
+      document.body.appendChild(d);
+      setTimeout(() => d.remove(), 1200);
+    }
+  }
+
   if (toastBtn) {
-   const now = Date.now();
-const canFx = (now - lastToastFx) > TOAST_FX_COOLDOWN;
-if (canFx) lastToastFx = now;
     toastBtn.addEventListener("click", (e) => {
       toastIndex = (toastIndex + 1) % toastPhrases.length;
       toastLine.textContent = toastPhrases[toastIndex];
 
-      // ripple sempre
       setRippleOnButton(toastBtn, e);
-
-      // ✅ NUOVO: pop + particelle dal bottone
       pulseToastBtn(toastBtn);
-      if (canFx) {
-  toastParticlesFromButton(toastBtn);
-  champagneSprayFromButton(toastBtn);
-}
 
+      // 💛 glow sempre (anche se spammano)
+      goldGlow(toastBtn);
+      ambientGlow(centralInvite);
 
-      // effetto “rotante” (diverso a ogni click)
+      // ✅ cooldown solo per particelle (anti-lag)
+      const now = Date.now();
+      const canFx = (now - lastToastFx) > TOAST_FX_COOLDOWN;
+      if (canFx) lastToastFx = now;
+
+      if (canFx && !reduceMotion) {
+        toastParticlesFromButton(toastBtn);
+        champagneSprayFromButton(toastBtn);
+      }
+
+      // effetto “rotante”
       toastMode = (toastMode + 1) % 3;
-      if (toastMode === 0) foilConfetti(centralInvite);
-      if (toastMode === 1) sparkleBurst(centralInvite);
-      if (toastMode === 2) bubbleHearts(centralInvite);
+      if (!reduceMotion) {
+        if (toastMode === 0) foilConfetti(centralInvite);
+        if (toastMode === 1) sparkleBurst(centralInvite);
+        if (toastMode === 2) bubbleHearts(centralInvite);
+      }
 
       vibrate(18);
     });
   }
-function champagneSprayFromButton(btn){
-  const r = btn.getBoundingClientRect();
-  const originX = r.left + r.width/2;
-  const originY = r.top + r.height/2;
-
-  const drops = 22; // quantità spray
-  for (let i = 0; i < drops; i++){
-    const d = document.createElement("div");
-
-    // 20% stelline glitter
-    const isStar = Math.random() < 0.20;
-    d.className = "champDrop" + (isStar ? " star" : "");
-
-    // look: oro/rosa perle + qualche bolla
-    if (isStar){
-      d.textContent = Math.random() < 0.5 ? "✦" : "✨";
-      d.style.color = Math.random() < 0.75 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.80)";
-      d.style.fontSize = (12 + Math.random()*14).toFixed(0) + "px";
-    } else {
-      const isBubble = Math.random() < 0.55; // qualche bolla trasparente
-      d.style.background = isBubble
-        ? "radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 65%)"
-        : (Math.random() < 0.92 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.55)");
-      const size = 6 + Math.random()*10;
-      d.style.width = size.toFixed(0) + "px";
-      d.style.height = size.toFixed(0) + "px";
-      d.style.boxShadow = isBubble
-        ? "0 0 0 1px rgba(241,223,177,.25) inset"
-        : "none";
-    }
-
-    // traiettoria: su + un po’ a ventaglio
-    const dx = (Math.random()*260 - 130);          // laterale
-    const dy = (-140 - Math.random()*260);         // verso l’alto
-    d.style.setProperty("--dx", dx.toFixed(0) + "px");
-    d.style.setProperty("--dy", dy.toFixed(0) + "px");
-    d.style.setProperty("--s", (0.9 + Math.random()*0.6).toFixed(2));
-
-    d.style.left = originX + "px";
-    d.style.top  = originY + "px";
-
-    document.body.appendChild(d);
-    setTimeout(() => d.remove(), 940);
-  }
-}
 
   // Slider fill
   function paintLoveRange(){
@@ -1298,7 +1368,7 @@ function champagneSprayFromButton(btn){
       scratchHint.textContent = "Svelato. 🥂✨ Si, è la stessa location di l'anno scorso perchè sono sempre senza mezzo e senza soldi 😄";
       vibrate([30, 30, 30]);
 
-      scratchBurst();
+      if (!reduceMotion) scratchBurst();
       if (reserved) reserved.classList.add("show");
     }
   }
@@ -1353,9 +1423,3 @@ function champagneSprayFromButton(btn){
 
 </body>
 </html>
-
-
-
-
-
-
