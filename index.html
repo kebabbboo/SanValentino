@@ -841,6 +841,8 @@
   let isScratching = false;
   let scratchedEnough = false;
   let ratio = 1;
+ let lastToastFx = 0;
+const TOAST_FX_COOLDOWN = 220; // ms
 
   // ✅ Audio: partire una volta dall'inizio
   let musicStartedOnce = false;
@@ -1029,7 +1031,7 @@
     const y = r.top + r.height/2;
 
     const symbols = ["🥂","✨","💫","⭐","💖","💕"];
-    const n = 16;
+    const n = 10;
 
     for (let i = 0; i < n; i++){
       const p = document.createElement("div");
@@ -1046,6 +1048,9 @@
   }
 
   if (toastBtn) {
+   const now = Date.now();
+const canFx = (now - lastToastFx) > TOAST_FX_COOLDOWN;
+if (canFx) lastToastFx = now;
     toastBtn.addEventListener("click", (e) => {
       toastIndex = (toastIndex + 1) % toastPhrases.length;
       toastLine.textContent = toastPhrases[toastIndex];
@@ -1055,8 +1060,10 @@
 
       // ✅ NUOVO: pop + particelle dal bottone
       pulseToastBtn(toastBtn);
-      toastParticlesFromButton(toastBtn);
-     champagneSprayFromButton(toastBtn);
+      if (canFx) {
+  toastParticlesFromButton(toastBtn);
+  champagneSprayFromButton(toastBtn);
+}
 
 
       // effetto “rotante” (diverso a ogni click)
@@ -1073,7 +1080,7 @@ function champagneSprayFromButton(btn){
   const originX = r.left + r.width/2;
   const originY = r.top + r.height/2;
 
-  const drops = 26; // quantità spray
+  const drops = 22; // quantità spray
   for (let i = 0; i < drops; i++){
     const d = document.createElement("div");
 
@@ -1087,10 +1094,10 @@ function champagneSprayFromButton(btn){
       d.style.color = Math.random() < 0.75 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.80)";
       d.style.fontSize = (12 + Math.random()*14).toFixed(0) + "px";
     } else {
-      const isBubble = Math.random() < 0.35; // qualche bolla trasparente
+      const isBubble = Math.random() < 0.55; // qualche bolla trasparente
       d.style.background = isBubble
         ? "radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 65%)"
-        : (Math.random() < 0.8 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.65)");
+        : (Math.random() < 0.92 ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.55)");
       const size = 6 + Math.random()*10;
       d.style.width = size.toFixed(0) + "px";
       d.style.height = size.toFixed(0) + "px";
@@ -1346,6 +1353,7 @@ function champagneSprayFromButton(btn){
 
 </body>
 </html>
+
 
 
 
