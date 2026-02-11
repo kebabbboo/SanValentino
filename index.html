@@ -1157,39 +1157,32 @@
     }
   }
 
-  if (toastBtn) {
-    toastBtn.addEventListener("click", (e) => {
-      toastIndex = (toastIndex + 1) % toastPhrases.length;
-      toastLine.textContent = toastPhrases[toastIndex];
+ if (toastBtn) {
+  toastBtn.addEventListener("click", (e) => {
 
-      setRippleOnButton(toastBtn, e);
-      pulseToastBtn(toastBtn);
+    const now = Date.now();
+    const canFx = (now - lastToastFx) > TOAST_FX_COOLDOWN;
+    if (canFx) lastToastFx = now;
 
-      // 💛 glow sempre (anche se spammano)
-      goldGlow(toastBtn);
-      ambientGlow(centralInvite);
+    toastIndex = (toastIndex + 1) % toastPhrases.length;
+    toastLine.textContent = toastPhrases[toastIndex];
 
-      // ✅ cooldown solo per particelle (anti-lag)
-      const now = Date.now();
-      const canFx = (now - lastToastFx) > TOAST_FX_COOLDOWN;
-      if (canFx) lastToastFx = now;
+    setRippleOnButton(toastBtn, e);
+    pulseToastBtn(toastBtn);
 
-      if (canFx && !reduceMotion) {
-        toastParticlesFromButton(toastBtn);
-        champagneSprayFromButton(toastBtn);
-      }
+    if (canFx) {
+      toastParticlesFromButton(toastBtn);
+      champagneSprayFromButton(toastBtn);
+    }
 
-      // effetto “rotante”
-      toastMode = (toastMode + 1) % 3;
-      if (!reduceMotion) {
-        if (toastMode === 0) foilConfetti(centralInvite);
-        if (toastMode === 1) sparkleBurst(centralInvite);
-        if (toastMode === 2) bubbleHearts(centralInvite);
-      }
+    toastMode = (toastMode + 1) % 3;
+    if (toastMode === 0) foilConfetti(centralInvite);
+    if (toastMode === 1) sparkleBurst(centralInvite);
+    if (toastMode === 2) bubbleHearts(centralInvite);
 
-      vibrate(18);
-    });
-  }
+    vibrate(18);
+  });
+}
 
   // Slider fill
   function paintLoveRange(){
@@ -1423,3 +1416,4 @@
 
 </body>
 </html>
+
