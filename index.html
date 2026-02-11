@@ -118,6 +118,8 @@
     border: 1px solid #ffd2dc;
     border-radius: 16px;
     padding: 12px;
+    position: relative;
+    overflow: hidden; /* utile per confetti in panel */
   }
 
   .panel h3 {
@@ -246,7 +248,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    touch-action: none; /* importantissimo per grattare su mobile */
+    touch-action: none;
     cursor: grab;
   }
 
@@ -270,11 +272,30 @@
   @keyframes floatUp {
     to { transform: translateY(-110vh); opacity: 0; }
   }
+
+  /* Confetti dentro la card */
+  .confetti {
+    position: absolute;
+    top: -10px;
+    width: 10px;
+    height: 14px;
+    border-radius: 4px;
+    opacity: 0.95;
+    animation: confettiFall 1.25s ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes confettiFall {
+    to {
+      transform: translateY(260px) rotate(260deg);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 
 <body>
-  <div class="card">
+  <div class="card" id="card">
     <h1>Ciao Lilian ❤️</h1>
 
     <p>
@@ -306,8 +327,7 @@
       </p>
 
       <div class="grid">
-        <!-- ✅ GRATTA E SCOPRI -->
-        <div class="panel">
+        <div class="panel" id="scratchPanel">
           <h3>🎟️ Gratta e scopri</h3>
 
           <div class="scratchWrap" id="scratchBox">
@@ -346,12 +366,12 @@
     </div>
   </div>
 
-  <!-- Musica: parte SOLO dopo click su SÌ -->
   <audio id="music" loop>
     <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
   </audio>
 
 <script>
+  const card = document.getElementById("card");
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
   const finalBox = document.getElementById("final");
@@ -365,7 +385,7 @@
   const resetKissBtn = document.getElementById("resetKissBtn");
   const kissResult = document.getElementById("kissResult");
 
-  // Scratch
+  const scratchPanel = document.getElementById("scratchPanel");
   const scratchBox = document.getElementById("scratchBox");
   const scratchCanvas = document.getElementById("scratchCanvas");
   const scratchHint = document.getElementById("scratchHint");
@@ -429,15 +449,13 @@
     music.play().catch(() => {});
 
     startHearts();
-
-    // init scratch AFTER final is visible (così ha dimensioni corrette)
     initScratch();
 
     yesBtn.disabled = true;
     noBtn.disabled = true;
   }
 
-  // ✅ Riempimento barra slider
+  // Slider: fill
   function paintLoveRange(){
     const v = Number(loveRange.value);
     loveRange.style.background =
@@ -463,7 +481,7 @@
   // SÌ
   yesBtn.addEventListener("click", doYesFlow);
 
-  // NO: 5 click per arrendersi
+  // NO: 5 click
   noBtn.addEventListener("click", () => {
     noCount++;
     vibrate(25);
@@ -472,7 +490,6 @@
       const left = 5 - noCount;
       showStatus(`No? Sei sicura? 😏 (mancano ${left})`);
       moveNoButton();
-
       const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
       noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
     } else {
@@ -480,13 +497,12 @@
       noBtn.textContent = "Ok… SÌ ❤️";
       noBtn.style.background = "#ff4d6d";
       noBtn.style.color = "white";
-      noBtn.style.border = "none";
       noBtn.onclick = () => doYesFlow();
       vibrate([60, 40, 60]);
     }
   });
 
-  // Timer dei baci
+  // Timer baci
   function kissMessage(k) {
     if (k < 10) return `Baci: ${k} (stai scaldando l’atmosfera 😏)`;
     if (k < 20) return `Baci: ${k} (ok Lilian… qui è serio 💘)`;
@@ -504,6 +520,27 @@
     kisses = 0;
     kissResult.textContent = "Baci: 0";
   });
+
+  /* ---------- CONFETTI ---------- */
+  function launchConfetti() {
+    // confetti leggeri dentro la card
+    const colors = ["#ff4d6d", "#ff9a9e", "#ffd2dc", "#ffbe5a", "#ffffff"];
+    const count = 26;
+
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.style.left = (Math.random() * 92 + 4) + "%";
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.transform = `rotate(${Math.random() * 180}deg)`;
+      c.style.animationDuration = (0.9 + Math.random() * 0.8) + "s";
+      c.style.width = (8 + Math.random() * 6) + "px";
+      c.style.height = (10 + Math.random() * 8) + "px";
+      card.appendChild(c);
+
+      setTimeout(() => c.remove(), 1600);
+    }
+  }
 
   /* -------- GRATTA E SCOPRI -------- */
   function resizeCanvasToBox() {
@@ -523,7 +560,6 @@
     if (!ctx) return;
     const rect = scratchBox.getBoundingClientRect();
 
-    // Cover "premium" (non PNG): gradiente + testo "GRATTA"
     const g = ctx.createLinearGradient(0, 0, rect.width, rect.height);
     g.addColorStop(0, "#ffb3c1");
     g.addColorStop(0.5, "#ff4d6d");
@@ -533,7 +569,6 @@
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, rect.width, rect.height);
 
-    // puntini glitter
     for (let i = 0; i < 80; i++) {
       ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25})`;
       ctx.beginPath();
@@ -541,7 +576,6 @@
       ctx.fill();
     }
 
-    // testo
     ctx.fillStyle = "rgba(255,255,255,0.95)";
     ctx.font = "700 18px Arial";
     ctx.textAlign = "center";
@@ -561,7 +595,6 @@
     ctx.arc(x, y, 18, 0, Math.PI * 2);
     ctx.fill();
 
-    // check “quanto hai grattato” ogni tanto
     checkScratchProgress();
   }
 
@@ -572,10 +605,13 @@
     lastCheck = now;
 
     const rect = scratchBox.getBoundingClientRect();
-    const img = ctx.getImageData(0, 0, Math.floor(rect.width), Math.floor(rect.height)).data;
+    const w = Math.floor(rect.width);
+    const h = Math.floor(rect.height);
 
+    const img = ctx.getImageData(0, 0, w, h).data;
     let transparent = 0;
     const total = img.length / 4;
+
     for (let i = 3; i < img.length; i += 4) {
       if (img[i] === 0) transparent++;
     }
@@ -585,13 +621,16 @@
       scratchedEnough = true;
       scratchHint.textContent = "Premio sbloccato 😏💘";
       vibrate([30, 30, 30]);
-      // pulisci tutto
-      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      // pulisci cover
+      ctx.clearRect(0, 0, w, h);
+
+      // 🎉 confetti
+      launchConfetti();
     }
   }
 
   function initScratch() {
-    // evita re-init inutili
     if (ctx) return;
 
     resizeCanvasToBox();
@@ -617,7 +656,6 @@
     scratchCanvas.addEventListener("pointermove", onMove);
     window.addEventListener("pointerup", onUp);
 
-    // se ruota lo schermo, ridisegna cover (se non ancora sbloccato)
     window.addEventListener("resize", () => {
       const already = scratchedEnough;
       ctx = null;
