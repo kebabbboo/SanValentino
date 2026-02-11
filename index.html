@@ -3,59 +3,55 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lilian ✨</title>
+<title>Lilian ❤️</title>
 
 <style>
   * { box-sizing: border-box; }
 
   :root{
-    --bg1:#0f0f12;
-    --bg2:#1b1b22;
-    --gold:#d8b67a;
-    --gold2:#f1dfb1;
-    --rose:#ff4d6d;
-    --card:#111218cc;
-    --card2:#171824cc;
-    --text:#f5f2ea;
-    --muted:#cfc7bb;
-    --shadow: 0 18px 45px rgba(0,0,0,.45);
+    --pink:#ff4d6d;
+    --pink2:#ff9a9e;
+    --cream:#fff7f9;
+    --line:#ffd2dc;
+    --text:#2c2c2c;
+    --muted:#6b6b6b;
+    --shadow: 0 14px 34px rgba(0,0,0,.18);
   }
 
   body{
     margin:0;
     min-height:100vh;
     font-family: Arial, sans-serif;
+    background:
+      radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,.55), rgba(255,255,255,0)),
+      radial-gradient(1200px 900px at 90% 20%, rgba(255,255,255,.45), rgba(255,255,255,0)),
+      linear-gradient(135deg, var(--pink2), #fad0c4);
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:auto;
     padding: 18px 0;
-
-    background:
-      radial-gradient(1000px 700px at 20% 10%, rgba(216,182,122,.18), rgba(0,0,0,0)),
-      radial-gradient(900px 700px at 85% 15%, rgba(255,77,109,.14), rgba(0,0,0,0)),
-      linear-gradient(135deg, var(--bg1), var(--bg2));
-    color: var(--text);
   }
 
+  /* cornice gradiente + card interna */
   .frame{
     width: 92%;
-    max-width: 430px;
+    max-width: 420px;
     border-radius: 26px;
     padding: 2px;
-    background: linear-gradient(135deg, rgba(241,223,177,.95), rgba(216,182,122,.25), rgba(255,77,109,.18));
+    background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(255,255,255,.28));
     box-shadow: var(--shadow);
   }
 
   .card{
+    background: rgba(255,255,255,.90);
+    backdrop-filter: blur(8px);
     border-radius: 24px;
     padding: 18px;
-    background: linear-gradient(180deg, var(--card), var(--card2));
-    backdrop-filter: blur(10px);
     position: relative;
 
-    max-height: 80vh;         /* ✅ come richiesto */
-    overflow: auto;           /* ✅ scroll interno */
+    max-height: 80vh; /* ✅ scroll interno */
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -73,40 +69,54 @@
     gap: 8px;
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(216,182,122,.12);
-    border: 1px solid rgba(216,182,122,.26);
-    color: var(--gold2);
-    font-weight: 700;
+    background: linear-gradient(135deg, rgba(255,77,109,.16), rgba(255,154,158,.12));
+    border: 1px solid rgba(255,77,109,.22);
+    color: #b21e35;
+    font-weight: 800;
     font-size: 12.5px;
-    letter-spacing: .3px;
+    letter-spacing: .2px;
+  }
+
+  .miniChip{
+    display:inline-flex;
+    align-items:center;
+    gap: 7px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(255,77,109,.10);
+    border: 1px solid rgba(255,77,109,.22);
+    color: rgba(178,30,53,.95);
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   h1{
     margin: 6px 0 8px;
+    color: var(--pink);
     font-size: 26px;
-    letter-spacing: .3px;
-    color: var(--gold2);
+    letter-spacing: .2px;
   }
 
   p{
     margin: 10px 0;
-    font-size: 16px;
+    color: var(--text);
+    font-size: 16.5px;
     line-height: 1.35;
-    color: rgba(245,242,234,.95);
   }
 
-  .muted{
-    color: rgba(207,199,187,.92);
+  .sub{
+    color: var(--muted);
     font-size: 14px;
     margin-top: 0;
   }
 
   .divider{
     height:1px;
-    background: linear-gradient(90deg, transparent, rgba(216,182,122,.25), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,77,109,.35), transparent);
     margin: 14px 0;
   }
 
+  /* Bottoni */
   .buttons{
     margin-top: 16px;
     height: 124px;
@@ -119,8 +129,8 @@
     padding: 13px 18px;
     font-size: 16px;
     cursor: pointer;
-    transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
-    user-select:none;
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    user-select: none;
   }
   button:active{ transform: translateY(1px) scale(.99); }
 
@@ -129,22 +139,20 @@
     left:50%;
     top:0;
     transform: translateX(-50%);
-    color: #19171a;
-    background: linear-gradient(135deg, var(--gold2), var(--gold));
-    box-shadow: 0 14px 26px rgba(216,182,122,.25);
-    font-weight: 800;
-    letter-spacing: .2px;
+    color: white;
+    background: linear-gradient(135deg, var(--pink), #ff2f57);
+    box-shadow: 0 10px 18px rgba(255,77,109,.35);
+    font-weight: 900;
   }
-  #yesBtn:hover{ filter: brightness(1.03); }
 
   #noBtn{
     position:absolute;
     left:50%;
     top:64px;
     transform: translateX(-50%);
-    color: rgba(245,242,234,.92);
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(240,240,240,.96);
+    border: 1px solid rgba(0,0,0,.06);
+    color:#555;
     touch-action: manipulation;
   }
 
@@ -155,18 +163,18 @@
     gap:8px;
     padding: 9px 12px;
     border-radius: 999px;
-    background: rgba(216,182,122,.10);
-    border: 1px solid rgba(216,182,122,.22);
-    color: rgba(241,223,177,.95);
-    font-size: 13px;
+    background: rgba(255,240,243,.92);
+    border: 1px solid rgba(255,77,109,.22);
+    color:#8f1730;
+    font-size: 13.5px;
     margin-top: 10px;
   }
 
   .hidden{ display:none; }
 
   #final{
-    margin-top: 12px;
-    padding-top: 8px;
+    margin-top: 14px;
+    padding-top: 10px;
   }
 
   .photo{
@@ -175,7 +183,7 @@
     object-fit: cover;
     border-radius: 18px;
     margin: 10px 0 6px;
-    box-shadow: 0 18px 35px rgba(0,0,0,.35);
+    box-shadow: 0 14px 28px rgba(0,0,0,.14);
     animation: photoIn 520ms ease both;
   }
   @keyframes photoIn{
@@ -183,24 +191,30 @@
     to{ opacity:1; transform: translateY(0) scale(1); }
   }
 
-  .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
 
   .panel{
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(216,182,122,.18);
+    background: linear-gradient(180deg, rgba(255,247,249,.95), rgba(255,255,255,.92));
+    border: 1px solid rgba(255,210,220,.9);
     border-radius: 18px;
     padding: 12px;
     position: relative;
     overflow:hidden;
   }
 
+  /* accent bar */
   .panel::before{
     content:"";
     position:absolute;
     left:0; top:0; bottom:0;
     width: 10px;
-    background: linear-gradient(180deg, rgba(241,223,177,.45), rgba(255,77,109,.25));
-    opacity:.8;
+    background: linear-gradient(180deg, rgba(255,77,109,.8), rgba(255,154,158,.7));
+    opacity: .85;
   }
 
   .panelHeader{
@@ -215,33 +229,60 @@
   .panelTitle{
     margin:0;
     font-size: 14.5px;
-    color: rgba(241,223,177,.95);
+    color:#8f1730;
     display:flex;
     align-items:center;
     gap: 8px;
-    letter-spacing: .2px;
+  }
+
+  .tag{
+    font-size: 12px;
+    color:#8f1730;
+    background: rgba(255,77,109,.12);
+    border: 1px solid rgba(255,77,109,.18);
+    padding: 4px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
 
   .result{
     margin-top: 8px;
     font-size: 14.5px;
-    color: rgba(245,242,234,.94);
+    color: #333;
     text-align:center;
     padding-left: 10px;
   }
 
-  /* Slider: fill + thumb fuoco elegante */
+  .choices{
+    display:flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content:center;
+    padding-left: 10px;
+  }
+
+  .choiceBtn{
+    background: rgba(255,255,255,.95);
+    border: 1px solid rgba(255,179,193,.92);
+    color:#8f1730;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    box-shadow: 0 8px 16px rgba(255,77,109,.10);
+  }
+
+  /* ---- Slider ---- */
   .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
 
   #loveRange{
     width:100%;
-    accent-color: var(--rose);
+    accent-color: var(--pink);
     -webkit-appearance:none;
     appearance:none;
     height: 10px;
     border-radius: 999px;
     outline:none;
-    background: linear-gradient(90deg, var(--rose) 50%, rgba(255,77,109,.18) 50%);
+    background: linear-gradient(90deg, var(--pink) 50%, rgba(255,77,109,.18) 50%);
   }
   #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
   #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
@@ -252,37 +293,39 @@
     width: 30px;
     height: 30px;
     border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.75);
+    border: 2px solid rgba(255,255,255,.95);
     cursor:pointer;
     margin-top: -10px;
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
-      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
     box-shadow:
-      0 10px 18px rgba(255,77,109,.20),
-      0 0 16px rgba(255,110,70,.45);
+      0 10px 18px rgba(255, 77, 109, 0.25),
+      0 0 16px rgba(255, 110, 70, 0.55);
   }
-  #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
+  #loveRange:active::-webkit-slider-thumb { transform: scale(1.06); }
 
   #loveRange::-moz-range-thumb{
-    width: 30px; height:30px; border-radius:999px;
-    border: 2px solid rgba(255,255,255,.75);
-    cursor:pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,.95);
+    cursor: pointer;
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
-      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
     box-shadow:
-      0 10px 18px rgba(255,77,109,.20),
-      0 0 16px rgba(255,110,70,.45);
+      0 10px 18px rgba(255, 77, 109, 0.25),
+      0 0 16px rgba(255, 110, 70, 0.55);
   }
 
-  /* Scratch */
+  /* ---- Scratch ---- */
   .scratchWrap{
     position:relative;
     border-radius: 18px;
     overflow:hidden;
-    border: 1px dashed rgba(241,223,177,.55);
-    background: rgba(0,0,0,.18);
+    border: 1px dashed rgba(255,77,109,.40);
+    background: rgba(255,255,255,.95);
     margin-left: 10px;
     min-height: 130px;
   }
@@ -296,15 +339,17 @@
 
   .scratchPrize .big{
     font-size: 18px;
-    color: rgba(241,223,177,.98);
+    color: #8f1730;
     font-weight: 900;
     margin-bottom: 6px;
-    letter-spacing: .6px;
+    letter-spacing: .4px;
   }
+
   .scratchPrize .small{
     font-size: 14px;
-    color: rgba(245,242,234,.94);
-    opacity:.95;
+    color: #333;
+    opacity:.92;
+    line-height: 1.45;
   }
 
   canvas#scratchCanvas{
@@ -320,23 +365,23 @@
   .scratchHint{
     margin-top: 8px;
     font-size: 13px;
-    color: rgba(241,223,177,.9);
+    color: #7a1c2c;
     text-align:center;
     opacity:.9;
     padding-left: 10px;
   }
 
-  /* cuori */
+  /* Cuori */
   .heart{
     position: fixed;
     bottom:-30px;
     animation: floatUp 4.2s linear forwards;
     pointer-events:none;
-    filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
 
-  /* ✅ Animazione finale scratch: Sparkle Burst (al posto dei confetti) */
+  /* ✅ Sparkle burst (non rimuovo niente, lo tengo come animazione finale scratch) */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -346,7 +391,7 @@
     z-index: 40;
     opacity: 0;
     animation: burst 900ms ease-out forwards;
-    text-shadow: 0 10px 16px rgba(0,0,0,.35);
+    text-shadow: 0 10px 16px rgba(0,0,0,.18);
   }
   @keyframes burst{
     0%   { opacity:0; transform: translate(-50%,-50%) scale(.85); }
@@ -354,7 +399,7 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* ✅ Kiss counter più interattivo */
+  /* ✅ Kiss counter interattivo (resta) */
   .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
   .kissTop{
     display:flex;
@@ -366,7 +411,7 @@
     font-size: 34px;
     font-weight: 900;
     letter-spacing: .6px;
-    color: rgba(241,223,177,.98);
+    color:#8f1730;
     line-height: 1;
     display:flex;
     align-items: baseline;
@@ -374,7 +419,7 @@
   }
   .kissBig span{
     font-size: 13px;
-    color: rgba(207,199,187,.95);
+    color: rgba(107,107,107,.95);
     font-weight: 700;
     letter-spacing: .2px;
   }
@@ -383,14 +428,14 @@
     width:100%;
     height: 10px;
     border-radius: 999px;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(216,182,122,.18);
+    background: rgba(255,77,109,.10);
+    border: 1px solid rgba(255,77,109,.18);
     overflow:hidden;
   }
   .kissFill{
     height:100%;
     width:0%;
-    background: linear-gradient(90deg, rgba(241,223,177,.95), rgba(255,77,109,.65));
+    background: linear-gradient(90deg, rgba(255,77,109,.95), rgba(255,154,158,.65));
     border-radius: 999px;
     transition: width 180ms ease;
   }
@@ -402,15 +447,15 @@
     justify-content:center;
   }
   .kissBtn{
-    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.55));
-    color:#16151a;
+    background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,47,87,.95));
+    color:white;
     font-weight: 900;
-    box-shadow: 0 14px 26px rgba(216,182,122,.16);
+    box-shadow: 0 14px 26px rgba(255,77,109,.18);
   }
   .kissReset{
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(241,223,177,.20);
-    color: rgba(245,242,234,.92);
+    background: rgba(255,255,255,.95);
+    border: 1px solid rgba(255,179,193,.92);
+    color:#8f1730;
   }
 
   .pop{ animation: pop 220ms ease-out; }
@@ -429,7 +474,7 @@
     opacity: 0;
     animation: kissFloat 900ms ease-out forwards;
     z-index: 30;
-    filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.18));
   }
   @keyframes kissFloat{
     0%{ opacity:0; transform: translateX(-50%) translateY(0) scale(.9); }
@@ -444,15 +489,16 @@
     <div class="card" id="card">
       <div class="topRow">
         <div class="badge">🥂 Invito a cena</div>
-        <!-- ✅ tolto “modalità romantico playful” -->
+        <!-- ✅ NON rimuovo: lo lascio -->
+        <div class="miniChip">💖 modalità: romantico + playful</div>
       </div>
 
       <h1>Ciao Lilian ✨</h1>
-      <p class="muted">Un invito elegante… con un pizzico di malizia 😌</p>
+      <p class="sub">Ho preparato una piccola cosa… e adesso non puoi più “non vederla” 😌</p>
 
       <p>
-        Domanda importantissima:<br><br>
-        Vuoi essere la mia <strong>Valentina di San Valentino</strong>? ❤️
+        Domanda importantissima (e assolutamente non truccata):<br><br>
+        Vuoi essere la mia <strong>Valentina di San Valentino?</strong> 💕
       </p>
 
       <div class="buttons">
@@ -475,20 +521,20 @@
         />
 
         <p id="finalText">
-          Allora è deciso 😌<br><br>
-          Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
+          Lo sapevo 😌<br><br>
+          Preparati a una serata piena di coccole, risate e amore 💖
         </p>
 
         <div class="grid">
           <div class="panel" id="scratchPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">🎟️ Gratta e scopri</h3>
-              <!-- ✅ tolti i tag -->
+              <!-- ✅ NON rimuovo: lo lascio -->
+              <span class="tag">premio segreto</span>
             </div>
 
             <div class="scratchWrap" id="scratchBox">
               <div class="scratchPrize">
-                <!-- 👇 qui metti le info (come volevi tu) -->
                 <div class="big">L’INVITO ✨</div>
                 <div class="small">
                   📍 <strong>Venerdì 14 Febbraio</strong><br>
@@ -500,14 +546,16 @@
               <canvas id="scratchCanvas"></canvas>
             </div>
 
-            <div class="scratchHint" id="scratchHint">Gratta con il dito per scoprire tutti i dettagli ✨</div>
+            <div class="scratchHint" id="scratchHint">Gratta con il dito per scoprire il premio ✨</div>
           </div>
 
           <div class="panel">
             <div class="panelHeader">
               <h3 class="panelTitle">🔥 Misuratore di amore</h3>
-              <!-- ✅ tolti i tag -->
+              <!-- ✅ NON rimuovo: lo lascio -->
+              <span class="tag">riempi la barra</span>
             </div>
+
             <div class="sliderWrap">
               <input id="loveRange" type="range" min="0" max="100" value="50" />
               <div id="loveText" class="result">Direi che siamo già ad un ottimo livello 😌</div>
@@ -517,13 +565,14 @@
           <div class="panel" id="kissPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">😚 Kiss counter</h3>
-              <!-- ✅ tolti i tag -->
+              <!-- ✅ NON rimuovo: lo lascio -->
+              <span class="tag">clicca!</span>
             </div>
 
             <div class="kissWrap">
               <div class="kissTop">
                 <div class="kissBig" id="kissBig">0 <span>baci</span></div>
-                <div style="color: rgba(207,199,187,.92); font-size: 13px; font-weight:700;">
+                <div style="color: rgba(107,107,107,.95); font-size: 13px; font-weight:700;">
                   obiettivo: <span id="kissGoal">30</span>
                 </div>
               </div>
@@ -664,9 +713,10 @@
     paintLoveRange();
   });
 
-  // Buttons
+  // SÌ
   yesBtn.addEventListener("click", doYesFlow);
 
+  // NO: 5 click
   noBtn.addEventListener("click", () => {
     noCount++;
     vibrate(25);
@@ -680,14 +730,14 @@
     } else {
       showStatus("ok ok… mi arrendo 🔥");
       noBtn.textContent = "Ok… SÌ ❤️";
-      noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
-      noBtn.style.color = "#19171a";
+      noBtn.style.background = "linear-gradient(135deg, #ff4d6d, #ff2f57)";
+      noBtn.style.color = "white";
       noBtn.onclick = () => doYesFlow();
       vibrate([60, 40, 60]);
     }
   });
 
-  /* ---------- KISS COUNTER (nuovo stile interattivo) ---------- */
+  /* ---------- KISS COUNTER ---------- */
   kissGoalEl.textContent = String(kissGoal);
 
   function setKissBig(){
@@ -740,7 +790,7 @@
     vibrate([20,20,20]);
   });
 
-  /* ---------- SCRATCH: Sparkle Burst (al posto dei confetti) ---------- */
+  /* ---------- Sparkle Burst (fine scratch) ---------- */
   function sparkleBurst(){
     const symbols = ["✨","⭐","💫","❤️","🥂"];
     for (let i = 0; i < 18; i++) {
@@ -767,34 +817,33 @@
     scratchCanvas.style.height = rect.height + "px";
 
     ctx = scratchCanvas.getContext("2d");
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // pixel reali
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   function drawCover() {
     if (!ctx) return;
-
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
 
-    // cover OPACA
+    // cover opaca
     const g = ctx.createLinearGradient(0, 0, w, h);
-    g.addColorStop(0, "#1c1b21");
-    g.addColorStop(0.55, "#15141a");
-    g.addColorStop(1, "#101015");
+    g.addColorStop(0, "#ffb3c1");
+    g.addColorStop(0.55, "#ff4d6d");
+    g.addColorStop(1, "#ff9a9e");
 
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
-    // foil dorato leggero
-    for (let i = 0; i < 120; i++) {
-      ctx.fillStyle = `rgba(216,182,122,${Math.random() * 0.08})`;
+    // glitter
+    for (let i = 0; i < 90; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25})`;
       ctx.beginPath();
-      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 3 + 0.5, 0, Math.PI * 2);
+      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2 + 0.5, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    ctx.fillStyle = "rgba(241,223,177,0.95)";
+    ctx.fillStyle = "rgba(255,255,255,0.96)";
     ctx.font = `900 ${Math.floor(18 * ratio)}px Arial`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -827,12 +876,10 @@
 
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
-
     const img = ctx.getImageData(0, 0, w, h).data;
 
     const stride = 24;
-    let cleared = 0;
-    let total = 0;
+    let cleared = 0, total = 0;
 
     for (let i = 3; i < img.length; i += 4 * stride) {
       total++;
@@ -848,7 +895,7 @@
 
       ctx.clearRect(0, 0, w, h);
 
-      // ✅ animazione sempre funzionante
+      // animazione
       sparkleBurst();
     }
   }
@@ -891,9 +938,7 @@
   }
 
   function getPoint(e) {
-    if (e.touches && e.touches[0]) {
-      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
+    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     return { x: e.clientX, y: e.clientY };
   }
 </script>
