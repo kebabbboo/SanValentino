@@ -9,13 +9,26 @@
   * { box-sizing: border-box; }
 
   :root{
+    --bg1:#0f0f12;
+    --bg2:#1b1b22;
+
+    --gold:#d8b67a;
+    --gold2:#f1dfb1;
+
     --pink:#ff4d6d;
     --pink2:#ff9a9e;
-    --cream:#fff7f9;
-    --line:#ffd2dc;
-    --text:#2c2c2c;
-    --muted:#6b6b6b;
-    --shadow: 0 14px 34px rgba(0,0,0,.18);
+
+    --text:#f5f2ea;
+    --muted:#cfc7bb;
+
+    --card1: rgba(17,18,24,.82);
+    --card2: rgba(23,24,36,.76);
+
+    --panel: rgba(255,255,255,.05);
+    --panel2: rgba(255,255,255,.035);
+
+    --line: rgba(216,182,122,.22);
+    --shadow: 0 18px 45px rgba(0,0,0,.45);
   }
 
   body{
@@ -23,29 +36,30 @@
     min-height:100vh;
     font-family: Arial, sans-serif;
     background:
-      radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,.55), rgba(255,255,255,0)),
-      radial-gradient(1200px 900px at 90% 20%, rgba(255,255,255,.45), rgba(255,255,255,0)),
-      linear-gradient(135deg, var(--pink2), #fad0c4);
+      radial-gradient(1000px 700px at 20% 10%, rgba(216,182,122,.18), rgba(0,0,0,0)),
+      radial-gradient(900px 700px at 85% 15%, rgba(255,77,109,.14), rgba(0,0,0,0)),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:auto;
     padding: 18px 0;
+    color: var(--text);
   }
 
-  /* cornice gradiente + card interna */
+  /* frame oro */
   .frame{
     width: 92%;
-    max-width: 420px;
+    max-width: 430px;
     border-radius: 26px;
     padding: 2px;
-    background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(255,255,255,.28));
+    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.25), rgba(255,77,109,.18));
     box-shadow: var(--shadow);
   }
 
   .card{
-    background: rgba(255,255,255,.90);
-    backdrop-filter: blur(8px);
+    background: linear-gradient(180deg, var(--card1), var(--card2));
+    backdrop-filter: blur(10px);
     border-radius: 24px;
     padding: 18px;
     position: relative;
@@ -69,9 +83,9 @@
     gap: 8px;
     padding: 8px 12px;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(255,77,109,.16), rgba(255,154,158,.12));
-    border: 1px solid rgba(255,77,109,.22);
-    color: #b21e35;
+    background: rgba(216,182,122,.12);
+    border: 1px solid rgba(216,182,122,.26);
+    color: var(--gold2);
     font-weight: 800;
     font-size: 12.5px;
     letter-spacing: .2px;
@@ -85,34 +99,34 @@
     border-radius: 999px;
     background: rgba(255,77,109,.10);
     border: 1px solid rgba(255,77,109,.22);
-    color: rgba(178,30,53,.95);
+    color: rgba(255,220,230,.95);
     font-size: 12px;
     white-space: nowrap;
   }
 
   h1{
     margin: 6px 0 8px;
-    color: var(--pink);
+    color: var(--gold2);
     font-size: 26px;
-    letter-spacing: .2px;
+    letter-spacing: .3px;
   }
 
   p{
     margin: 10px 0;
-    color: var(--text);
+    color: rgba(245,242,234,.95);
     font-size: 16.5px;
     line-height: 1.35;
   }
 
   .sub{
-    color: var(--muted);
+    color: rgba(207,199,187,.92);
     font-size: 14px;
     margin-top: 0;
   }
 
   .divider{
     height:1px;
-    background: linear-gradient(90deg, transparent, rgba(255,77,109,.35), transparent);
+    background: linear-gradient(90deg, transparent, rgba(216,182,122,.25), transparent);
     margin: 14px 0;
   }
 
@@ -139,9 +153,9 @@
     left:50%;
     top:0;
     transform: translateX(-50%);
-    color: white;
-    background: linear-gradient(135deg, var(--pink), #ff2f57);
-    box-shadow: 0 10px 18px rgba(255,77,109,.35);
+    color: #19171a;
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    box-shadow: 0 14px 26px rgba(216,182,122,.22);
     font-weight: 900;
   }
 
@@ -150,9 +164,9 @@
     left:50%;
     top:64px;
     transform: translateX(-50%);
-    background: rgba(240,240,240,.96);
-    border: 1px solid rgba(0,0,0,.06);
-    color:#555;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    color: rgba(245,242,234,.92);
     touch-action: manipulation;
   }
 
@@ -163,9 +177,9 @@
     gap:8px;
     padding: 9px 12px;
     border-radius: 999px;
-    background: rgba(255,240,243,.92);
-    border: 1px solid rgba(255,77,109,.22);
-    color:#8f1730;
+    background: rgba(216,182,122,.10);
+    border: 1px solid rgba(216,182,122,.22);
+    color: rgba(241,223,177,.95);
     font-size: 13.5px;
     margin-top: 10px;
   }
@@ -183,7 +197,7 @@
     object-fit: cover;
     border-radius: 18px;
     margin: 10px 0 6px;
-    box-shadow: 0 14px 28px rgba(0,0,0,.14);
+    box-shadow: 0 18px 35px rgba(0,0,0,.35);
     animation: photoIn 520ms ease both;
   }
   @keyframes photoIn{
@@ -199,8 +213,8 @@
   }
 
   .panel{
-    background: linear-gradient(180deg, rgba(255,247,249,.95), rgba(255,255,255,.92));
-    border: 1px solid rgba(255,210,220,.9);
+    background: linear-gradient(180deg, var(--panel), var(--panel2));
+    border: 1px solid rgba(216,182,122,.18);
     border-radius: 18px;
     padding: 12px;
     position: relative;
@@ -213,7 +227,7 @@
     position:absolute;
     left:0; top:0; bottom:0;
     width: 10px;
-    background: linear-gradient(180deg, rgba(255,77,109,.8), rgba(255,154,158,.7));
+    background: linear-gradient(180deg, rgba(241,223,177,.45), rgba(255,77,109,.25));
     opacity: .85;
   }
 
@@ -229,17 +243,18 @@
   .panelTitle{
     margin:0;
     font-size: 14.5px;
-    color:#8f1730;
+    color: rgba(241,223,177,.95);
     display:flex;
     align-items:center;
     gap: 8px;
+    letter-spacing: .2px;
   }
 
   .tag{
     font-size: 12px;
-    color:#8f1730;
-    background: rgba(255,77,109,.12);
-    border: 1px solid rgba(255,77,109,.18);
+    color: rgba(241,223,177,.92);
+    background: rgba(216,182,122,.10);
+    border: 1px solid rgba(216,182,122,.20);
     padding: 4px 8px;
     border-radius: 999px;
     white-space: nowrap;
@@ -248,27 +263,9 @@
   .result{
     margin-top: 8px;
     font-size: 14.5px;
-    color: #333;
+    color: rgba(245,242,234,.94);
     text-align:center;
     padding-left: 10px;
-  }
-
-  .choices{
-    display:flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content:center;
-    padding-left: 10px;
-  }
-
-  .choiceBtn{
-    background: rgba(255,255,255,.95);
-    border: 1px solid rgba(255,179,193,.92);
-    color:#8f1730;
-    padding: 10px 14px;
-    border-radius: 999px;
-    font-size: 14px;
-    box-shadow: 0 8px 16px rgba(255,77,109,.10);
   }
 
   /* ---- Slider ---- */
@@ -293,15 +290,15 @@
     width: 30px;
     height: 30px;
     border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.95);
+    border: 2px solid rgba(255,255,255,.80);
     cursor:pointer;
     margin-top: -10px;
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
       radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
     box-shadow:
-      0 10px 18px rgba(255, 77, 109, 0.25),
-      0 0 16px rgba(255, 110, 70, 0.55);
+      0 10px 18px rgba(255, 77, 109, 0.22),
+      0 0 16px rgba(255, 110, 70, 0.45);
   }
   #loveRange:active::-webkit-slider-thumb { transform: scale(1.06); }
 
@@ -309,14 +306,14 @@
     width: 30px;
     height: 30px;
     border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.95);
+    border: 2px solid rgba(255,255,255,.80);
     cursor: pointer;
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
       radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
     box-shadow:
-      0 10px 18px rgba(255, 77, 109, 0.25),
-      0 0 16px rgba(255, 110, 70, 0.55);
+      0 10px 18px rgba(255, 77, 109, 0.22),
+      0 0 16px rgba(255, 110, 70, 0.45);
   }
 
   /* ---- Scratch ---- */
@@ -324,8 +321,8 @@
     position:relative;
     border-radius: 18px;
     overflow:hidden;
-    border: 1px dashed rgba(255,77,109,.40);
-    background: rgba(255,255,255,.95);
+    border: 1px dashed rgba(241,223,177,.45);
+    background: rgba(0,0,0,.18);
     margin-left: 10px;
     min-height: 130px;
   }
@@ -339,7 +336,7 @@
 
   .scratchPrize .big{
     font-size: 18px;
-    color: #8f1730;
+    color: rgba(241,223,177,.98);
     font-weight: 900;
     margin-bottom: 6px;
     letter-spacing: .4px;
@@ -347,8 +344,8 @@
 
   .scratchPrize .small{
     font-size: 14px;
-    color: #333;
-    opacity:.92;
+    color: rgba(245,242,234,.94);
+    opacity:.95;
     line-height: 1.45;
   }
 
@@ -365,7 +362,7 @@
   .scratchHint{
     margin-top: 8px;
     font-size: 13px;
-    color: #7a1c2c;
+    color: rgba(241,223,177,.92);
     text-align:center;
     opacity:.9;
     padding-left: 10px;
@@ -377,11 +374,11 @@
     bottom:-30px;
     animation: floatUp 4.2s linear forwards;
     pointer-events:none;
-    filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
 
-  /* ✅ Sparkle burst (non rimuovo niente, lo tengo come animazione finale scratch) */
+  /* Sparkle burst (fine scratch) */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -391,7 +388,7 @@
     z-index: 40;
     opacity: 0;
     animation: burst 900ms ease-out forwards;
-    text-shadow: 0 10px 16px rgba(0,0,0,.18);
+    text-shadow: 0 10px 16px rgba(0,0,0,.35);
   }
   @keyframes burst{
     0%   { opacity:0; transform: translate(-50%,-50%) scale(.85); }
@@ -399,7 +396,7 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* ✅ Kiss counter interattivo (resta) */
+  /* Kiss counter interattivo */
   .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
   .kissTop{
     display:flex;
@@ -411,7 +408,7 @@
     font-size: 34px;
     font-weight: 900;
     letter-spacing: .6px;
-    color:#8f1730;
+    color: rgba(241,223,177,.98);
     line-height: 1;
     display:flex;
     align-items: baseline;
@@ -419,7 +416,7 @@
   }
   .kissBig span{
     font-size: 13px;
-    color: rgba(107,107,107,.95);
+    color: rgba(207,199,187,.95);
     font-weight: 700;
     letter-spacing: .2px;
   }
@@ -428,14 +425,14 @@
     width:100%;
     height: 10px;
     border-radius: 999px;
-    background: rgba(255,77,109,.10);
-    border: 1px solid rgba(255,77,109,.18);
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(216,182,122,.18);
     overflow:hidden;
   }
   .kissFill{
     height:100%;
     width:0%;
-    background: linear-gradient(90deg, rgba(255,77,109,.95), rgba(255,154,158,.65));
+    background: linear-gradient(90deg, rgba(241,223,177,.95), rgba(255,77,109,.65));
     border-radius: 999px;
     transition: width 180ms ease;
   }
@@ -447,15 +444,15 @@
     justify-content:center;
   }
   .kissBtn{
-    background: linear-gradient(135deg, rgba(255,77,109,.95), rgba(255,47,87,.95));
-    color:white;
+    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.55));
+    color:#16151a;
     font-weight: 900;
-    box-shadow: 0 14px 26px rgba(255,77,109,.18);
+    box-shadow: 0 14px 26px rgba(216,182,122,.16);
   }
   .kissReset{
-    background: rgba(255,255,255,.95);
-    border: 1px solid rgba(255,179,193,.92);
-    color:#8f1730;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(241,223,177,.20);
+    color: rgba(245,242,234,.92);
   }
 
   .pop{ animation: pop 220ms ease-out; }
@@ -474,7 +471,7 @@
     opacity: 0;
     animation: kissFloat 900ms ease-out forwards;
     z-index: 30;
-    filter: drop-shadow(0 10px 16px rgba(0,0,0,.18));
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
   }
   @keyframes kissFloat{
     0%{ opacity:0; transform: translateX(-50%) translateY(0) scale(.9); }
@@ -489,7 +486,6 @@
     <div class="card" id="card">
       <div class="topRow">
         <div class="badge">🥂 Invito a cena</div>
-        <!-- ✅ NON rimuovo: lo lascio -->
         <div class="miniChip">💖 modalità: romantico + playful</div>
       </div>
 
@@ -529,7 +525,6 @@
           <div class="panel" id="scratchPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">🎟️ Gratta e scopri</h3>
-              <!-- ✅ NON rimuovo: lo lascio -->
               <span class="tag">premio segreto</span>
             </div>
 
@@ -552,7 +547,6 @@
           <div class="panel">
             <div class="panelHeader">
               <h3 class="panelTitle">🔥 Misuratore di amore</h3>
-              <!-- ✅ NON rimuovo: lo lascio -->
               <span class="tag">riempi la barra</span>
             </div>
 
@@ -565,14 +559,13 @@
           <div class="panel" id="kissPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">😚 Kiss counter</h3>
-              <!-- ✅ NON rimuovo: lo lascio -->
               <span class="tag">clicca!</span>
             </div>
 
             <div class="kissWrap">
               <div class="kissTop">
                 <div class="kissBig" id="kissBig">0 <span>baci</span></div>
-                <div style="color: rgba(107,107,107,.95); font-size: 13px; font-weight:700;">
+                <div style="color: rgba(207,199,187,.92); font-size: 13px; font-weight:700;">
                   obiettivo: <span id="kissGoal">30</span>
                 </div>
               </div>
@@ -599,7 +592,6 @@
   </audio>
 
 <script>
-  const card = document.getElementById("card");
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
   const finalBox = document.getElementById("final");
@@ -730,8 +722,8 @@
     } else {
       showStatus("ok ok… mi arrendo 🔥");
       noBtn.textContent = "Ok… SÌ ❤️";
-      noBtn.style.background = "linear-gradient(135deg, #ff4d6d, #ff2f57)";
-      noBtn.style.color = "white";
+      noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
+      noBtn.style.color = "#19171a";
       noBtn.onclick = () => doYesFlow();
       vibrate([60, 40, 60]);
     }
@@ -825,25 +817,24 @@
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
 
-    // cover opaca
+    // cover opaca (tema scuro)
     const g = ctx.createLinearGradient(0, 0, w, h);
-    g.addColorStop(0, "#ffb3c1");
-    g.addColorStop(0.55, "#ff4d6d");
-    g.addColorStop(1, "#ff9a9e");
+    g.addColorStop(0, "rgba(241,223,177,.65)");
+    g.addColorStop(0.55, "rgba(216,182,122,.35)");
+    g.addColorStop(1, "rgba(255,77,109,.22)");
 
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
-    // glitter
-    for (let i = 0; i < 90; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25})`;
+    for (let i = 0; i < 80; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18})`;
       ctx.beginPath();
-      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2 + 0.5, 0, Math.PI * 2);
+      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2 + 0.4, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    ctx.fillStyle = "rgba(255,255,255,0.96)";
+    ctx.fillStyle = "rgba(15,15,18,0.85)";
     ctx.font = `900 ${Math.floor(18 * ratio)}px Arial`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -894,8 +885,6 @@
       vibrate([30, 30, 30]);
 
       ctx.clearRect(0, 0, w, h);
-
-      // animazione
       sparkleBurst();
     }
   }
