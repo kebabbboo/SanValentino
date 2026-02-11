@@ -20,6 +20,7 @@
     --gold2:#f1dfb1;
 
     --rose:#ff4d6d;
+    --rose2:#ff9ab0;
 
     --text:#f5f2ea;
     --muted:#cfc7bb;
@@ -57,14 +58,14 @@
 
   .frame{
     width: 92%;
-    max-width: 440px;
+    max-width: 460px;
     border-radius: 28px;
     padding: 2px;
     background:
       linear-gradient(135deg,
         rgba(241,223,177,.92),
         rgba(216,182,122,.22),
-        rgba(255,77,109,.14)
+        rgba(255,77,109,.16)
       );
     box-shadow: var(--shadow);
   }
@@ -81,13 +82,13 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* sottile “grain” luxury */
+  /* grain luxury */
   .card::before{
     content:"";
     position:absolute; inset:0;
     background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
     background-size: 22px 22px;
-    opacity:.07;
+    opacity:.06;
     pointer-events:none;
     border-radius: 26px;
   }
@@ -280,7 +281,7 @@
     border: 1px solid rgba(241,223,177,.35);
     background:
       radial-gradient(650px 240px at 25% 20%, rgba(216,182,122,.16), rgba(0,0,0,0)),
-      radial-gradient(700px 260px at 85% 40%, rgba(255,77,109,.10), rgba(0,0,0,0)),
+      radial-gradient(700px 260px at 85% 40%, rgba(255,77,109,.12), rgba(0,0,0,0)),
       linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
   }
 
@@ -305,26 +306,16 @@
     border: 1px solid rgba(241,223,177,.35);
     background: rgba(0,0,0,.22);
     margin-left: 10px;
-    min-height: 170px;   /* più importante */
+    min-height: 180px;
     box-shadow: 0 18px 40px rgba(0,0,0,.35);
   }
 
-  /* ✅ NON SI VEDE SOTTO: nascosto finché non sblocchi */
+  /* ✅ ORA: il testo sotto è visibile DURANTE lo scratch */
   .scratchPrize{
     position: relative;
     z-index: 1;
     padding: 18px 14px 18px;
     text-align:center;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 280ms ease, transform 280ms ease, visibility 0s linear 280ms;
-  }
-  .scratchWrap.revealed .scratchPrize{
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 280ms ease, transform 280ms ease, visibility 0s;
   }
 
   .scratchPrize .big{
@@ -361,6 +352,29 @@
     padding-left: 10px;
   }
 
+  /* Tavolo prenotato */
+  .reserved{
+    margin-top:10px;
+    text-align:center;
+    color: rgba(241,223,177,.96);
+    font-weight: 900;
+    letter-spacing: .45px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(241,223,177,.22);
+    background:
+      radial-gradient(420px 120px at 50% 10%, rgba(216,182,122,.20), rgba(0,0,0,0)),
+      rgba(216,182,122,.08);
+    box-shadow: 0 16px 30px rgba(0,0,0,.25);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 320ms ease, transform 320ms ease;
+  }
+  .reserved.show{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   /* Sparkle burst */
   .burstPiece{
     position:absolute;
@@ -379,8 +393,8 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* Cuori */
-  .heart{
+  /* ✅ Cuori + stelle */
+  .floaty{
     position: fixed;
     bottom:-30px;
     animation: floatUp 4.2s linear forwards;
@@ -513,6 +527,20 @@
     15%{ opacity:1; }
     100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
   }
+
+  /* Music button */
+  .musicRow{
+    display:flex;
+    justify-content:center;
+    margin: 10px 0 6px;
+  }
+  .musicBtn{
+    background: rgba(255,255,255,.06);
+    border:1px solid rgba(241,223,177,.22);
+    color: rgba(241,223,177,.95);
+    font-weight:900;
+    box-shadow: 0 14px 26px rgba(0,0,0,.25);
+  }
 </style>
 </head>
 
@@ -521,7 +549,6 @@
     <div class="card" id="card">
       <div class="topRow">
         <div class="badge">🥂 Invito a cena</div>
-        <!-- ✅ rimosso: modalità romantico playful -->
       </div>
 
       <h1>Ciao Lilian ✨</h1>
@@ -544,7 +571,11 @@
       <div id="final" class="hidden">
         <h1>Perfetto. ❤️</h1>
 
-        <!-- ✅ CENTRALE: scratch prima di tutto -->
+        <div class="musicRow">
+          <button id="musicBtn" class="musicBtn">♪ Pausa</button>
+        </div>
+
+        <!-- CENTRALE -->
         <div class="central" id="centralInvite">
           <div class="centralTitle">Il tuo invito ufficiale</div>
           <div class="centralSub">Gratta qui sotto per scoprire tutti i dettagli ✨</div>
@@ -563,6 +594,8 @@
           </div>
 
           <div class="scratchHint" id="scratchHint">Consiglio: gratta bene fino ai bordi 😉</div>
+
+          <div id="reserved" class="reserved">🥂 Tavolo prenotato</div>
         </div>
 
         <img
@@ -576,12 +609,10 @@
           Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
         </p>
 
-        <!-- ✅ gli altri giochi restano -->
         <div class="grid">
           <div class="panel">
             <div class="panelHeader">
               <h3 class="panelTitle">🔥 Misuratore di amore</h3>
-              <!-- ✅ rimosso tag -->
             </div>
             <div class="sliderWrap">
               <input id="loveRange" type="range" min="0" max="100" value="50" />
@@ -592,7 +623,6 @@
           <div class="panel" id="kissPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">😚 Kiss counter</h3>
-              <!-- ✅ rimosso tag -->
             </div>
 
             <div class="kissWrap">
@@ -630,6 +660,7 @@
   const finalBox = document.getElementById("final");
   const status = document.getElementById("status");
   const music = document.getElementById("music");
+  const musicBtn = document.getElementById("musicBtn");
 
   const loveRange = document.getElementById("loveRange");
   const loveText = document.getElementById("loveText");
@@ -637,6 +668,7 @@
   const scratchBox = document.getElementById("scratchBox");
   const scratchCanvas = document.getElementById("scratchCanvas");
   const scratchHint = document.getElementById("scratchHint");
+  const reserved = document.getElementById("reserved");
 
   const kissPanel = document.getElementById("kissPanel");
   const kissBtn = document.getElementById("kissBtn");
@@ -647,7 +679,7 @@
   const kissGoalEl = document.getElementById("kissGoal");
 
   let noCount = 0;
-  let heartsStarted = false;
+  let floatiesStarted = false;
 
   // Kisses
   let kisses = 0;
@@ -685,19 +717,26 @@
     noBtn.style.transform = "none";
   }
 
-  function startHearts() {
-    if (heartsStarted) return;
-    heartsStarted = true;
+  // ✅ Cuori + stelle
+  function startFloaties() {
+    if (floatiesStarted) return;
+    floatiesStarted = true;
 
+    const symbols = ["❤️","💖","💕","💗","💘","✨","⭐","🌟","💫"];
     setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = ["❤️","💖","💕","💗","💘"][Math.floor(Math.random()*5)];
-      heart.style.left = (Math.random() * 100) + "vw";
-      heart.style.fontSize = (Math.random() * 22 + 14) + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4200);
-    }, 260);
+      const el = document.createElement("div");
+      el.className = "floaty";
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = (Math.random() * 100) + "vw";
+      el.style.fontSize = (Math.random() * 22 + 14) + "px";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4200);
+    }, 240);
+  }
+
+  async function safePlayMusic() {
+    music.volume = 0.30;
+    try { await music.play(); } catch (_) {}
   }
 
   function doYesFlow() {
@@ -705,14 +744,48 @@
     showStatus("questa è la scelta giusta 😌");
     vibrate([40, 30, 40]);
 
-    music.volume = 0.30;
-    music.play().catch(() => {});
-
-    startHearts();
+    safePlayMusic();
+    startFloaties();
     initScratch();
 
     yesBtn.disabled = true;
     noBtn.disabled = true;
+  }
+
+  yesBtn.addEventListener("click", doYesFlow);
+
+  // NO: 5 click
+  noBtn.addEventListener("click", () => {
+    noCount++;
+    vibrate(25);
+
+    if (noCount < 5) {
+      const left = 5 - noCount;
+      showStatus(`no? sei sicura? 😏 (mancano ${left})`);
+      moveNoButton();
+      const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
+      noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
+    } else {
+      showStatus("ok ok… mi arrendo 🔥");
+      noBtn.textContent = "Ok… SÌ ❤️";
+      noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
+      noBtn.style.color = "#19171a";
+      noBtn.onclick = () => doYesFlow();
+      vibrate([60, 40, 60]);
+    }
+  });
+
+  // Music button
+  if (musicBtn) {
+    musicBtn.addEventListener("click", async () => {
+      if (music.paused) {
+        await safePlayMusic();
+        musicBtn.textContent = "♪ Pausa";
+      } else {
+        music.pause();
+        musicBtn.textContent = "♪ Play";
+      }
+    });
   }
 
   // Slider fill
@@ -735,30 +808,6 @@
   loveRange.addEventListener("input", () => {
     loveText.textContent = updateLoveText(Number(loveRange.value));
     paintLoveRange();
-  });
-
-  // SÌ
-  yesBtn.addEventListener("click", doYesFlow);
-
-  // NO: 5 click
-  noBtn.addEventListener("click", () => {
-    noCount++;
-    vibrate(25);
-
-    if (noCount < 5) {
-      const left = 5 - noCount;
-      showStatus(`no? sei sicura? 😏 (mancano ${left})`);
-      moveNoButton();
-      const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
-      noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
-    } else {
-      showStatus("ok ok… mi arrendo 🔥");
-      noBtn.textContent = "Ok… SÌ ❤️";
-      noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
-      noBtn.style.color = "#19171a";
-      noBtn.onclick = () => doYesFlow();
-      vibrate([60, 40, 60]);
-    }
   });
 
   /* ---------- KISS COUNTER ---------- */
@@ -792,7 +841,7 @@
   function spawnKissFloat(){
     const el = document.createElement("div");
     el.className = "kissFloat";
-    el.textContent = ["💋","💕","💖","❤️","✨"][Math.floor(Math.random()*5)];
+    el.textContent = ["💋","💕","💖","❤️","✨","⭐"][Math.floor(Math.random()*6)];
     el.style.setProperty("--dx", (Math.random()*120 - 60) + "px");
     kissPanel.appendChild(el);
     setTimeout(() => el.remove(), 950);
@@ -816,32 +865,31 @@
 
   /* ---------- Sparkle Burst (fine scratch) ---------- */
   function sparkleBurst(){
-    const symbols = ["✨","⭐","💫","❤️","🥂"];
-    for (let i = 0; i < 20; i++) {
+    const symbols = ["✨","⭐","🌟","💫","❤️","🥂"];
+    const host = document.getElementById("centralInvite");
+    for (let i = 0; i < 22; i++) {
       const s = document.createElement("div");
       s.className = "burstPiece";
       s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-      s.style.setProperty("--dx", (Math.random()*260 - 130).toFixed(0) + "px");
-      s.style.setProperty("--dy", (Math.random()*240 - 120).toFixed(0) + "px");
+      s.style.setProperty("--dx", (Math.random()*280 - 140).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.random()*250 - 125).toFixed(0) + "px");
       s.style.fontSize = (14 + Math.random()*18).toFixed(0) + "px";
-      // sopra la sezione centrale
-      document.getElementById("centralInvite").appendChild(s);
+      host.appendChild(s);
       setTimeout(() => s.remove(), 950);
     }
   }
 
-  /* -------- SCRATCH (robusto + cover opaca + reveal finale) -------- */
+  /* -------- SCRATCH (robusto, cover opaca, reveal live) -------- */
   function resizeCanvasToBox() {
     const rect = scratchBox.getBoundingClientRect();
     ratio = Math.max(1, window.devicePixelRatio || 1);
 
     scratchCanvas.width = Math.floor(rect.width * ratio);
     scratchCanvas.height = Math.floor(rect.height * ratio);
-
     scratchCanvas.style.width = rect.width + "px";
     scratchCanvas.style.height = rect.height + "px";
 
-    ctx = scratchCanvas.getContext("2d");
+    ctx = scratchCanvas.getContext("2d", { willReadFrequently: true });
     ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
@@ -850,26 +898,30 @@
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
 
-    // ✅ cover 100% OPACA (niente trasparenze)
+    // cover 100% opaca (vera “vernice”)
     const g = ctx.createLinearGradient(0, 0, w, h);
     g.addColorStop(0, "#1a1a22");
-    g.addColorStop(0.5, "#12121a");
-    g.addColorStop(1, "#0f0f15");
+    g.addColorStop(0.55, "#11111a");
+    g.addColorStop(1, "#0c0c12");
 
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
-    // foil dorato discreto
-    for (let i = 0; i < 140; i++) {
-      ctx.fillStyle = `rgba(216,182,122,${Math.random() * 0.09})`;
+    // foil dorato/rose discretissimo
+    for (let i = 0; i < 160; i++) {
+      const a = Math.random() * 0.09;
+      const pick = Math.random() < 0.72
+        ? `rgba(216,182,122,${a})`
+        : `rgba(255,77,109,${a * 0.8})`;
+      ctx.fillStyle = pick;
       ctx.beginPath();
       ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2.6 + 0.5, 0, Math.PI * 2);
       ctx.fill();
     }
 
     // testo
-    ctx.fillStyle = "rgba(241,223,177,0.95)";
+    ctx.fillStyle = "rgba(241,223,177,0.92)";
     ctx.font = `900 ${Math.floor(18 * ratio)}px Inter`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -888,7 +940,7 @@
 
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
-    ctx.arc(x, y, Math.floor(20 * ratio), 0, Math.PI * 2);
+    ctx.arc(x, y, Math.floor(22 * ratio), 0, Math.PI * 2);
     ctx.fill();
 
     checkScratchProgress(false);
@@ -897,14 +949,14 @@
   let lastCheck = 0;
   function checkScratchProgress(force){
     const now = Date.now();
-    if (!force && now - lastCheck < 250) return;
+    if (!force && now - lastCheck < 260) return;
     lastCheck = now;
 
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
     const img = ctx.getImageData(0, 0, w, h).data;
 
-    const stride = 26;
+    const stride = 28; // più veloce
     let cleared = 0, total = 0;
 
     for (let i = 3; i < img.length; i += 4 * stride) {
@@ -917,24 +969,22 @@
     if (pct > 0.45 && !scratchedEnough) {
       scratchedEnough = true;
 
-      // ✅ mostra contenuto sotto
-      scratchBox.classList.add("revealed");
-
-      // pulisci cover
       ctx.clearRect(0, 0, w, h);
-
       scratchHint.textContent = "Svelato. 🥂✨";
       vibrate([30, 30, 30]);
 
       sparkleBurst();
+
+      // tavolo prenotato
+      if (reserved) reserved.classList.add("show");
     }
   }
 
   function initScratch() {
     if (ctx) return;
 
-    // assicurati che sia nascosto finché non completato
-    scratchBox.classList.remove("revealed");
+    // reset “tavolo prenotato”
+    if (reserved) reserved.classList.remove("show");
 
     resizeCanvasToBox();
     drawCover();
@@ -958,22 +1008,25 @@
       if (ctx && !scratchedEnough) checkScratchProgress(true);
     };
 
-    scratchCanvas.addEventListener("pointerdown", onDown);
-    scratchCanvas.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
+    scratchCanvas.addEventListener("pointerdown", onDown, { passive: true });
+    scratchCanvas.addEventListener("pointermove", onMove, { passive: false });
+    window.addEventListener("pointerup", onUp, { passive: true });
 
     window.addEventListener("resize", () => {
-      const already = scratchedEnough;
+      const alreadyDone = scratchedEnough;
+      const prev = alreadyDone ? null : ctx;
       ctx = null;
       resizeCanvasToBox();
-      if (!already) drawCover();
+      if (!alreadyDone) drawCover();
+      else {
+        // se era già completato, lascia trasparente
+        ctx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+      }
     }, { passive: true });
   }
 
   function getPoint(e) {
-    if (e.touches && e.touches[0]) {
-      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
+    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     return { x: e.clientX, y: e.clientY };
   }
 </script>
