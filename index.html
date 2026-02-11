@@ -730,7 +730,7 @@
                 📍 <strong>Venerdì 14 Febbraio</strong><br>
                 🕰️ Ore 21:00<br>
                 🍷 Location: <strong>Carlo Fiamma</strong><br>
-                ✨ Dress code: bella come sempre
+                ✨ Dress code: bella come sempre<br>
                (Andiamo con il pullman delle 20:25)
               </div>
             </div>
@@ -1055,7 +1055,7 @@
 
       // ✅ NUOVO: pop + particelle dal bottone
       pulseToastBtn(toastBtn);
-      
+      toastParticlesFromButton(toastBtn);
      champagneSprayFromButton(toastBtn);
 
 
@@ -1288,7 +1288,7 @@ function champagneSprayFromButton(btn){
       scratchedEnough = true;
 
       ctx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
-      scratchHint.textContent = "Svelato. 🥂✨<br>Si, è la stessa location di l'anno scorso perchè sono sempre senza mezzo e senza soldi 😄";
+      scratchHint.textContent = "Svelato. 🥂✨ Si, è la stessa location di l'anno scorso perchè sono sempre senza mezzo e senza soldi 😄";
       vibrate([30, 30, 30]);
 
       scratchBurst();
@@ -1346,6 +1346,7 @@ function champagneSprayFromButton(btn){
 
 </body>
 </html>
+
 
 
 
