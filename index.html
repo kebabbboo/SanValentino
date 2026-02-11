@@ -5,310 +5,897 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Lilian ✨</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-
 <style>
-*{box-sizing:border-box;}
+  * { box-sizing: border-box; }
 
-:root{
-  --bg1:#0f0f12;
-  --bg2:#1b1b22;
-  --gold:#d8b67a;
-  --gold2:#f1dfb1;
-  --rose:#ff4d6d;
-  --text:#f5f2ea;
+  :root{
+    --bg1:#0f0f12;
+    --bg2:#1b1b22;
+    --gold:#d8b67a;
+    --gold2:#f1dfb1;
+    --rose:#ff4d6d;
+    --card:#111218cc;
+    --card2:#171824cc;
+    --text:#f5f2ea;
+    --muted:#cfc7bb;
+    --shadow: 0 18px 45px rgba(0,0,0,.45);
+  }
 
-  --font-body:"Inter", sans-serif;
-  --font-title:"Playfair Display", serif;
-}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family: Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+    padding: 18px 0;
 
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:var(--font-body);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,var(--bg1),var(--bg2));
-  color:var(--text);
-  padding:20px 0;
-}
+    background:
+      radial-gradient(1000px 700px at 20% 10%, rgba(216,182,122,.18), rgba(0,0,0,0)),
+      radial-gradient(900px 700px at 85% 15%, rgba(255,77,109,.14), rgba(0,0,0,0)),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
+    color: var(--text);
+  }
 
-.frame{
-  width:92%;
-  max-width:430px;
-  border-radius:26px;
-  padding:2px;
-  background:linear-gradient(135deg,var(--gold2),rgba(216,182,122,.3),rgba(255,77,109,.2));
-}
+  .frame{
+    width: 92%;
+    max-width: 430px;
+    border-radius: 26px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(241,223,177,.95), rgba(216,182,122,.25), rgba(255,77,109,.18));
+    box-shadow: var(--shadow);
+  }
 
-.card{
-  border-radius:24px;
-  padding:20px;
-  background:#111218;
-  max-height:80vh;
-  overflow:auto;
-}
+  .card{
+    border-radius: 24px;
+    padding: 18px;
+    background: linear-gradient(180deg, var(--card), var(--card2));
+    backdrop-filter: blur(10px);
+    position: relative;
 
-h1{
-  font-family:var(--font-title);
-  color:var(--gold2);
-  letter-spacing:.5px;
-  margin:6px 0 8px;
-}
+    max-height: 80vh;         /* ✅ come richiesto */
+    overflow: auto;           /* ✅ scroll interno */
+    -webkit-overflow-scrolling: touch;
+  }
 
-.muted{opacity:.8;font-size:14px;}
+  .topRow{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
 
-.buttons{
-  margin-top:16px;
-  height:120px;
-  position:relative;
-}
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(216,182,122,.12);
+    border: 1px solid rgba(216,182,122,.26);
+    color: var(--gold2);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: .3px;
+  }
 
-button{
-  border:none;
-  border-radius:999px;
-  padding:13px 18px;
-  cursor:pointer;
-  font-weight:700;
-}
+  h1{
+    margin: 6px 0 8px;
+    font-size: 26px;
+    letter-spacing: .3px;
+    color: var(--gold2);
+  }
 
-#yesBtn{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translateX(-50%);
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
-  color:#111;
-}
+  p{
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.35;
+    color: rgba(245,242,234,.95);
+  }
 
-#noBtn{
-  position:absolute;
-  left:50%;
-  top:60px;
-  transform:translateX(-50%);
-  background:#333;
-  color:#fff;
-}
+  .muted{
+    color: rgba(207,199,187,.92);
+    font-size: 14px;
+    margin-top: 0;
+  }
 
-.hidden{display:none;}
+  .divider{
+    height:1px;
+    background: linear-gradient(90deg, transparent, rgba(216,182,122,.25), transparent);
+    margin: 14px 0;
+  }
 
-.divider{
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold2),transparent);
-  margin:16px 0;
-}
+  .buttons{
+    margin-top: 16px;
+    height: 124px;
+    position: relative;
+  }
 
-/* ---------- SCRATCH CENTRALE IMPORTANTE ---------- */
+  button{
+    border: none;
+    border-radius: 999px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+    user-select:none;
+  }
+  button:active{ transform: translateY(1px) scale(.99); }
 
-.scratchWrap{
-  position:relative;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid var(--gold);
-  margin-top:12px;
-  min-height:180px;
-  background:#000;
-}
+  #yesBtn{
+    position:absolute;
+    left:50%;
+    top:0;
+    transform: translateX(-50%);
+    color: #19171a;
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    box-shadow: 0 14px 26px rgba(216,182,122,.25);
+    font-weight: 800;
+    letter-spacing: .2px;
+  }
+  #yesBtn:hover{ filter: brightness(1.03); }
 
-.scratchPrize{
-  position:relative;
-  z-index:1;
-  padding:24px;
-  text-align:center;
-}
+  #noBtn{
+    position:absolute;
+    left:50%;
+    top:64px;
+    transform: translateX(-50%);
+    color: rgba(245,242,234,.92);
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    touch-action: manipulation;
+  }
 
-.inviteTitle{
-  font-family:var(--font-title);
-  font-size:20px;
-  color:var(--gold2);
-  margin-bottom:14px;
-}
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(216,182,122,.10);
+    border: 1px solid rgba(216,182,122,.22);
+    color: rgba(241,223,177,.95);
+    font-size: 13px;
+    margin-top: 10px;
+  }
 
-.inviteDetails{
-  font-size:15px;
-  line-height:1.8;
-}
+  .hidden{ display:none; }
 
-.inviteDetails strong{
-  color:var(--gold2);
-}
+  #final{
+    margin-top: 12px;
+    padding-top: 8px;
+  }
 
-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:5;
-  cursor:grab;
-}
+  .photo{
+    width:100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 18px;
+    margin: 10px 0 6px;
+    box-shadow: 0 18px 35px rgba(0,0,0,.35);
+    animation: photoIn 520ms ease both;
+  }
+  @keyframes photoIn{
+    from{ opacity:0; transform: translateY(8px) scale(.97); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
 
-.scratchHint{
-  text-align:center;
-  margin-top:8px;
-  font-size:13px;
-  opacity:.8;
-}
+  .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
 
-/* Sparkle finale */
-.burstPiece{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  animation:burst 900ms ease-out forwards;
-  font-size:20px;
-  pointer-events:none;
-}
+  .panel{
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(216,182,122,.18);
+    border-radius: 18px;
+    padding: 12px;
+    position: relative;
+    overflow:hidden;
+  }
 
-@keyframes burst{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.8);}
-  15%{opacity:1;}
-  100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2);}
-}
+  .panel::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width: 10px;
+    background: linear-gradient(180deg, rgba(241,223,177,.45), rgba(255,77,109,.25));
+    opacity:.8;
+  }
 
-/* KISS COUNTER elegante */
-.kissWrap{margin-top:20px;text-align:center;}
-.kissBig{
-  font-size:32px;
-  font-weight:900;
-  color:var(--gold2);
-}
-.kissBar{
-  height:8px;
-  border-radius:999px;
-  background:#333;
-  margin:10px 0;
-}
-.kissFill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--gold2),var(--rose));
-  border-radius:999px;
-  transition:width .2s;
-}
+  .panelHeader{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+  }
+
+  .panelTitle{
+    margin:0;
+    font-size: 14.5px;
+    color: rgba(241,223,177,.95);
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    letter-spacing: .2px;
+  }
+
+  .result{
+    margin-top: 8px;
+    font-size: 14.5px;
+    color: rgba(245,242,234,.94);
+    text-align:center;
+    padding-left: 10px;
+  }
+
+  /* Slider: fill + thumb fuoco elegante */
+  .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
+
+  #loveRange{
+    width:100%;
+    accent-color: var(--rose);
+    -webkit-appearance:none;
+    appearance:none;
+    height: 10px;
+    border-radius: 999px;
+    outline:none;
+    background: linear-gradient(90deg, var(--rose) 50%, rgba(255,77,109,.18) 50%);
+  }
+  #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
+  #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
+
+  #loveRange::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,.75);
+    cursor:pointer;
+    margin-top: -10px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
+    box-shadow:
+      0 10px 18px rgba(255,77,109,.20),
+      0 0 16px rgba(255,110,70,.45);
+  }
+  #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
+
+  #loveRange::-moz-range-thumb{
+    width: 30px; height:30px; border-radius:999px;
+    border: 2px solid rgba(255,255,255,.75);
+    cursor:pointer;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
+    box-shadow:
+      0 10px 18px rgba(255,77,109,.20),
+      0 0 16px rgba(255,110,70,.45);
+  }
+
+  /* Scratch */
+  .scratchWrap{
+    position:relative;
+    border-radius: 18px;
+    overflow:hidden;
+    border: 1px dashed rgba(241,223,177,.55);
+    background: rgba(0,0,0,.18);
+    margin-left: 10px;
+    min-height: 130px;
+  }
+
+  .scratchPrize{
+    position: relative;
+    z-index: 1;
+    padding: 14px 14px 16px;
+    text-align:center;
+  }
+
+  .scratchPrize .big{
+    font-size: 18px;
+    color: rgba(241,223,177,.98);
+    font-weight: 900;
+    margin-bottom: 6px;
+    letter-spacing: .6px;
+  }
+  .scratchPrize .small{
+    font-size: 14px;
+    color: rgba(245,242,234,.94);
+    opacity:.95;
+  }
+
+  canvas#scratchCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    touch-action:none;
+    cursor:grab;
+    z-index: 5;
+  }
+
+  .scratchHint{
+    margin-top: 8px;
+    font-size: 13px;
+    color: rgba(241,223,177,.9);
+    text-align:center;
+    opacity:.9;
+    padding-left: 10px;
+  }
+
+  /* cuori */
+  .heart{
+    position: fixed;
+    bottom:-30px;
+    animation: floatUp 4.2s linear forwards;
+    pointer-events:none;
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+  }
+  @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
+
+  /* ✅ Animazione finale scratch: Sparkle Burst (al posto dei confetti) */
+  .burstPiece{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events:none;
+    z-index: 40;
+    opacity: 0;
+    animation: burst 900ms ease-out forwards;
+    text-shadow: 0 10px 16px rgba(0,0,0,.35);
+  }
+  @keyframes burst{
+    0%   { opacity:0; transform: translate(-50%,-50%) scale(.85); }
+    15%  { opacity:1; }
+    100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
+  }
+
+  /* ✅ Kiss counter più interattivo */
+  .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
+  .kissTop{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .kissBig{
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: .6px;
+    color: rgba(241,223,177,.98);
+    line-height: 1;
+    display:flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .kissBig span{
+    font-size: 13px;
+    color: rgba(207,199,187,.95);
+    font-weight: 700;
+    letter-spacing: .2px;
+  }
+
+  .kissBar{
+    width:100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(216,182,122,.18);
+    overflow:hidden;
+  }
+  .kissFill{
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, rgba(241,223,177,.95), rgba(255,77,109,.65));
+    border-radius: 999px;
+    transition: width 180ms ease;
+  }
+
+  .kissBtns{
+    display:flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  .kissBtn{
+    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.55));
+    color:#16151a;
+    font-weight: 900;
+    box-shadow: 0 14px 26px rgba(216,182,122,.16);
+  }
+  .kissReset{
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(241,223,177,.20);
+    color: rgba(245,242,234,.92);
+  }
+
+  .pop{ animation: pop 220ms ease-out; }
+  @keyframes pop{
+    0%{ transform: scale(1); }
+    50%{ transform: scale(1.06); }
+    100%{ transform: scale(1); }
+  }
+
+  .kissFloat{
+    position:absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events:none;
+    opacity: 0;
+    animation: kissFloat 900ms ease-out forwards;
+    z-index: 30;
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
+  }
+  @keyframes kissFloat{
+    0%{ opacity:0; transform: translateX(-50%) translateY(0) scale(.9); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
+  }
 </style>
 </head>
 
 <body>
-<div class="frame">
-<div class="card">
+  <div class="frame">
+    <div class="card" id="card">
+      <div class="topRow">
+        <div class="badge">🥂 Invito a cena</div>
+        <!-- ✅ tolto “modalità romantico playful” -->
+      </div>
 
-<h1>Ciao Lilian ✨</h1>
-<p class="muted">Ho preparato qualcosa per te…</p>
+      <h1>Ciao Lilian ✨</h1>
+      <p class="muted">Un invito elegante… con un pizzico di malizia 😌</p>
 
-<p>Vuoi essere la mia <strong>Valentina di San Valentino</strong>? ❤️</p>
+      <p>
+        Domanda importantissima:<br><br>
+        Vuoi essere la mia <strong>Valentina di San Valentino</strong>? ❤️
+      </p>
 
-<div class="buttons">
-<button id="yesBtn">SÌ 💘</button>
-<button id="noBtn">NO 🙄</button>
-</div>
+      <div class="buttons">
+        <button id="yesBtn">SÌ 💘</button>
+        <button id="noBtn">NO 🙄</button>
+      </div>
 
-<div id="final" class="hidden">
+      <div id="status" class="pill hidden">✨</div>
 
-<div class="divider"></div>
+      <div class="divider"></div>
 
-<h1>L'invito ufficiale 🥂</h1>
+      <div id="final" class="hidden">
+        <h1>Perfetto. ❤️</h1>
 
-<div class="scratchWrap" id="scratchBox">
-<div class="scratchPrize">
+        <img
+          id="photo"
+          class="photo"
+          alt="Noi 💖"
+          src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80"
+        />
 
-<div class="inviteTitle">Cena per due ✨</div>
+        <p id="finalText">
+          Allora è deciso 😌<br><br>
+          Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
+        </p>
 
-<div class="inviteDetails">
-📍 <strong>Venerdì 14 Febbraio</strong><br>
-🕯 Ore 20:30<br>
-🥂 Location: <strong>Sorpresa</strong><br>
-✨ Dress code: bella come sempre
-</div>
+        <div class="grid">
+          <div class="panel" id="scratchPanel">
+            <div class="panelHeader">
+              <h3 class="panelTitle">🎟️ Gratta e scopri</h3>
+              <!-- ✅ tolti i tag -->
+            </div>
 
-</div>
-<canvas id="scratchCanvas"></canvas>
-</div>
+            <div class="scratchWrap" id="scratchBox">
+              <div class="scratchPrize">
+                <!-- 👇 qui metti le info (come volevi tu) -->
+                <div class="big">L’INVITO ✨</div>
+                <div class="small">
+                  📍 <strong>Venerdì 14 Febbraio</strong><br>
+                  🕯 Ore 20:30<br>
+                  🥂 Location: <strong>Sorpresa</strong><br>
+                  ✨ Dress code: bella come sempre
+                </div>
+              </div>
+              <canvas id="scratchCanvas"></canvas>
+            </div>
 
-<div class="scratchHint">Gratta per scoprire l'invito ufficiale ✨</div>
+            <div class="scratchHint" id="scratchHint">Gratta con il dito per scoprire tutti i dettagli ✨</div>
+          </div>
 
-<div class="kissWrap">
-<div class="kissBig" id="kissBig">0 baci</div>
-<div class="kissBar"><div class="kissFill" id="kissFill"></div></div>
-<button onclick="addKiss()">Bacio +1 💋</button>
-</div>
+          <div class="panel">
+            <div class="panelHeader">
+              <h3 class="panelTitle">🔥 Misuratore di amore</h3>
+              <!-- ✅ tolti i tag -->
+            </div>
+            <div class="sliderWrap">
+              <input id="loveRange" type="range" min="0" max="100" value="50" />
+              <div id="loveText" class="result">Direi che siamo già ad un ottimo livello 😌</div>
+            </div>
+          </div>
 
-</div>
-</div>
-</div>
+          <div class="panel" id="kissPanel">
+            <div class="panelHeader">
+              <h3 class="panelTitle">😚 Kiss counter</h3>
+              <!-- ✅ tolti i tag -->
+            </div>
+
+            <div class="kissWrap">
+              <div class="kissTop">
+                <div class="kissBig" id="kissBig">0 <span>baci</span></div>
+                <div style="color: rgba(207,199,187,.92); font-size: 13px; font-weight:700;">
+                  obiettivo: <span id="kissGoal">30</span>
+                </div>
+              </div>
+
+              <div class="kissBar">
+                <div class="kissFill" id="kissFill"></div>
+              </div>
+
+              <div class="kissBtns">
+                <button class="kissBtn" id="kissBtn">Bacio +1 💋</button>
+                <button class="kissReset" id="resetKissBtn">Reset 😇</button>
+              </div>
+
+              <div id="kissResult" class="result">Vai piano… o non rispondo più 😏</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
+  </audio>
 
 <script>
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const final=document.getElementById("final");
+  const card = document.getElementById("card");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const finalBox = document.getElementById("final");
+  const status = document.getElementById("status");
+  const music = document.getElementById("music");
 
-yesBtn.onclick=()=>{final.classList.remove("hidden");initScratch();}
-noBtn.onclick=()=>{noBtn.textContent="Ok... SÌ ❤️";noBtn.onclick=()=>yesBtn.click();}
+  const loveRange = document.getElementById("loveRange");
+  const loveText = document.getElementById("loveText");
 
-let kisses=0;
-function addKiss(){
-kisses++;
-document.getElementById("kissBig").textContent=kisses+" baci";
-document.getElementById("kissFill").style.width=Math.min(100,(kisses/30)*100)+"%";
-}
+  const scratchPanel = document.getElementById("scratchPanel");
+  const scratchBox = document.getElementById("scratchBox");
+  const scratchCanvas = document.getElementById("scratchCanvas");
+  const scratchHint = document.getElementById("scratchHint");
 
-/* SCRATCH */
-let ctx,ratio=1,scratched=false;
-function initScratch(){
-const canvas=document.getElementById("scratchCanvas");
-const rect=canvas.getBoundingClientRect();
-ratio=window.devicePixelRatio||1;
-canvas.width=rect.width*ratio;
-canvas.height=rect.height*ratio;
-canvas.style.width=rect.width+"px";
-canvas.style.height=rect.height+"px";
-ctx=canvas.getContext("2d");
-ctx.fillStyle="#111";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#f1dfb1";
-ctx.font=20*ratio+"px Inter";
-ctx.textAlign="center";
-ctx.fillText("GRATTA QUI ✨",canvas.width/2,canvas.height/2);
+  const kissPanel = document.getElementById("kissPanel");
+  const kissBtn = document.getElementById("kissBtn");
+  const resetKissBtn = document.getElementById("resetKissBtn");
+  const kissResult = document.getElementById("kissResult");
+  const kissFill = document.getElementById("kissFill");
+  const kissBig = document.getElementById("kissBig");
+  const kissGoalEl = document.getElementById("kissGoal");
 
-canvas.onpointermove=e=>{
-if(e.buttons!==1||scratched)return;
-const x=(e.offsetX*ratio);
-const y=(e.offsetY*ratio);
-ctx.globalCompositeOperation="destination-out";
-ctx.beginPath();
-ctx.arc(x,y,20*ratio,0,Math.PI*2);
-ctx.fill();
-checkScratch(canvas);
-};
-}
+  let noCount = 0;
+  let heartsStarted = false;
 
-function checkScratch(canvas){
-const img=ctx.getImageData(0,0,canvas.width,canvas.height).data;
-let cleared=0,total=0;
-for(let i=3;i<img.length;i+=16){
-total++;
-if(img[i]<20)cleared++;
-}
-if(cleared/total>0.45&&!scratched){
-scratched=true;
-sparkle();
-}
-}
+  // Kisses
+  let kisses = 0;
+  const kissGoal = 30;
 
-function sparkle(){
-for(let i=0;i<18;i++){
-const s=document.createElement("div");
-s.className="burstPiece";
-s.textContent=["✨","⭐","💫","❤️","🥂"][Math.floor(Math.random()*5)];
-s.style.setProperty("--dx",(Math.random()*200-100)+"px");
-s.style.setProperty("--dy",(Math.random()*200-100)+"px");
-document.getElementById("scratchBox").appendChild(s);
-setTimeout(()=>s.remove(),900);
-}
-}
+  // Scratch
+  let ctx = null;
+  let isScratching = false;
+  let scratchedEnough = false;
+  let ratio = 1;
+
+  function vibrate(pattern) {
+    try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (_) {}
+  }
+
+  function showStatus(msg) {
+    status.textContent = "✨ " + msg;
+    status.classList.remove("hidden");
+  }
+
+  function moveNoButton() {
+    const container = document.querySelector(".buttons");
+    const c = container.getBoundingClientRect();
+    const b = noBtn.getBoundingClientRect();
+
+    const padding = 8;
+    const maxLeft = c.width - b.width - padding * 2;
+    const maxTop  = c.height - b.height - padding * 2;
+
+    const left = padding + Math.random() * Math.max(10, maxLeft);
+    const top  = padding + Math.random() * Math.max(10, maxTop);
+
+    noBtn.style.left = left + "px";
+    noBtn.style.top  = top + "px";
+    noBtn.style.transform = "none";
+  }
+
+  function startHearts() {
+    if (heartsStarted) return;
+    heartsStarted = true;
+
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = ["❤️","💖","💕","💗","💘"][Math.floor(Math.random()*5)];
+      heart.style.left = (Math.random() * 100) + "vw";
+      heart.style.fontSize = (Math.random() * 22 + 14) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4200);
+    }, 260);
+  }
+
+  function doYesFlow() {
+    finalBox.classList.remove("hidden");
+    showStatus("questa è la scelta giusta 😌");
+    vibrate([40, 30, 40]);
+
+    music.volume = 0.30;
+    music.play().catch(() => {});
+
+    startHearts();
+    initScratch();
+
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+  }
+
+  // Slider fill
+  function paintLoveRange(){
+    const v = Number(loveRange.value);
+    loveRange.style.background =
+      `linear-gradient(90deg, #ff4d6d ${v}%, rgba(255,77,109,.18) ${v}%)`;
+  }
+
+  function updateLoveText(v) {
+    if (v < 20) return "Ok… timida. Ma ti recupero a colpi di coccole 😌";
+    if (v < 40) return "Stai iniziando a convincerti… bravissima 😏";
+    if (v < 60) return "Direi che siamo già ad un ottimo livello 😌";
+    if (v < 80) return "Wow. Qui siamo pericolosamente innamorati 💕";
+    return "Allarme: livello amore massimo. Procedo con baci immediati 💘";
+  }
+
+  paintLoveRange();
+  loveText.textContent = updateLoveText(Number(loveRange.value));
+  loveRange.addEventListener("input", () => {
+    loveText.textContent = updateLoveText(Number(loveRange.value));
+    paintLoveRange();
+  });
+
+  // Buttons
+  yesBtn.addEventListener("click", doYesFlow);
+
+  noBtn.addEventListener("click", () => {
+    noCount++;
+    vibrate(25);
+
+    if (noCount < 5) {
+      const left = 5 - noCount;
+      showStatus(`no? sei sicura? 😏 (mancano ${left})`);
+      moveNoButton();
+      const texts = ["NO 🙄", "NO? 🤨", "Ancora NO? 😌", "Dai su 😏", "Ok basta 😳"];
+      noBtn.textContent = texts[Math.min(noCount, texts.length - 1)];
+    } else {
+      showStatus("ok ok… mi arrendo 🔥");
+      noBtn.textContent = "Ok… SÌ ❤️";
+      noBtn.style.background = "linear-gradient(135deg, #f1dfb1, #d8b67a)";
+      noBtn.style.color = "#19171a";
+      noBtn.onclick = () => doYesFlow();
+      vibrate([60, 40, 60]);
+    }
+  });
+
+  /* ---------- KISS COUNTER (nuovo stile interattivo) ---------- */
+  kissGoalEl.textContent = String(kissGoal);
+
+  function setKissBig(){
+    kissBig.textContent = `${kisses} `;
+    const span = document.createElement("span");
+    span.textContent = "baci";
+    kissBig.appendChild(span);
+  }
+
+  function updateKissUI(){
+    setKissBig();
+    const pct = Math.min(100, Math.round((kisses / kissGoal) * 100));
+    kissFill.style.width = pct + "%";
+
+    if (kisses === 0) kissResult.textContent = "Vai piano… o non rispondo più 😏";
+    else if (kisses < 10) kissResult.textContent = "Ok… così mi piace 😌";
+    else if (kisses < 20) kissResult.textContent = "Qui la situazione sta diventando seria 💖";
+    else if (kisses < kissGoal) kissResult.textContent = "Ancora un po’… e sblocchi qualcosa 😏";
+    else kissResult.textContent = "✅ Sbloccato: ‘stasera non scappi’ 🥂❤️";
+  }
+
+  function kissPop(){
+    kissBig.classList.remove("pop");
+    void kissBig.offsetWidth;
+    kissBig.classList.add("pop");
+  }
+
+  function spawnKissFloat(){
+    const el = document.createElement("div");
+    el.className = "kissFloat";
+    el.textContent = ["💋","💕","💖","❤️","✨"][Math.floor(Math.random()*5)];
+    el.style.setProperty("--dx", (Math.random()*120 - 60) + "px");
+    kissPanel.appendChild(el);
+    setTimeout(() => el.remove(), 950);
+  }
+
+  updateKissUI();
+
+  kissBtn.addEventListener("click", () => {
+    kisses++;
+    vibrate(12);
+    updateKissUI();
+    kissPop();
+    spawnKissFloat();
+  });
+
+  resetKissBtn.addEventListener("click", () => {
+    kisses = 0;
+    updateKissUI();
+    vibrate([20,20,20]);
+  });
+
+  /* ---------- SCRATCH: Sparkle Burst (al posto dei confetti) ---------- */
+  function sparkleBurst(){
+    const symbols = ["✨","⭐","💫","❤️","🥂"];
+    for (let i = 0; i < 18; i++) {
+      const s = document.createElement("div");
+      s.className = "burstPiece";
+      s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      s.style.setProperty("--dx", (Math.random()*240 - 120).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.random()*220 - 110).toFixed(0) + "px");
+      s.style.fontSize = (14 + Math.random()*16).toFixed(0) + "px";
+      scratchPanel.appendChild(s);
+      setTimeout(() => s.remove(), 950);
+    }
+  }
+
+  /* -------- SCRATCH (robusto) -------- */
+  function resizeCanvasToBox() {
+    const rect = scratchBox.getBoundingClientRect();
+    ratio = Math.max(1, window.devicePixelRatio || 1);
+
+    scratchCanvas.width = Math.floor(rect.width * ratio);
+    scratchCanvas.height = Math.floor(rect.height * ratio);
+
+    scratchCanvas.style.width = rect.width + "px";
+    scratchCanvas.style.height = rect.height + "px";
+
+    ctx = scratchCanvas.getContext("2d");
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // pixel reali
+  }
+
+  function drawCover() {
+    if (!ctx) return;
+
+    const w = scratchCanvas.width;
+    const h = scratchCanvas.height;
+
+    // cover OPACA
+    const g = ctx.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0, "#1c1b21");
+    g.addColorStop(0.55, "#15141a");
+    g.addColorStop(1, "#101015");
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    // foil dorato leggero
+    for (let i = 0; i < 120; i++) {
+      ctx.fillStyle = `rgba(216,182,122,${Math.random() * 0.08})`;
+      ctx.beginPath();
+      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 3 + 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = "rgba(241,223,177,0.95)";
+    ctx.font = `900 ${Math.floor(18 * ratio)}px Arial`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("GRATTA QUI ✨", w / 2, h / 2);
+  }
+
+  function scratchAt(clientX, clientY) {
+    if (!ctx || scratchedEnough) return;
+
+    const rect = scratchCanvas.getBoundingClientRect();
+    const xCss = clientX - rect.left;
+    const yCss = clientY - rect.top;
+
+    const x = Math.floor(xCss * ratio);
+    const y = Math.floor(yCss * ratio);
+
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.arc(x, y, Math.floor(18 * ratio), 0, Math.PI * 2);
+    ctx.fill();
+
+    checkScratchProgress(false);
+  }
+
+  let lastCheck = 0;
+  function checkScratchProgress(force){
+    const now = Date.now();
+    if (!force && now - lastCheck < 250) return;
+    lastCheck = now;
+
+    const w = scratchCanvas.width;
+    const h = scratchCanvas.height;
+
+    const img = ctx.getImageData(0, 0, w, h).data;
+
+    const stride = 24;
+    let cleared = 0;
+    let total = 0;
+
+    for (let i = 3; i < img.length; i += 4 * stride) {
+      total++;
+      if (img[i] < 25) cleared++;
+    }
+
+    const pct = cleared / Math.max(1, total);
+
+    if (pct > 0.45 && !scratchedEnough) {
+      scratchedEnough = true;
+      scratchHint.textContent = "Svelato 🥂✨";
+      vibrate([30, 30, 30]);
+
+      ctx.clearRect(0, 0, w, h);
+
+      // ✅ animazione sempre funzionante
+      sparkleBurst();
+    }
+  }
+
+  function initScratch() {
+    if (ctx) return;
+
+    resizeCanvasToBox();
+    drawCover();
+
+    const onDown = (e) => {
+      isScratching = true;
+      const p = getPoint(e);
+      scratchAt(p.x, p.y);
+      vibrate(8);
+    };
+
+    const onMove = (e) => {
+      if (!isScratching) return;
+      e.preventDefault();
+      const p = getPoint(e);
+      scratchAt(p.x, p.y);
+    };
+
+    const onUp = () => {
+      isScratching = false;
+      if (ctx && !scratchedEnough) checkScratchProgress(true);
+    };
+
+    scratchCanvas.addEventListener("pointerdown", onDown);
+    scratchCanvas.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+
+    window.addEventListener("resize", () => {
+      const already = scratchedEnough;
+      ctx = null;
+      resizeCanvasToBox();
+      if (!already) drawCover();
+    }, { passive: true });
+  }
+
+  function getPoint(e) {
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
+  }
 </script>
 
 </body>
