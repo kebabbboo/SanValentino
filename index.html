@@ -94,6 +94,8 @@
     letter-spacing: .3px;
     color: var(--gold2);
    font-family: var(--font-title);
+  letter-spacing: .5px;
+
 
   }
 
@@ -440,6 +442,23 @@
     15%{ opacity:1; }
     100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
   }
+ .inviteDetails{
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(216,182,122,.25);
+  color: rgba(241,223,177,.95);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+  backdrop-filter: blur(4px);
+}
+
+.inviteDetails div{
+  margin: 4px 0;
+}
+
 </style>
 </head>
 
@@ -480,6 +499,14 @@
           Allora è deciso 😌<br><br>
           Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
         </p>
+
+       <div class="inviteDetails">
+  <div>📍 <strong>Venerdì 14 Febbraio</strong></div>
+  <div>🕯 Ore 20:30</div>
+  <div>🥂 Location: sorpresa</div>
+  <div>✨ Dress code: bella come sempre</div>
+</div>
+
 
         <div class="grid">
           <div class="panel" id="scratchPanel">
@@ -896,4 +923,5 @@
 
 </body>
 </html>
+
 
