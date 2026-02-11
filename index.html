@@ -3,70 +3,93 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lilian ❤️</title>
+<title>Lilian ✨</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-  * { box-sizing: border-box; }
+  *{ box-sizing:border-box; }
 
   :root{
-    --bg1:#0f0f12;
-    --bg2:#1b1b22;
+    --bg1:#0b0b0f;
+    --bg2:#151620;
 
     --gold:#d8b67a;
     --gold2:#f1dfb1;
 
-    --pink:#ff4d6d;
-    --pink2:#ff9a9e;
+    --rose:#ff4d6d;
 
     --text:#f5f2ea;
     --muted:#cfc7bb;
 
-    --card1: rgba(17,18,24,.82);
-    --card2: rgba(23,24,36,.76);
+    --card1: rgba(14,15,22,.78);
+    --card2: rgba(18,19,29,.70);
 
-    --panel: rgba(255,255,255,.05);
+    --panel1: rgba(255,255,255,.055);
     --panel2: rgba(255,255,255,.035);
 
     --line: rgba(216,182,122,.22);
-    --shadow: 0 18px 45px rgba(0,0,0,.45);
+    --shadow: 0 22px 60px rgba(0,0,0,.55);
+
+    --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    --font-title: "Playfair Display", Georgia, serif;
   }
 
   body{
     margin:0;
     min-height:100vh;
-    font-family: Arial, sans-serif;
-    background:
-      radial-gradient(1000px 700px at 20% 10%, rgba(216,182,122,.18), rgba(0,0,0,0)),
-      radial-gradient(900px 700px at 85% 15%, rgba(255,77,109,.14), rgba(0,0,0,0)),
-      linear-gradient(135deg, var(--bg1), var(--bg2));
+    font-family: var(--font-body);
+    color: var(--text);
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:auto;
     padding: 18px 0;
-    color: var(--text);
+
+    background:
+      radial-gradient(1200px 800px at 18% 10%, rgba(216,182,122,.16), rgba(0,0,0,0)),
+      radial-gradient(1000px 800px at 88% 18%, rgba(255,77,109,.12), rgba(0,0,0,0)),
+      radial-gradient(900px 700px at 50% 90%, rgba(241,223,177,.06), rgba(0,0,0,0)),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
   }
 
-  /* frame oro */
   .frame{
     width: 92%;
-    max-width: 430px;
-    border-radius: 26px;
+    max-width: 440px;
+    border-radius: 28px;
     padding: 2px;
-    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.25), rgba(255,77,109,.18));
+    background:
+      linear-gradient(135deg,
+        rgba(241,223,177,.92),
+        rgba(216,182,122,.22),
+        rgba(255,77,109,.14)
+      );
     box-shadow: var(--shadow);
   }
 
   .card{
-    background: linear-gradient(180deg, var(--card1), var(--card2));
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
+    border-radius: 26px;
     padding: 18px;
+    background: linear-gradient(180deg, var(--card1), var(--card2));
+    backdrop-filter: blur(12px);
     position: relative;
 
-    max-height: 80vh; /* ✅ scroll interno */
+    max-height: 80vh;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* sottile “grain” luxury */
+  .card::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+    opacity:.07;
+    pointer-events:none;
+    border-radius: 26px;
   }
 
   .topRow{
@@ -74,7 +97,9 @@
     align-items:center;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
   }
 
   .badge{
@@ -83,42 +108,34 @@
     gap: 8px;
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(216,182,122,.12);
-    border: 1px solid rgba(216,182,122,.26);
+    background: rgba(216,182,122,.10);
+    border: 1px solid rgba(216,182,122,.24);
     color: var(--gold2);
     font-weight: 800;
     font-size: 12.5px;
-    letter-spacing: .2px;
-  }
-
-  .miniChip{
-    display:inline-flex;
-    align-items:center;
-    gap: 7px;
-    padding: 8px 10px;
-    border-radius: 999px;
-    background: rgba(255,77,109,.10);
-    border: 1px solid rgba(255,77,109,.22);
-    color: rgba(255,220,230,.95);
-    font-size: 12px;
-    white-space: nowrap;
+    letter-spacing: .25px;
   }
 
   h1{
+    position: relative;
+    z-index: 1;
     margin: 6px 0 8px;
+    font-family: var(--font-title);
+    font-size: 28px;
+    letter-spacing: .25px;
     color: var(--gold2);
-    font-size: 26px;
-    letter-spacing: .3px;
   }
 
   p{
+    position: relative;
+    z-index: 1;
     margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.4;
     color: rgba(245,242,234,.95);
-    font-size: 16.5px;
-    line-height: 1.35;
   }
 
-  .sub{
+  .muted{
     color: rgba(207,199,187,.92);
     font-size: 14px;
     margin-top: 0;
@@ -130,11 +147,11 @@
     margin: 14px 0;
   }
 
-  /* Bottoni */
   .buttons{
     margin-top: 16px;
     height: 124px;
     position: relative;
+    z-index: 1;
   }
 
   button{
@@ -143,8 +160,8 @@
     padding: 13px 18px;
     font-size: 16px;
     cursor: pointer;
-    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-    user-select: none;
+    transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+    user-select:none;
   }
   button:active{ transform: translateY(1px) scale(.99); }
 
@@ -157,6 +174,7 @@
     background: linear-gradient(135deg, var(--gold2), var(--gold));
     box-shadow: 0 14px 26px rgba(216,182,122,.22);
     font-weight: 900;
+    letter-spacing: .2px;
   }
 
   #noBtn{
@@ -164,9 +182,9 @@
     left:50%;
     top:64px;
     transform: translateX(-50%);
+    color: rgba(245,242,234,.92);
     background: rgba(255,255,255,.06);
     border: 1px solid rgba(255,255,255,.10);
-    color: rgba(245,242,234,.92);
     touch-action: manipulation;
   }
 
@@ -180,15 +198,18 @@
     background: rgba(216,182,122,.10);
     border: 1px solid rgba(216,182,122,.22);
     color: rgba(241,223,177,.95);
-    font-size: 13.5px;
+    font-size: 13px;
     margin-top: 10px;
+    position: relative;
+    z-index: 1;
   }
 
   .hidden{ display:none; }
 
   #final{
-    margin-top: 14px;
-    padding-top: 10px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
   }
 
   .photo{
@@ -205,15 +226,10 @@
     to{ opacity:1; transform: translateY(0) scale(1); }
   }
 
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 12px;
-  }
+  .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
 
   .panel{
-    background: linear-gradient(180deg, var(--panel), var(--panel2));
+    background: linear-gradient(180deg, var(--panel1), var(--panel2));
     border: 1px solid rgba(216,182,122,.18);
     border-radius: 18px;
     padding: 12px;
@@ -221,14 +237,13 @@
     overflow:hidden;
   }
 
-  /* accent bar */
   .panel::before{
     content:"";
     position:absolute;
     left:0; top:0; bottom:0;
     width: 10px;
-    background: linear-gradient(180deg, rgba(241,223,177,.45), rgba(255,77,109,.25));
-    opacity: .85;
+    background: linear-gradient(180deg, rgba(241,223,177,.42), rgba(255,77,109,.22));
+    opacity:.85;
   }
 
   .panelHeader{
@@ -250,16 +265,6 @@
     letter-spacing: .2px;
   }
 
-  .tag{
-    font-size: 12px;
-    color: rgba(241,223,177,.92);
-    background: rgba(216,182,122,.10);
-    border: 1px solid rgba(216,182,122,.20);
-    padding: 4px 8px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-
   .result{
     margin-top: 8px;
     font-size: 14.5px;
@@ -268,85 +273,73 @@
     padding-left: 10px;
   }
 
-  /* ---- Slider ---- */
-  .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
-
-  #loveRange{
-    width:100%;
-    accent-color: var(--pink);
-    -webkit-appearance:none;
-    appearance:none;
-    height: 10px;
-    border-radius: 999px;
-    outline:none;
-    background: linear-gradient(90deg, var(--pink) 50%, rgba(255,77,109,.18) 50%);
-  }
-  #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
-  #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
-
-  #loveRange::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    appearance:none;
-    width: 30px;
-    height: 30px;
-    border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.80);
-    cursor:pointer;
-    margin-top: -10px;
+  /* ---------- CENTRAL SCRATCH (luxury) ---------- */
+  .central{
+    padding: 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(241,223,177,.35);
     background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
-      radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
-    box-shadow:
-      0 10px 18px rgba(255, 77, 109, 0.22),
-      0 0 16px rgba(255, 110, 70, 0.45);
-  }
-  #loveRange:active::-webkit-slider-thumb { transform: scale(1.06); }
-
-  #loveRange::-moz-range-thumb{
-    width: 30px;
-    height: 30px;
-    border-radius: 999px;
-    border: 2px solid rgba(255,255,255,.80);
-    cursor: pointer;
-    background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
-      radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
-    box-shadow:
-      0 10px 18px rgba(255, 77, 109, 0.22),
-      0 0 16px rgba(255, 110, 70, 0.45);
+      radial-gradient(650px 240px at 25% 20%, rgba(216,182,122,.16), rgba(0,0,0,0)),
+      radial-gradient(700px 260px at 85% 40%, rgba(255,77,109,.10), rgba(0,0,0,0)),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
   }
 
-  /* ---- Scratch ---- */
+  .centralTitle{
+    font-family: var(--font-title);
+    font-size: 18px;
+    letter-spacing: .35px;
+    color: var(--gold2);
+    margin: 0 0 6px 10px;
+  }
+
+  .centralSub{
+    margin: 0 0 10px 10px;
+    color: rgba(207,199,187,.92);
+    font-size: 13px;
+  }
+
   .scratchWrap{
     position:relative;
     border-radius: 18px;
     overflow:hidden;
-    border: 1px dashed rgba(241,223,177,.45);
-    background: rgba(0,0,0,.18);
+    border: 1px solid rgba(241,223,177,.35);
+    background: rgba(0,0,0,.22);
     margin-left: 10px;
-    min-height: 130px;
+    min-height: 170px;   /* più importante */
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
   }
 
+  /* ✅ NON SI VEDE SOTTO: nascosto finché non sblocchi */
   .scratchPrize{
     position: relative;
     z-index: 1;
-    padding: 14px 14px 16px;
+    padding: 18px 14px 18px;
     text-align:center;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 280ms ease, transform 280ms ease, visibility 0s linear 280ms;
+  }
+  .scratchWrap.revealed .scratchPrize{
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 280ms ease, transform 280ms ease, visibility 0s;
   }
 
   .scratchPrize .big{
-    font-size: 18px;
+    font-family: var(--font-title);
+    font-size: 22px;
     color: rgba(241,223,177,.98);
-    font-weight: 900;
-    margin-bottom: 6px;
-    letter-spacing: .4px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: .7px;
   }
 
   .scratchPrize .small{
-    font-size: 14px;
-    color: rgba(245,242,234,.94);
-    opacity:.95;
-    line-height: 1.45;
+    font-size: 15px;
+    color: rgba(245,242,234,.95);
+    line-height: 1.55;
   }
 
   canvas#scratchCanvas{
@@ -360,25 +353,15 @@
   }
 
   .scratchHint{
-    margin-top: 8px;
+    margin-top: 10px;
     font-size: 13px;
     color: rgba(241,223,177,.92);
     text-align:center;
-    opacity:.9;
+    opacity:.95;
     padding-left: 10px;
   }
 
-  /* Cuori */
-  .heart{
-    position: fixed;
-    bottom:-30px;
-    animation: floatUp 4.2s linear forwards;
-    pointer-events:none;
-    filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
-  }
-  @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
-
-  /* Sparkle burst (fine scratch) */
+  /* Sparkle burst */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -396,7 +379,63 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* Kiss counter interattivo */
+  /* Cuori */
+  .heart{
+    position: fixed;
+    bottom:-30px;
+    animation: floatUp 4.2s linear forwards;
+    pointer-events:none;
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+  }
+  @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
+
+  /* Slider */
+  .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
+
+  #loveRange{
+    width:100%;
+    accent-color: var(--rose);
+    -webkit-appearance:none;
+    appearance:none;
+    height: 10px;
+    border-radius: 999px;
+    outline:none;
+    background: linear-gradient(90deg, var(--rose) 50%, rgba(255,77,109,.18) 50%);
+  }
+  #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
+  #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
+
+  #loveRange::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,.75);
+    cursor:pointer;
+    margin-top: -10px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
+    box-shadow:
+      0 10px 18px rgba(255,77,109,.20),
+      0 0 16px rgba(255,110,70,.45);
+  }
+  #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
+
+  #loveRange::-moz-range-thumb{
+    width: 30px; height:30px; border-radius:999px;
+    border: 2px solid rgba(255,255,255,.75);
+    cursor:pointer;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.7) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,77,109,1) 100%);
+    box-shadow:
+      0 10px 18px rgba(255,77,109,.20),
+      0 0 16px rgba(255,110,70,.45);
+  }
+
+  /* Kiss counter */
   .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
   .kissTop{
     display:flex;
@@ -456,11 +495,7 @@
   }
 
   .pop{ animation: pop 220ms ease-out; }
-  @keyframes pop{
-    0%{ transform: scale(1); }
-    50%{ transform: scale(1.06); }
-    100%{ transform: scale(1); }
-  }
+  @keyframes pop{ 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
 
   .kissFloat{
     position:absolute;
@@ -486,15 +521,15 @@
     <div class="card" id="card">
       <div class="topRow">
         <div class="badge">🥂 Invito a cena</div>
-        <div class="miniChip">💖 modalità: romantico + playful</div>
+        <!-- ✅ rimosso: modalità romantico playful -->
       </div>
 
       <h1>Ciao Lilian ✨</h1>
-      <p class="sub">Ho preparato una piccola cosa… e adesso non puoi più “non vederla” 😌</p>
+      <p class="muted">Un invito elegante… e una sorpresa che devi scoprire 😌</p>
 
       <p>
-        Domanda importantissima (e assolutamente non truccata):<br><br>
-        Vuoi essere la mia <strong>Valentina di San Valentino?</strong> 💕
+        Domanda importantissima:<br><br>
+        Vuoi essere la mia <strong>Valentina di San Valentino</strong>? ❤️
       </p>
 
       <div class="buttons">
@@ -509,47 +544,45 @@
       <div id="final" class="hidden">
         <h1>Perfetto. ❤️</h1>
 
+        <!-- ✅ CENTRALE: scratch prima di tutto -->
+        <div class="central" id="centralInvite">
+          <div class="centralTitle">Il tuo invito ufficiale</div>
+          <div class="centralSub">Gratta qui sotto per scoprire tutti i dettagli ✨</div>
+
+          <div class="scratchWrap" id="scratchBox">
+            <div class="scratchPrize" id="scratchPrize">
+              <div class="big">Cena per due 🥂</div>
+              <div class="small">
+                📍 <strong>Venerdì 14 Febbraio</strong><br>
+                🕯 Ore 20:30<br>
+                🍷 Location: <strong>Sorpresa</strong><br>
+                ✨ Dress code: bella come sempre
+              </div>
+            </div>
+            <canvas id="scratchCanvas"></canvas>
+          </div>
+
+          <div class="scratchHint" id="scratchHint">Consiglio: gratta bene fino ai bordi 😉</div>
+        </div>
+
         <img
-          id="photo"
           class="photo"
           alt="Noi 💖"
           src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80"
         />
 
-        <p id="finalText">
-          Lo sapevo 😌<br><br>
-          Preparati a una serata piena di coccole, risate e amore 💖
+        <p>
+          Allora è deciso 😌<br><br>
+          Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
         </p>
 
+        <!-- ✅ gli altri giochi restano -->
         <div class="grid">
-          <div class="panel" id="scratchPanel">
-            <div class="panelHeader">
-              <h3 class="panelTitle">🎟️ Gratta e scopri</h3>
-              <span class="tag">premio segreto</span>
-            </div>
-
-            <div class="scratchWrap" id="scratchBox">
-              <div class="scratchPrize">
-                <div class="big">L’INVITO ✨</div>
-                <div class="small">
-                  📍 <strong>Venerdì 14 Febbraio</strong><br>
-                  🕯 Ore 20:30<br>
-                  🥂 Location: <strong>Sorpresa</strong><br>
-                  ✨ Dress code: bella come sempre
-                </div>
-              </div>
-              <canvas id="scratchCanvas"></canvas>
-            </div>
-
-            <div class="scratchHint" id="scratchHint">Gratta con il dito per scoprire il premio ✨</div>
-          </div>
-
           <div class="panel">
             <div class="panelHeader">
               <h3 class="panelTitle">🔥 Misuratore di amore</h3>
-              <span class="tag">riempi la barra</span>
+              <!-- ✅ rimosso tag -->
             </div>
-
             <div class="sliderWrap">
               <input id="loveRange" type="range" min="0" max="100" value="50" />
               <div id="loveText" class="result">Direi che siamo già ad un ottimo livello 😌</div>
@@ -559,7 +592,7 @@
           <div class="panel" id="kissPanel">
             <div class="panelHeader">
               <h3 class="panelTitle">😚 Kiss counter</h3>
-              <span class="tag">clicca!</span>
+              <!-- ✅ rimosso tag -->
             </div>
 
             <div class="kissWrap">
@@ -601,7 +634,6 @@
   const loveRange = document.getElementById("loveRange");
   const loveText = document.getElementById("loveText");
 
-  const scratchPanel = document.getElementById("scratchPanel");
   const scratchBox = document.getElementById("scratchBox");
   const scratchCanvas = document.getElementById("scratchCanvas");
   const scratchHint = document.getElementById("scratchHint");
@@ -785,19 +817,20 @@
   /* ---------- Sparkle Burst (fine scratch) ---------- */
   function sparkleBurst(){
     const symbols = ["✨","⭐","💫","❤️","🥂"];
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 20; i++) {
       const s = document.createElement("div");
       s.className = "burstPiece";
       s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-      s.style.setProperty("--dx", (Math.random()*240 - 120).toFixed(0) + "px");
-      s.style.setProperty("--dy", (Math.random()*220 - 110).toFixed(0) + "px");
-      s.style.fontSize = (14 + Math.random()*16).toFixed(0) + "px";
-      scratchPanel.appendChild(s);
+      s.style.setProperty("--dx", (Math.random()*260 - 130).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.random()*240 - 120).toFixed(0) + "px");
+      s.style.fontSize = (14 + Math.random()*18).toFixed(0) + "px";
+      // sopra la sezione centrale
+      document.getElementById("centralInvite").appendChild(s);
       setTimeout(() => s.remove(), 950);
     }
   }
 
-  /* -------- SCRATCH (robusto) -------- */
+  /* -------- SCRATCH (robusto + cover opaca + reveal finale) -------- */
   function resizeCanvasToBox() {
     const rect = scratchBox.getBoundingClientRect();
     ratio = Math.max(1, window.devicePixelRatio || 1);
@@ -817,25 +850,27 @@
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
 
-    // cover opaca (tema scuro)
+    // ✅ cover 100% OPACA (niente trasparenze)
     const g = ctx.createLinearGradient(0, 0, w, h);
-    g.addColorStop(0, "rgba(241,223,177,.65)");
-    g.addColorStop(0.55, "rgba(216,182,122,.35)");
-    g.addColorStop(1, "rgba(255,77,109,.22)");
+    g.addColorStop(0, "#1a1a22");
+    g.addColorStop(0.5, "#12121a");
+    g.addColorStop(1, "#0f0f15");
 
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, w, h);
 
-    for (let i = 0; i < 80; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18})`;
+    // foil dorato discreto
+    for (let i = 0; i < 140; i++) {
+      ctx.fillStyle = `rgba(216,182,122,${Math.random() * 0.09})`;
       ctx.beginPath();
-      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2 + 0.4, 0, Math.PI * 2);
+      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2.6 + 0.5, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    ctx.fillStyle = "rgba(15,15,18,0.85)";
-    ctx.font = `900 ${Math.floor(18 * ratio)}px Arial`;
+    // testo
+    ctx.fillStyle = "rgba(241,223,177,0.95)";
+    ctx.font = `900 ${Math.floor(18 * ratio)}px Inter`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("GRATTA QUI ✨", w / 2, h / 2);
@@ -853,7 +888,7 @@
 
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
-    ctx.arc(x, y, Math.floor(18 * ratio), 0, Math.PI * 2);
+    ctx.arc(x, y, Math.floor(20 * ratio), 0, Math.PI * 2);
     ctx.fill();
 
     checkScratchProgress(false);
@@ -869,7 +904,7 @@
     const h = scratchCanvas.height;
     const img = ctx.getImageData(0, 0, w, h).data;
 
-    const stride = 24;
+    const stride = 26;
     let cleared = 0, total = 0;
 
     for (let i = 3; i < img.length; i += 4 * stride) {
@@ -881,16 +916,25 @@
 
     if (pct > 0.45 && !scratchedEnough) {
       scratchedEnough = true;
-      scratchHint.textContent = "Svelato 🥂✨";
+
+      // ✅ mostra contenuto sotto
+      scratchBox.classList.add("revealed");
+
+      // pulisci cover
+      ctx.clearRect(0, 0, w, h);
+
+      scratchHint.textContent = "Svelato. 🥂✨";
       vibrate([30, 30, 30]);
 
-      ctx.clearRect(0, 0, w, h);
       sparkleBurst();
     }
   }
 
   function initScratch() {
     if (ctx) return;
+
+    // assicurati che sia nascosto finché non completato
+    scratchBox.classList.remove("revealed");
 
     resizeCanvasToBox();
     drawCover();
@@ -927,7 +971,9 @@
   }
 
   function getPoint(e) {
-    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
     return { x: e.clientX, y: e.clientY };
   }
 </script>
