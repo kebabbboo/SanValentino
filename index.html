@@ -14,12 +14,10 @@
     --gold:#d8b67a;
     --gold2:#f1dfb1;
     --rose:#ff4d6d;
-    --rose2:#ff9a9e;
     --card:#111218cc;
     --card2:#171824cc;
     --text:#f5f2ea;
     --muted:#cfc7bb;
-    --line:rgba(216,182,122,.25);
     --shadow: 0 18px 45px rgba(0,0,0,.45);
   }
 
@@ -40,13 +38,12 @@
     color: var(--text);
   }
 
-  /* frame elegante oro */
   .frame{
     width: 92%;
     max-width: 430px;
     border-radius: 26px;
     padding: 2px;
-    background: linear-gradient(135deg, rgba(241,223,177,.9), rgba(216,182,122,.25), rgba(255,77,109,.18));
+    background: linear-gradient(135deg, rgba(241,223,177,.95), rgba(216,182,122,.25), rgba(255,77,109,.18));
     box-shadow: var(--shadow);
   }
 
@@ -123,7 +120,6 @@
     margin: 14px 0;
   }
 
-  /* Bottoni */
   .buttons{
     margin-top: 16px;
     height: 124px;
@@ -181,11 +177,6 @@
 
   .hidden{ display:none; }
 
-  #final{
-    margin-top: 12px;
-    padding-top: 8px;
-  }
-
   .photo{
     width:100%;
     max-height: 220px;
@@ -200,7 +191,6 @@
     to{ opacity:1; transform: translateY(0) scale(1); }
   }
 
-  /* Panels */
   .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
 
   .panel{
@@ -276,9 +266,8 @@
     box-shadow: 0 10px 20px rgba(0,0,0,.20);
   }
   .choiceBtn:hover{ filter: brightness(1.03); }
-  .choiceBtn:active{ transform: translateY(1px) scale(.99); }
 
-  /* Slider: fill + thumb elegante fuoco */
+  /* Slider fill + thumb fuoco elegante */
   .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
 
   #loveRange{
@@ -310,8 +299,6 @@
       0 10px 18px rgba(255,77,109,.20),
       0 0 16px rgba(255,110,70,.45);
   }
-  #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
-
   #loveRange::-moz-range-thumb{
     width: 30px; height:30px; border-radius:999px;
     border: 2px solid rgba(255,255,255,.75);
@@ -324,7 +311,7 @@
       0 0 16px rgba(255,110,70,.45);
   }
 
-  /* Scratch: ticket elegante */
+  /* Scratch: ora cover opaca e canvas sopra */
   .scratchWrap{
     position:relative;
     border-radius: 18px;
@@ -332,9 +319,12 @@
     border: 1px dashed rgba(241,223,177,.55);
     background: rgba(0,0,0,.18);
     margin-left: 10px;
+    min-height: 120px; /* ✅ assicura spazio e copertura */
   }
 
   .scratchPrize{
+    position: relative;
+    z-index: 1; /* sotto al canvas */
     padding: 14px 14px 16px;
     text-align:center;
   }
@@ -359,6 +349,7 @@
     height:100%;
     touch-action:none;
     cursor:grab;
+    z-index: 5; /* ✅ sopra al premio */
   }
 
   .scratchHint{
@@ -388,11 +379,12 @@
     height:14px;
     border-radius: 4px;
     opacity:.95;
-    animation: confettiFall 1.25s ease-in forwards;
+    animation: confettiFall 1.35s ease-in forwards;
     pointer-events:none;
+    z-index: 50; /* ✅ sopra */
   }
   @keyframes confettiFall{
-    to{ transform: translateY(280px) rotate(260deg); opacity:0; }
+    to{ transform: translateY(320px) rotate(280deg); opacity:0; }
   }
 </style>
 </head>
@@ -402,11 +394,11 @@
     <div class="card" id="card">
       <div class="topRow">
         <div class="badge">🥂 Invito a cena</div>
-        <div class="miniChip">💖 modalità: romantico + playful</div>
+        <div class="miniChip">💖 elegante + playful</div>
       </div>
 
       <h1>Ciao Lilian ✨</h1>
-      <p class="muted">Un invito elegante… con un pizzico di malizia 😌</p>
+      <p class="muted">Un invito elegante… con un pizzico di giocheria 😌</p>
 
       <p>
         Domanda importantissima:<br><br>
@@ -425,21 +417,19 @@
       <div id="final" class="hidden">
         <h1>Perfetto. ❤️</h1>
 
-        <!-- FOTO: se carichi una foto nel repo (es. foto.jpg) cambia src="foto.jpg" -->
         <img
-          id="photo"
           class="photo"
           alt="Noi 💖"
           src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=1200&q=80"
         />
 
-        <p id="finalText">
+        <p>
           Allora è deciso 😌<br><br>
           Una cena elegante, un brindisi… e poi il resto lo vediamo dopo 💖
         </p>
 
         <div class="grid">
-          <div class="panel" id="scratchPanel">
+          <div class="panel">
             <div class="panelHeader">
               <h3 class="panelTitle">🎟️ Gratta e scopri</h3>
               <span class="tag">premio segreto</span>
@@ -476,7 +466,7 @@
               <h3 class="panelTitle">😚 Timer dei baci</h3>
               <span class="tag">clicca!</span>
             </div>
-            <div class="choices" style="justify-content:center;">
+            <div class="choices">
               <button class="choiceBtn" id="kissBtn">Bacio +1 💋</button>
               <button class="choiceBtn" id="resetKissBtn">Reset 😇</button>
             </div>
@@ -487,13 +477,13 @@
     </div>
   </div>
 
-  <!-- Musica (parte solo dopo click su SÌ) -->
   <audio id="music" loop>
     <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b6b1c6d.mp3" type="audio/mpeg">
   </audio>
 
 <script>
   const card = document.getElementById("card");
+
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
   const finalBox = document.getElementById("final");
@@ -515,10 +505,11 @@
   let heartsStarted = false;
   let kisses = 0;
 
-  // Scratch
+  // Scratch (robusto)
+  let ctx = null;
   let isScratching = false;
   let scratchedEnough = false;
-  let ctx = null;
+  let ratio = 1;
 
   function vibrate(pattern) {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (_) {}
@@ -640,10 +631,10 @@
     kissResult.textContent = "Baci: 0";
   });
 
-  /* ---------- CONFETTI (fix) ---------- */
+  /* Confetti */
   function launchConfetti() {
     const colors = ["#f1dfb1", "#d8b67a", "#ff4d6d", "#ff9a9e", "#ffffff"];
-    const count = 30;
+    const count = 34;
 
     for (let i = 0; i < count; i++) {
       const c = document.createElement("div");
@@ -651,20 +642,20 @@
       c.style.left = (Math.random() * 92 + 4) + "%";
       c.style.background = colors[Math.floor(Math.random() * colors.length)];
       c.style.transform = `rotate(${Math.random() * 180}deg)`;
-      c.style.animationDuration = (0.95 + Math.random() * 0.9) + "s";
+      c.style.animationDuration = (1.0 + Math.random() * 1.0) + "s";
       c.style.width = (8 + Math.random() * 6) + "px";
       c.style.height = (10 + Math.random() * 8) + "px";
       card.appendChild(c);
-      setTimeout(() => c.remove(), 1900);
+      setTimeout(() => c.remove(), 2300);
     }
   }
 
-  /* -------- SCRATCH (fix robusto) -------- */
+  /* -------- SCRATCH (cover opaca + progress stabile) -------- */
   function resizeCanvasToBox() {
     const rect = scratchBox.getBoundingClientRect();
-    const ratio = Math.max(1, window.devicePixelRatio || 1);
+    ratio = Math.max(1, window.devicePixelRatio || 1);
 
-    // dimensioni reali canvas (pixel)
+    // canvas in pixel reali
     scratchCanvas.width = Math.floor(rect.width * ratio);
     scratchCanvas.height = Math.floor(rect.height * ratio);
 
@@ -673,91 +664,99 @@
     scratchCanvas.style.height = rect.height + "px";
 
     ctx = scratchCanvas.getContext("2d");
-    // disegniamo in coordinate CSS, non in pixel
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // lavoriamo in pixel reali
   }
 
   function drawCover() {
     if (!ctx) return;
-    const rect = scratchBox.getBoundingClientRect();
 
-    const g = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-    g.addColorStop(0, "rgba(241,223,177,.95)");
-    g.addColorStop(0.55, "rgba(216,182,122,.45)");
-    g.addColorStop(1, "rgba(255,77,109,.22)");
+    const w = scratchCanvas.width;
+    const h = scratchCanvas.height;
+
+    // ✅ cover 100% OPACA (non si vede il testo sotto)
+    const g = ctx.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0, "#1c1b21");
+    g.addColorStop(0.55, "#15141a");
+    g.addColorStop(1, "#101015");
 
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = g;
-    ctx.fillRect(0, 0, rect.width, rect.height);
+    ctx.fillRect(0, 0, w, h);
 
-    // glitter discreto
-    for (let i = 0; i < 70; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18})`;
+    // “foil” dorato discreto
+    for (let i = 0; i < 120; i++) {
+      ctx.fillStyle = `rgba(216,182,122,${Math.random() * 0.08})`;
       ctx.beginPath();
-      ctx.arc(Math.random() * rect.width, Math.random() * rect.height, Math.random() * 2 + 0.4, 0, Math.PI * 2);
+      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 3 + 0.5, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    ctx.fillStyle = "rgba(15,15,18,0.85)";
-    ctx.font = "900 18px Arial";
+    // testo “GRATTA”
+    ctx.fillStyle = "rgba(241,223,177,0.95)";
+    ctx.font = `900 ${Math.floor(18 * ratio)}px Arial`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("GRATTA QUI ✨", rect.width / 2, rect.height / 2);
+    ctx.fillText("GRATTA QUI ✨", w / 2, h / 2);
   }
 
   function scratchAt(clientX, clientY) {
     if (!ctx || scratchedEnough) return;
 
     const rect = scratchCanvas.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    const xCss = clientX - rect.left;
+    const yCss = clientY - rect.top;
+
+    const x = Math.floor(xCss * ratio);
+    const y = Math.floor(yCss * ratio);
 
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
-    ctx.arc(x, y, 18, 0, Math.PI * 2);
+    ctx.arc(x, y, Math.floor(18 * ratio), 0, Math.PI * 2);
     ctx.fill();
 
     checkScratchProgress();
   }
 
   let lastCheck = 0;
-
-  function checkScratchProgress() {
+  function checkScratchProgress(force=false) {
     const now = Date.now();
-    if (now - lastCheck < 250) return;
+    if (!force && now - lastCheck < 250) return;
     lastCheck = now;
 
-    // ✅ usa dimensioni reali del canvas (pixel) e campiona
     const w = scratchCanvas.width;
     const h = scratchCanvas.height;
 
     const img = ctx.getImageData(0, 0, w, h).data;
-    const step = 16; // campionamento: veloce e stabile
-    let transparent = 0;
+
+    // campionamento stabile
+    const stride = 24; // più basso = più preciso (ma più lento)
+    let cleared = 0;
     let total = 0;
 
-    for (let i = 3; i < img.length; i += 4 * step) {
+    // alpha sotto 25 = “grattato” (anti-alias)
+    for (let i = 3; i < img.length; i += 4 * stride) {
       total++;
-      if (img[i] === 0) transparent++;
+      if (img[i] < 25) cleared++;
     }
 
-    const pct = transparent / Math.max(1, total);
+    const pct = cleared / Math.max(1, total);
 
     if (pct > 0.45 && !scratchedEnough) {
       scratchedEnough = true;
       scratchHint.textContent = "Premio sbloccato 🥂✨";
       vibrate([30, 30, 30]);
 
-      // pulisci cover
+      // rimuovi cover completamente
       ctx.clearRect(0, 0, w, h);
 
-      // 🎉 confetti (ora funziona)
+      // ✅ confetti (ora parte davvero)
       launchConfetti();
     }
   }
 
   function initScratch() {
     if (ctx) return;
+
     resizeCanvasToBox();
     drawCover();
 
@@ -775,7 +774,11 @@
       scratchAt(p.x, p.y);
     };
 
-    const onUp = () => { isScratching = false; };
+    const onUp = () => {
+      isScratching = false;
+      // ✅ check finale quando alzi il dito
+      if (ctx && !scratchedEnough) checkScratchProgress(true);
+    };
 
     scratchCanvas.addEventListener("pointerdown", onDown);
     scratchCanvas.addEventListener("pointermove", onMove);
