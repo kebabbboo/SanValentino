@@ -16,7 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: auto; /* ✅ permette scroll pagina se serve */
+    overflow: auto;
   }
 
   .card {
@@ -29,8 +29,8 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     position: relative;
 
-    /* ✅ scroll interno per il contenuto finale */
-    max-height: 76vh;
+    /* ✅ scroll interno */
+    max-height: 80vh;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -173,7 +173,7 @@
   #loveRange::-webkit-slider-runnable-track{
     height: 10px;
     border-radius: 999px;
-    background: transparent; /* usiamo il background dell'input */
+    background: transparent;
   }
   #loveRange::-moz-range-track{
     height: 10px;
@@ -181,7 +181,6 @@
     background: transparent;
   }
 
-  /* Thumb (Chrome/Safari/Edge) */
   #loveRange::-webkit-slider-thumb{
     -webkit-appearance: none;
     appearance: none;
@@ -191,7 +190,6 @@
     border: 2px solid rgba(255,255,255,0.95);
     cursor: pointer;
     margin-top: -10px;
-
     background:
       radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0 18%, rgba(255,255,255,0) 19% 100%),
       radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
@@ -201,14 +199,12 @@
   }
   #loveRange:active::-webkit-slider-thumb { transform: scale(1.06); }
 
-  /* Thumb (Firefox) */
   #loveRange::-moz-range-thumb{
     width: 30px;
     height: 30px;
     border-radius: 999px;
     border: 2px solid rgba(255,255,255,0.95);
     cursor: pointer;
-
     background:
       radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0 18%, rgba(255,255,255,0) 19% 100%),
       radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
@@ -217,6 +213,50 @@
       0 0 16px rgba(255, 110, 70, 0.55);
   }
   #loveRange:active::-moz-range-thumb { transform: scale(1.06); }
+
+  /* ---- GRATTA E SCOPRI ---- */
+  .scratchWrap {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #ffb3c1;
+    background: #ffffff;
+  }
+
+  .scratchPrize {
+    padding: 14px 14px 16px;
+    text-align: center;
+  }
+
+  .scratchPrize .big {
+    font-size: 18px;
+    color: #b21e35;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .scratchPrize .small {
+    font-size: 14px;
+    color: #333;
+    opacity: 0.9;
+  }
+
+  canvas#scratchCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none; /* importantissimo per grattare su mobile */
+    cursor: grab;
+  }
+
+  .scratchHint {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #7a1c2c;
+    text-align: center;
+    opacity: 0.9;
+  }
 
   /* Cuori */
   .heart {
@@ -266,14 +306,24 @@
       </p>
 
       <div class="grid">
+        <!-- ✅ GRATTA E SCOPRI -->
         <div class="panel">
-          <h3>🎯 Scegli la tua missione</h3>
-          <div class="choices">
-            <button class="choiceBtn" data-choice="pizza">🍕 Pizza & Film</button>
-            <button class="choiceBtn" data-choice="cena">🍝 Cena Romantica</button>
-            <button class="choiceBtn" data-choice="sorpresa">🎁 Sorpresa</button>
+          <h3>🎟️ Gratta e scopri</h3>
+
+          <div class="scratchWrap" id="scratchBox">
+            <div class="scratchPrize">
+              <!-- 👇 Cambia questo testo come vuoi -->
+              <div class="big">PREMIO SEGRETO 💘</div>
+              <div class="small">
+                Hai vinto: una serata bellissima con me + coccole illimitate 😌❤️<br>
+                (e forse anche una sorpresa…)
+              </div>
+            </div>
+
+            <canvas id="scratchCanvas"></canvas>
           </div>
-          <div id="choiceResult" class="result">Scegli e vediamo cosa ti aspetta… 😏</div>
+
+          <div class="scratchHint" id="scratchHint">Gratta con il dito per scoprire il premio ✨</div>
         </div>
 
         <div class="panel">
@@ -308,7 +358,6 @@
   const status = document.getElementById("status");
   const music = document.getElementById("music");
 
-  const choiceResult = document.getElementById("choiceResult");
   const loveRange = document.getElementById("loveRange");
   const loveText = document.getElementById("loveText");
 
@@ -316,9 +365,19 @@
   const resetKissBtn = document.getElementById("resetKissBtn");
   const kissResult = document.getElementById("kissResult");
 
+  // Scratch
+  const scratchBox = document.getElementById("scratchBox");
+  const scratchCanvas = document.getElementById("scratchCanvas");
+  const scratchHint = document.getElementById("scratchHint");
+
   let noCount = 0;
   let heartsStarted = false;
   let kisses = 0;
+
+  // Scratch state
+  let isScratching = false;
+  let scratchedEnough = false;
+  let ctx;
 
   function vibrate(pattern) {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (_) {}
@@ -330,7 +389,6 @@
   }
 
   function moveNoButton() {
-    // ✅ resta dentro il contenitore dei bottoni
     const container = document.querySelector(".buttons");
     const c = container.getBoundingClientRect();
     const b = noBtn.getBoundingClientRect();
@@ -371,6 +429,10 @@
     music.play().catch(() => {});
 
     startHearts();
+
+    // init scratch AFTER final is visible (così ha dimensioni corrette)
+    initScratch();
+
     yesBtn.disabled = true;
     noBtn.disabled = true;
   }
@@ -382,7 +444,6 @@
       `linear-gradient(90deg, #ff4d6d ${v}%, rgba(255, 77, 109, 0.22) ${v}%)`;
   }
 
-  // ✅ Slider amore testo
   function updateLoveText(v) {
     if (v < 20) return "Ok… timida. Ma ti recupero a colpi di coccole 😌";
     if (v < 40) return "Stai iniziando a convincerti… bravissima 😏";
@@ -391,7 +452,6 @@
     return "Allarme: livello amore massimo. Procedo con baci immediati 💘";
   }
 
-  // Init slider
   paintLoveRange();
   loveText.textContent = updateLoveText(Number(loveRange.value));
 
@@ -426,22 +486,6 @@
     }
   });
 
-  // Missione
-  document.querySelectorAll(".choiceBtn[data-choice]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const c = btn.getAttribute("data-choice");
-      vibrate(20);
-
-      if (c === "pizza") {
-        choiceResult.textContent = "🍕 Pizza, film e abbracci illimitati. (Io porto i baci.)";
-      } else if (c === "cena") {
-        choiceResult.textContent = "🍝 Cena romantica + brindisi + ‘quanto sei bella’ ripetuto N volte 😌";
-      } else {
-        choiceResult.textContent = "🎁 Sorpresa: tu ti fai bella… al resto ci penso io 😏💘";
-      }
-    });
-  });
-
   // Timer dei baci
   function kissMessage(k) {
     if (k < 10) return `Baci: ${k} (stai scaldando l’atmosfera 😏)`;
@@ -460,6 +504,134 @@
     kisses = 0;
     kissResult.textContent = "Baci: 0";
   });
+
+  /* -------- GRATTA E SCOPRI -------- */
+  function resizeCanvasToBox() {
+    const rect = scratchBox.getBoundingClientRect();
+    const ratio = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+
+    scratchCanvas.width = Math.floor(rect.width * ratio);
+    scratchCanvas.height = Math.floor(rect.height * ratio);
+    scratchCanvas.style.width = rect.width + "px";
+    scratchCanvas.style.height = rect.height + "px";
+
+    ctx = scratchCanvas.getContext("2d");
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function drawCover() {
+    if (!ctx) return;
+    const rect = scratchBox.getBoundingClientRect();
+
+    // Cover "premium" (non PNG): gradiente + testo "GRATTA"
+    const g = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+    g.addColorStop(0, "#ffb3c1");
+    g.addColorStop(0.5, "#ff4d6d");
+    g.addColorStop(1, "#ff9a9e");
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, rect.width, rect.height);
+
+    // puntini glitter
+    for (let i = 0; i < 80; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25})`;
+      ctx.beginPath();
+      ctx.arc(Math.random() * rect.width, Math.random() * rect.height, Math.random() * 2 + 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // testo
+    ctx.fillStyle = "rgba(255,255,255,0.95)";
+    ctx.font = "700 18px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("GRATTA QUI ✨", rect.width / 2, rect.height / 2);
+  }
+
+  function scratchAt(clientX, clientY) {
+    if (!ctx || scratchedEnough) return;
+
+    const rect = scratchCanvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.arc(x, y, 18, 0, Math.PI * 2);
+    ctx.fill();
+
+    // check “quanto hai grattato” ogni tanto
+    checkScratchProgress();
+  }
+
+  let lastCheck = 0;
+  function checkScratchProgress() {
+    const now = Date.now();
+    if (now - lastCheck < 350) return;
+    lastCheck = now;
+
+    const rect = scratchBox.getBoundingClientRect();
+    const img = ctx.getImageData(0, 0, Math.floor(rect.width), Math.floor(rect.height)).data;
+
+    let transparent = 0;
+    const total = img.length / 4;
+    for (let i = 3; i < img.length; i += 4) {
+      if (img[i] === 0) transparent++;
+    }
+
+    const pct = transparent / total;
+    if (pct > 0.45 && !scratchedEnough) {
+      scratchedEnough = true;
+      scratchHint.textContent = "Premio sbloccato 😏💘";
+      vibrate([30, 30, 30]);
+      // pulisci tutto
+      ctx.clearRect(0, 0, rect.width, rect.height);
+    }
+  }
+
+  function initScratch() {
+    // evita re-init inutili
+    if (ctx) return;
+
+    resizeCanvasToBox();
+    drawCover();
+
+    const onDown = (e) => {
+      isScratching = true;
+      const p = getPoint(e);
+      scratchAt(p.x, p.y);
+      vibrate(10);
+    };
+
+    const onMove = (e) => {
+      if (!isScratching) return;
+      e.preventDefault();
+      const p = getPoint(e);
+      scratchAt(p.x, p.y);
+    };
+
+    const onUp = () => { isScratching = false; };
+
+    scratchCanvas.addEventListener("pointerdown", onDown);
+    scratchCanvas.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+
+    // se ruota lo schermo, ridisegna cover (se non ancora sbloccato)
+    window.addEventListener("resize", () => {
+      const already = scratchedEnough;
+      ctx = null;
+      resizeCanvasToBox();
+      if (!already) drawCover();
+    }, { passive: true });
+  }
+
+  function getPoint(e) {
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
+  }
 </script>
 
 </body>
