@@ -28,7 +28,7 @@
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     position: relative;
-   max-height: 88vh;   /* ✅ limita altezza su telefono */
+   max-height: 76vh;   /* ✅ limita altezza su telefono */
   overflow: auto;     /* ✅ abilita scroll dentro la card */
   -webkit-overflow-scrolling: touch; /* ✅ scroll fluido su iPhone */
   }
@@ -151,60 +151,69 @@
   }
 
   /* ---- MISURATORE: rosso + thumb FUOCO ---- */
-  #loveRange { accent-color: #ff4d6d; } /* fallback semplice */
+ /* ---- MISURATORE: rosso + thumb "fuoco" elegante (non PNG) ---- */
+#loveRange{
+  width: 100%;
+  accent-color: #ff4d6d; /* fallback */
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 77, 109, 0.22);
+  outline: none;
+}
 
-  #loveRange {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255, 77, 109, 0.25);
-    outline: none;
-  }
+/* Track */
+#loveRange::-webkit-slider-runnable-track{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 77, 109, 0.22);
+}
+#loveRange::-moz-range-track{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 77, 109, 0.22);
+}
 
-  #loveRange::-webkit-slider-runnable-track {
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255, 77, 109, 0.25);
-  }
+/* Thumb (Chrome/Safari/Edge) */
+#loveRange::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.95);
+  cursor: pointer;
+  margin-top: -10px;
 
-  #loveRange::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 34px;
-    height: 34px;
-    border: none;
-    background: transparent;
-    margin-top: -13px; /* centra il fuoco sulla barra */
-    cursor: pointer;
+  /* "fuoco" = gradienti caldi + glow */
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+    radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
+  box-shadow:
+    0 10px 18px rgba(255, 77, 109, 0.25),
+    0 0 16px rgba(255, 110, 70, 0.55);
+}
 
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23ff4d6d' d='M13.5 2s.5 3-1.5 5c-1.8 1.8-2.2 2.9-1.6 4.1.2.4.6.8 1.2 1.2-.1-1.5.7-2.7 2.4-3.7 0 0 4.2 4.1 4.2 8.1 0 3.5-2.8 6.3-6.3 6.3S5.7 20.2 5.7 16.7c0-3.2 2.2-5.5 4.7-7.8C12.7 6.8 13.5 2 13.5 2z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 28px 28px;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
-  }
+/* Thumb (Firefox) */
+#loveRange::-moz-range-thumb{
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.95);
+  cursor: pointer;
 
-  #loveRange::-moz-range-track {
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255, 77, 109, 0.25);
-  }
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0 18%, rgba(255,255,255,0) 19% 100%),
+    radial-gradient(circle at 55% 65%, rgba(255, 190, 90, 0.95) 0 35%, rgba(255, 110, 70, 0.95) 55%, rgba(255, 77, 109, 1) 100%);
+  box-shadow:
+    0 10px 18px rgba(255, 77, 109, 0.25),
+    0 0 16px rgba(255, 110, 70, 0.55);
+}
 
-  #loveRange::-moz-range-thumb {
-    width: 34px;
-    height: 34px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23ff4d6d' d='M13.5 2s.5 3-1.5 5c-1.8 1.8-2.2 2.9-1.6 4.1.2.4.6.8 1.2 1.2-.1-1.5.7-2.7 2.4-3.7 0 0 4.2 4.1 4.2 8.1 0 3.5-2.8 6.3-6.3 6.3S5.7 20.2 5.7 16.7c0-3.2 2.2-5.5 4.7-7.8C12.7 6.8 13.5 2 13.5 2z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 28px 28px;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
-  }
-
+/* Piccola animazione quando lo tocchi */
+#loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
+#loveRange:active::-moz-range-thumb{ transform: scale(1.06); }
   /* Cuori */
   .heart {
     position: fixed;
@@ -437,4 +446,5 @@
 
 </body>
 </html>
+
 
