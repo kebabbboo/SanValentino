@@ -137,31 +137,7 @@
   body.goldAmbient.on .card{ backdrop-filter:none; -webkit-backdrop-filter:none; }
   */
 
-  .card::before{
-    content:"";
-    position:absolute; inset:0;
-    border-radius: 28px;
-    background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
-    background-size: 24px 24px;
-    opacity:.05;
-    pointer-events:none;
-    z-index: 0;
-  }
 
-  /* ✨ inner glow nella card */
-  .card::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius: 28px;
-    pointer-events:none;
-    z-index: 0;
-    box-shadow:
-      0 0 0 1px rgba(241,223,177,.09) inset,
-      0 0 28px rgba(241,223,177,.08) inset,
-      0 0 70px rgba(216,182,122,.06) inset;
-    opacity: .95;
-  }
 
   .topRow{
     display:flex;
@@ -1591,6 +1567,7 @@ function stopGoldVibes(){
 
 </body>
 </html>
+
 
 
 
