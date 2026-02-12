@@ -411,6 +411,35 @@
       0 0 36px rgba(241,223,177,.09) inset,
       0 0 90px rgba(216,182,122,.06) inset;
   }
+ /* Glow “flash” SOLO dentro la central */
+.central::after{
+  content:"";
+  position:absolute;
+  inset:0;                 /* NON negativo */
+  border-radius:20px;      /* uguale alla .central */
+  pointer-events:none;
+
+  background: radial-gradient(circle at 50% 35%,
+    rgba(241,223,177,.36),
+    rgba(216,182,122,.22),
+    rgba(241,223,177,0) 62%);
+
+  opacity:0;
+
+  /* niente scale e niente blur eccessivo */
+}
+
+/* quando attivo */
+.central.ambientGlow::after{
+  animation: ambientFlash 820ms ease-out both;
+}
+
+/* animazione pulita senza espansione */
+@keyframes ambientFlash{
+  0%   { opacity:0; }
+  30%  { opacity:1; }
+  100% { opacity:0; }
+}
 
   /* glow “flash” quando brindiamo */
 
@@ -1567,6 +1596,7 @@ function stopGoldVibes(){
 
 </body>
 </html>
+
 
 
 
