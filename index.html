@@ -55,36 +55,72 @@
       linear-gradient(135deg, var(--bg1), var(--bg2));
   }
 
-  /* =========================
-     💛 GOLD AMBIENT (pulsante + sfondo “che luccica”)
-     ========================= */
-  body.goldAmbient::after{
-    content:"";
-    position: fixed;
-    inset:-20vh -20vw;
-    pointer-events:none;
-    z-index: 0;
-    background:
-      radial-gradient(700px 560px at 50% 35%,
-        rgba(241,223,177,.18),
-        rgba(216,182,122,.10) 42%,
-        rgba(0,0,0,0) 70%);
-    filter: blur(10px);
-    opacity: 0;
-    transform: scale(1.02);
-    transition: opacity 520ms ease;
-  }
-  body.goldAmbient.on::after{ opacity: 1; }
+ /* =========================
+   💛 GOLD AMBIENT (più visibile, pulsa davvero)
+   ========================= */
 
-  /* scintillio “soft” sul background quando la musica suona */
-  body.goldAmbient.on{
-    animation: bgSparkle 1.6s ease-in-out infinite;
+/* layer largo (soft) */
+body.goldAmbient::before{
+  content:"";
+  position: fixed;
+  inset:-30vh -30vw;
+  pointer-events:none;
+  z-index: 0;
+  background:
+    radial-gradient(900px 720px at 50% 35%,
+      rgba(241,223,177,.10),
+      rgba(216,182,122,.06) 45%,
+      rgba(0,0,0,0) 72%);
+  filter: blur(14px);
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 520ms ease;
+}
+
+/* layer più “centrato” (quello che pulsa) */
+body.goldAmbient::after{
+  content:"";
+  position: fixed;
+  inset:-22vh -22vw;
+  pointer-events:none;
+  z-index: 0;
+  background:
+    radial-gradient(700px 560px at 50% 35%,
+      rgba(241,223,177,.18),
+      rgba(216,182,122,.10) 42%,
+      rgba(0,0,0,0) 70%);
+  filter: blur(10px);
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 520ms ease;
+}
+
+/* accensione */
+body.goldAmbient.on::before{ opacity: 1; }
+body.goldAmbient.on::after { opacity: 1; }
+
+/* pulsazione vera sul glow */
+body.goldAmbient.on::after{
+  animation: ambientPulse 1.35s ease-in-out infinite;
+}
+
+@keyframes ambientPulse{
+  0%{
+    opacity: .45;
+    transform: scale(1.01);
+    filter: blur(10px) saturate(1);
   }
-  @keyframes bgSparkle{
-    0%   { filter: brightness(1); }
-    50%  { filter: brightness(1.03); }
-    100% { filter: brightness(1); }
+  50%{
+    opacity: .95;
+    transform: scale(1.045);
+    filter: blur(10px) saturate(1.15);
   }
+  100%{
+    opacity: .45;
+    transform: scale(1.01);
+    filter: blur(10px) saturate(1);
+  }
+}
 
   .frame{
     width: 92%;
@@ -1533,3 +1569,4 @@
 
 </body>
 </html>
+
