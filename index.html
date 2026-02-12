@@ -56,52 +56,34 @@
   }
 
   /* =========================
-     💛 DOUBLE GOLD AMBIENT GLOW (pulsante + "aria")
+     💛 GOLD AMBIENT (pulsante + sfondo “che luccica”)
      ========================= */
-  body.goldAmbient::before,
   body.goldAmbient::after{
     content:"";
     position: fixed;
-    inset:-22vh -22vw;
+    inset:-20vh -20vw;
     pointer-events:none;
-    z-index: -1; /* ✅ dietro a tutto */
-    opacity: 0;
-    transition: opacity 520ms ease;
-    transform: scale(1.02);
-  }
-
-  /* layer grande e morbido */
-  body.goldAmbient::after{
+    z-index: 0;
     background:
-      radial-gradient(780px 620px at 50% 34%,
-        rgba(241,223,177,.16),
-        rgba(216,182,122,.09) 44%,
-        rgba(0,0,0,0) 72%);
-    filter: blur(14px);
-  }
-
-  /* layer più stretto “sparkly” */
-  body.goldAmbient::before{
-    background:
-      radial-gradient(520px 420px at 50% 38%,
-        rgba(241,223,177,.13),
-        rgba(241,223,177,0) 68%);
+      radial-gradient(700px 560px at 50% 35%,
+        rgba(241,223,177,.18),
+        rgba(216,182,122,.10) 42%,
+        rgba(0,0,0,0) 70%);
     filter: blur(10px);
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 520ms ease;
   }
+  body.goldAmbient.on::after{ opacity: 1; }
 
-  body.goldAmbient.on::before,
-  body.goldAmbient.on::after{
-    opacity: 1;
-    animation: ambientPulse 1.6s ease-in-out infinite;
+  /* scintillio “soft” sul background quando la musica suona */
+  body.goldAmbient.on{
+    animation: bgSparkle 1.6s ease-in-out infinite;
   }
-  body.goldAmbient.on::before{
-    animation-duration: 1.05s; /* ✅ doppio ritmo */
-  }
-
-  @keyframes ambientPulse{
-    0%   { opacity:.55; transform: scale(1.015); }
-    50%  { opacity:1;   transform: scale(1.045); }
-    100% { opacity:.55; transform: scale(1.015); }
+  @keyframes bgSparkle{
+    0%   { filter: brightness(1); }
+    50%  { filter: brightness(1.03); }
+    100% { filter: brightness(1); }
   }
 
   .frame{
@@ -115,6 +97,8 @@
       rgba(255,90,118,.11)
     );
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1; /* sopra l'ambient */
   }
 
   .card{
@@ -313,16 +297,19 @@
     margin-top: 6px;
   }
 
-  /* ✅ FIX IMMAGINE: niente tag duplicati */
+  /* ✅ FIX immagine: niente “granulosità” da scaling */
   .photo{
     width:100%;
-    max-height: 220px;
+    height: 220px;           /* meglio di max-height per evitare stretching strano */
     object-fit: cover;
+    object-position: center;
     border-radius: 18px;
     margin: 10px 0 6px;
     box-shadow: 0 18px 35px rgba(0,0,0,.35);
     animation: photoIn 520ms ease both;
     image-rendering: auto;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
   @keyframes photoIn{
     from{ opacity:0; transform: translateY(8px) scale(.97); }
@@ -332,13 +319,14 @@
   .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
 
   .panel{
-    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.028));
+    background: linear-gradient(180deg, var(--panel1), var(--panel2));
     border: 1px solid rgba(216,182,122,.16);
     border-radius: 18px;
     padding: 12px;
     position: relative;
     overflow:hidden;
   }
+
   .panel::before{
     content:"";
     position:absolute;
@@ -351,6 +339,7 @@
     );
     opacity:.9;
   }
+
   .panelHeader{
     display:flex;
     align-items:center;
@@ -359,6 +348,7 @@
     margin-bottom: 8px;
     padding-left: 10px;
   }
+
   .panelTitle{
     margin:0;
     font-size: 14.5px;
@@ -368,6 +358,7 @@
     gap: 8px;
     letter-spacing: .2px;
   }
+
   .result{
     margin-top: 8px;
     font-size: 14.5px;
@@ -375,133 +366,6 @@
     text-align:center;
     padding-left: 10px;
   }
-/* =========================
-   ✅ RIPRISTINO STILE: Misuratore amore + Kiss Counter
-   ========================= */
-
-/* Slider */
-.sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
-
-#loveRange{
-  width:100%;
-  -webkit-appearance:none;
-  appearance:none;
-  height: 10px;
-  border-radius: 999px;
-  outline:none;
-  background: linear-gradient(90deg, var(--rose) 50%, rgba(255,90,118,.16) 50%);
-}
-#loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
-#loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
-
-#loveRange::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  appearance:none;
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  border: 2px solid rgba(255,255,255,.72);
-  cursor:pointer;
-  margin-top: -10px;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,.65) 0 18%, rgba(255,255,255,0) 19% 100%),
-    radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,90,118,1) 100%);
-  box-shadow:
-    0 10px 18px rgba(255,90,118,.16),
-    0 0 16px rgba(255,110,70,.36);
-}
-#loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
-
-#loveRange::-moz-range-thumb{
-  width: 30px; height:30px; border-radius:999px;
-  border: 2px solid rgba(255,255,255,.72);
-  cursor:pointer;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,.65) 0 18%, rgba(255,255,255,0) 19% 100%),
-    radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,90,118,1) 100%);
-  box-shadow:
-    0 10px 18px rgba(255,90,118,.16),
-    0 0 16px rgba(255,110,70,.36);
-}
-
-/* Kiss counter */
-.kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
-.kissTop{
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.kissBig{
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: .6px;
-  color: rgba(241,223,177,.98);
-  line-height: 1;
-  display:flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.kissBig span{
-  font-size: 13px;
-  color: rgba(207,199,187,.95);
-  font-weight: 700;
-  letter-spacing: .2px;
-}
-
-.kissBar{
-  width:100%;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(216,182,122,.16);
-  overflow:hidden;
-}
-.kissFill{
-  height:100%;
-  width:0%;
-  background: linear-gradient(90deg, rgba(241,223,177,.92), rgba(255,90,118,.52));
-  border-radius: 999px;
-  transition: width 180ms ease;
-}
-
-.kissBtns{
-  display:flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content:center;
-}
-.kissBtn{
-  background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.55));
-  color:#16151a;
-  font-weight: 900;
-  box-shadow: 0 14px 26px rgba(216,182,122,.14);
-}
-.kissReset{
-  background: rgba(255,255,255,.055);
-  border: 1px solid rgba(241,223,177,.18);
-  color: rgba(245,242,234,.92);
-}
-
-.pop{ animation: pop 220ms ease-out; }
-@keyframes pop{ 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
-
-.kissFloat{
-  position:absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events:none;
-  opacity: 0;
-  animation: kissFloat 900ms ease-out forwards;
-  z-index: 30;
-  filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
-}
-@keyframes kissFloat{
-  0%{ opacity:0; transform: translateX(-50%) translateY(0) scale(.9); }
-  15%{ opacity:1; }
-  100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
-}
 
   /* ---------- Central Scratch ---------- */
   .central{
@@ -515,26 +379,26 @@
     position: relative;
   }
 
-  /* glow breve quando clicchi brindiamo */
+  /* glow locale quando brindiamo */
   .central::after{
     content:"";
     position:absolute;
     inset:-26px;
     border-radius: 26px;
     background: radial-gradient(circle at 50% 35%,
-      rgba(241,223,177,.24),
-      rgba(216,182,122,.12),
+      rgba(241,223,177,.26),
+      rgba(216,182,122,.14),
       rgba(241,223,177,0) 62%);
     opacity: 0;
     transform: scale(.98);
     pointer-events:none;
     filter: blur(6px);
   }
-  .central.ambientGlow::after{ animation: centralGlow 640ms ease-out both; }
-  @keyframes centralGlow{
+  .central.ambientGlow::after{ animation: ambientGlow 720ms ease-out both; }
+  @keyframes ambientGlow{
     0%   { opacity:0; transform: scale(.97); }
     28%  { opacity:1; transform: scale(1); }
-    100% { opacity:0; transform: scale(1.04); }
+    100% { opacity:0; transform: scale(1.05); }
   }
 
   .centralTitle{
@@ -544,6 +408,7 @@
     color: var(--gold2);
     margin: 0 0 6px 10px;
   }
+
   .centralSub{
     margin: 0 0 10px 10px;
     color: rgba(207,199,187,.90);
@@ -567,6 +432,7 @@
     padding: 18px 14px 18px;
     text-align:center;
   }
+
   .scratchPrize .big{
     font-family: var(--font-title);
     font-size: 22px;
@@ -575,6 +441,7 @@
     margin-bottom: 10px;
     letter-spacing: .7px;
   }
+
   .scratchPrize .small{
     font-size: 15px;
     color: rgba(245,242,234,.95);
@@ -619,7 +486,7 @@
   }
   .reserved.show{ opacity: 1; transform: translateY(0); }
 
-  /* burst / floaties */
+  /* Sparkle burst */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -637,14 +504,51 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
+  /* Cuori + stelle che salgono */
   .floaty{
     position: fixed;
     bottom:-30px;
     animation: floatUp 4.2s linear forwards;
     pointer-events:none;
     filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
+    z-index: 5;
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
+
+  /* Toast special effects */
+  .foilDot{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events:none;
+    opacity: 0;
+    z-index: 60;
+    animation: foil 920ms ease-out forwards;
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.25));
+  }
+  @keyframes foil{
+    0%   { opacity:0; transform: translate(-50%,-50%) scale(.85); }
+    15%  { opacity:1; }
+    100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
+  }
+
+  .bubble{
+    position:absolute;
+    left:50%;
+    top: 55%;
+    transform: translate(-50%,-50%);
+    pointer-events:none;
+    opacity:0;
+    z-index: 60;
+    animation: bubble 1100ms ease-out forwards;
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.25));
+  }
+  @keyframes bubble{
+    0%   { opacity:0; transform: translate(-50%,-50%) scale(.9); }
+    15%  { opacity:1; }
+    100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.25); }
+  }
 
   /* Toast pop */
   .toastBtn.toastPop{
@@ -674,7 +578,7 @@
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* 🍾 Champagne spray */
+  /* 🍾 Champagne spray (più elegante) */
   .champDrop{
     position: fixed;
     left: 0; top: 0;
@@ -706,15 +610,30 @@
     }
   }
 
-  /* ✅ glow pulsante (continuo finché suona) */
+  /* 💛 GOLD GLOW sul bottone “Brindiamo” (doppio: halo + pulse) */
   .toastBtn.goldGlow{
     box-shadow:
       0 16px 30px rgba(216,182,122,.18),
       0 0 0 1px rgba(241,223,177,.15) inset,
-      0 0 26px rgba(241,223,177,.10);
+      0 0 26px rgba(241,223,177,.12);
+  }
+  .toastBtn.goldGlow::before{
+    content:"";
+    position:absolute;
+    inset:-16px;
+    border-radius:999px;
+    background: radial-gradient(circle at 50% 50%,
+      rgba(241,223,177,.34),
+      rgba(241,223,177,0) 65%);
+    opacity:0;
+    transform: scale(.95);
+    pointer-events:none;
   }
   .toastBtn.goldGlow.pulse{
     animation: goldPulse 1.25s ease-in-out infinite;
+  }
+  .toastBtn.goldGlow.pulse::before{
+    animation: goldHalo 1.25s ease-in-out infinite;
   }
   @keyframes goldPulse{
     0%{
@@ -725,11 +644,11 @@
         0 0 18px rgba(241,223,177,.10);
     }
     50%{
-      filter: brightness(1.04);
+      filter: brightness(1.05);
       box-shadow:
-        0 18px 38px rgba(216,182,122,.28),
-        0 0 0 1px rgba(241,223,177,.20) inset,
-        0 0 34px rgba(241,223,177,.18);
+        0 18px 38px rgba(216,182,122,.30),
+        0 0 0 1px rgba(241,223,177,.22) inset,
+        0 0 36px rgba(241,223,177,.20);
     }
     100%{
       filter: brightness(1);
@@ -739,12 +658,137 @@
         0 0 18px rgba(241,223,177,.10);
     }
   }
+  @keyframes goldHalo{
+    0%   { opacity:.05; transform: scale(.96); }
+    50%  { opacity:.18; transform: scale(1.02); }
+    100% { opacity:.05; transform: scale(.96); }
+  }
+
+  /* =========================
+     ✅ RIPRISTINO STILE: Misuratore amore + Kiss Counter
+     ========================= */
+  .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
+
+  #loveRange{
+    width:100%;
+    -webkit-appearance:none;
+    appearance:none;
+    height: 10px;
+    border-radius: 999px;
+    outline:none;
+    background: linear-gradient(90deg, var(--rose) 50%, rgba(255,90,118,.16) 50%);
+  }
+  #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
+  #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
+
+  #loveRange::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,.72);
+    cursor:pointer;
+    margin-top: -10px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.65) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,90,118,1) 100%);
+    box-shadow:
+      0 10px 18px rgba(255,90,118,.16),
+      0 0 16px rgba(255,110,70,.36);
+  }
+  #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
+
+  #loveRange::-moz-range-thumb{
+    width: 30px; height:30px; border-radius:999px;
+    border: 2px solid rgba(255,255,255,.72);
+    cursor:pointer;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.65) 0 18%, rgba(255,255,255,0) 19% 100%),
+      radial-gradient(circle at 55% 65%, rgba(255,190,90,.95) 0 35%, rgba(255,110,70,.95) 55%, rgba(255,90,118,1) 100%);
+    box-shadow:
+      0 10px 18px rgba(255,90,118,.16),
+      0 0 16px rgba(255,110,70,.36);
+  }
+
+  .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
+  .kissTop{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .kissBig{
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: .6px;
+    color: rgba(241,223,177,.98);
+    line-height: 1;
+    display:flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .kissBig span{
+    font-size: 13px;
+    color: rgba(207,199,187,.95);
+    font-weight: 700;
+    letter-spacing: .2px;
+  }
+
+  .kissBar{
+    width:100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(216,182,122,.16);
+    overflow:hidden;
+  }
+  .kissFill{
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, rgba(241,223,177,.92), rgba(255,90,118,.52));
+    border-radius: 999px;
+    transition: width 180ms ease;
+  }
+
+  .kissBtns{
+    display:flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  .kissBtn{
+    background: linear-gradient(135deg, rgba(241,223,177,.92), rgba(216,182,122,.55));
+    color:#16151a;
+    font-weight: 900;
+    box-shadow: 0 14px 26px rgba(216,182,122,.14);
+  }
+  .kissReset{
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(241,223,177,.18);
+    color: rgba(245,242,234,.92);
+  }
+
+  .pop{ animation: pop 220ms ease-out; }
+  @keyframes pop{ 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+
+  .kissFloat{
+    position:absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events:none;
+    opacity: 0;
+    animation: kissFloat 900ms ease-out forwards;
+    z-index: 30;
+    filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
+  }
 
   /* ✅ riduci animazioni se richiesto dal sistema */
   @media (prefers-reduced-motion: reduce){
-    .toastParticle, .champDrop, .burstPiece, .floaty { animation: none !important; opacity: 0 !important; }
-    .toastBtn.toastPop { animation: none !important; }
-    body.goldAmbient.on::before, body.goldAmbient.on::after { animation: none !important; opacity: 0 !important; }
+    body.goldAmbient.on{ animation:none !important; }
+    .toastParticle, .champDrop, .burstPiece, .bubble, .foilDot, .floaty, .kissFloat { animation: none !important; opacity: 0 !important; }
+    .toastBtn.toastPop, .toastBtn.goldGlow.pulse, .toastBtn.goldGlow.pulse::before { animation: none !important; }
     .central.ambientGlow::after { animation: none !important; opacity: 0 !important; }
   }
 </style>
@@ -805,8 +849,8 @@
           <div id="reserved" class="reserved">🥂 Tavolo prenotato</div>
         </div>
 
-        <!-- ✅ FIX: una sola immagine -->
-        <img class="photo" alt="Noi 🩶" src="assets/noi.webp" />
+        <!-- ✅ FIX HTML immagine (prima era spezzata) -->
+        <img class="photo" alt="Noi 🩶" src="assets/noi.webp" loading="lazy" decoding="async" />
 
         <p>
           Allora è deciso 😌<br><br>
@@ -815,43 +859,10 @@
         </p>
 
         <div class="grid">
-  <div class="panel">
-    <div class="panelHeader">
-      <h3 class="panelTitle">🩶 Misuratore di amore</h3>
-    </div>
-    <div class="sliderWrap">
-      <input id="loveRange" type="range" min="0" max="100" value="50" />
-      <div id="loveText" class="result">Direi che siamo già ad un ottimo livello 😌</div>
-    </div>
-  </div>
-
-  <div class="panel" id="kissPanel">
-    <div class="panelHeader">
-      <h3 class="panelTitle">😚 Kiss counter</h3>
-    </div>
-
-    <div class="kissWrap">
-      <div class="kissTop">
-        <div class="kissBig" id="kissBig">0 <span>baci</span></div>
-        <div style="color: rgba(207,199,187,.92); font-size: 13px; font-weight:700;">
-          obiettivo: <span id="kissGoal">30</span>
-        </div>
-      </div>
-
-      <div class="kissBar">
-        <div class="kissFill" id="kissFill"></div>
-      </div>
-
-      <div class="kissBtns">
-        <button class="kissBtn" id="kissBtn">Bacio +1 💋</button>
-        <button class="kissReset" id="resetKissBtn">Reset 😇</button>
-      </div>
-
-      <div id="kissResult" class="result">Se rimane 0 non andiamo da nessuna parte 🖕🏽</div>
-    </div>
-  </div>
-</div>
-
+          <div class="panel">
+            <div class="panelHeader">
+              <h3 class="panelTitle">🩶 Misuratore di amore</h3>
+            </div>
             <div class="sliderWrap">
               <input id="loveRange" type="range" min="0" max="100" value="50" />
               <div id="loveText" class="result">Direi che siamo già ad un ottimo livello 😌</div>
@@ -888,6 +899,7 @@
     </div>
   </div>
 
+  <!-- 🎵 MUSICA -->
   <audio id="music" loop preload="auto">
     <source src="assets/song.mp3" type="audio/mpeg">
   </audio>
@@ -924,6 +936,7 @@
   let noCount = 0;
   let floatiesStarted = false;
 
+  // Kisses
   let kisses = 0;
   const kissGoal = 30;
 
@@ -933,13 +946,13 @@
   let scratchedEnough = false;
   let ratio = 1;
 
-  // Cooldown effetti brindisi
+  // Cooldown effetti brindisi (evita spam)
   let lastToastFx = 0;
-  const TOAST_FX_COOLDOWN = 220;
+  const TOAST_FX_COOLDOWN = 220; // ms
 
   // Audio
   let musicStartedOnce = false;
-  let fading = false;
+  let fadeTimer = null;
 
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
@@ -970,7 +983,7 @@
   }
 
   function startFloaties() {
-    if (floatiesStarted) return;
+    if (floatiesStarted || reduceMotion) return;
     floatiesStarted = true;
 
     const symbols = ["❤️","💖","💕","✨","⭐","🌟","💫"];
@@ -985,75 +998,76 @@
     }, 250);
   }
 
-  // =========================
-  // 💛 Gold vibes agganciati alla musica
-  // =========================
+  /* =========================
+     💛 GOLD VIBES (pulsante + ambient)
+     ========================= */
   function startGoldVibes(){
     document.body.classList.add("goldAmbient","on");
     if (toastBtn) toastBtn.classList.add("goldGlow","pulse");
   }
   function stopGoldVibes(){
-    document.body.classList.remove("on"); // spegne il glow ambient
+    document.body.classList.remove("on");
     if (toastBtn) toastBtn.classList.remove("pulse");
   }
-  music.addEventListener("play", startGoldVibes);
-  music.addEventListener("pause", stopGoldVibes);
-  music.addEventListener("ended", stopGoldVibes);
 
-  // =========================
-  // 🎵 Fade in / fade out
-  // =========================
-  function fadeTo(target, ms){
-    return new Promise((resolve) => {
-      if (fading) return resolve();
-      fading = true;
-
-      const start = music.volume ?? 0;
-      const t0 = performance.now();
-
-      const step = (t) => {
-        const k = Math.min(1, (t - t0) / ms);
-        music.volume = start + (target - start) * k;
-        if (k < 1) requestAnimationFrame(step);
-        else { fading = false; resolve(); }
-      };
-      requestAnimationFrame(step);
-    });
+  /* =========================
+     🎚️ Fade volume helper
+     ========================= */
+  function fadeVolumeTo(target, ms, onDone){
+    try{
+      if (fadeTimer) clearInterval(fadeTimer);
+      const start = music.volume;
+      const diff = target - start;
+      const steps = Math.max(1, Math.floor(ms / 35));
+      let i = 0;
+      fadeTimer = setInterval(() => {
+        i++;
+        const v = start + diff * (i / steps);
+        music.volume = Math.max(0, Math.min(1, v));
+        if (i >= steps){
+          clearInterval(fadeTimer);
+          fadeTimer = null;
+          music.volume = target;
+          onDone?.();
+        }
+      }, 35);
+    } catch (_){}
   }
 
   async function safePlayMusic() {
     try {
+      // parte da “tot tempo”
       if (!musicStartedOnce) {
-        music.currentTime = 12; // ✅ parte da tot secondi
+        music.currentTime = 12; // cambia qui (secondi)
         musicStartedOnce = true;
       }
 
       music.volume = 0;
       await music.play();
+      startGoldVibes();
 
-      // piccolo "cin cin" sincronizzato quando parte
-      setTimeout(() => {
-        if (!reduceMotion && typeof champagneSprayFromButton === "function" && toastBtn){
-          champagneSprayFromButton(toastBtn);
-        }
-      }, 180);
+      // fade-in elegante
+      fadeVolumeTo(0.35, 800);
 
-      await fadeTo(0.35, 900); // ✅ fade-in elegante
+      // micro-spray sincronizzato all’avvio
+      if (!reduceMotion){
+        setTimeout(() => {
+          if (toastBtn) champagneSprayFromButton(toastBtn);
+        }, 180);
+      }
     } catch (_) {}
   }
 
-  async function fadeOutAndPause() {
-    try {
-      await fadeTo(0, 650);   // ✅ fade-out elegante
-      music.pause();
-    } catch (_) {
-      try { music.pause(); } catch(e){}
-    }
+  function fadeOutAndPause(){
+    try{
+      if (music.paused) return;
+      fadeVolumeTo(0, 650, () => {
+        music.pause();
+        stopGoldVibes();
+      });
+    } catch(_){}
   }
 
-  // =========================
-  // Flow Sì/No
-  // =========================
   function doYesFlow() {
     finalBox.classList.remove("hidden");
     showStatus("questa è la scelta giusta 😌");
@@ -1066,6 +1080,7 @@
     yesBtn.disabled = true;
     noBtn.disabled = true;
   }
+
   yesBtn.addEventListener("click", doYesFlow);
 
   noBtn.addEventListener("click", () => {
@@ -1088,22 +1103,25 @@
     }
   });
 
-  // Toggle musica (con fade out)
+  // Music toggle (con fade in/out)
   if (musicBtn) {
     musicBtn.addEventListener("click", async () => {
       if (music.paused) {
         await safePlayMusic();
         musicBtn.textContent = "♪ Pausa";
       } else {
-        await fadeOutAndPause();
         musicBtn.textContent = "♪ Play";
+        fadeOutAndPause();
       }
     });
   }
 
-  // =========================
-  // 🥂 Toast FX
-  // =========================
+  // Sicurezza: se cambi tab, non blastare musica
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) fadeOutAndPause();
+  });
+
+  // ---------- Toast effects ----------
   const toastPhrases = [
     "Cin cin, principessa mia 🥂",
     "A noi. Sempre. ✨",
@@ -1115,6 +1133,53 @@
   ];
   let toastIndex = 0;
   let toastMode = 0;
+
+  function sparkleBurst(host){
+    if (reduceMotion) return;
+    const symbols = ["✨","⭐","🌟","💫","🥂"];
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement("div");
+      s.className = "burstPiece";
+      s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      s.style.setProperty("--dx", (Math.random()*220 - 110).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.random()*170 - 85).toFixed(0) + "px");
+      s.style.fontSize = (12 + Math.random()*16).toFixed(0) + "px";
+      host.appendChild(s);
+      setTimeout(() => s.remove(), 950);
+    }
+  }
+
+  function foilConfetti(host){
+    if (reduceMotion) return;
+    const dots = 18;
+    for (let i = 0; i < dots; i++){
+      const d = document.createElement("div");
+      d.className = "foilDot";
+      const isGold = Math.random() < 0.75;
+      d.textContent = isGold ? "•" : "✦";
+      d.style.color = isGold ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.80)";
+      d.style.setProperty("--dx", (Math.random()*240 - 120).toFixed(0) + "px");
+      d.style.setProperty("--dy", (Math.random()*160 - 80).toFixed(0) + "px");
+      d.style.fontSize = (14 + Math.random()*14).toFixed(0) + "px";
+      host.appendChild(d);
+      setTimeout(() => d.remove(), 940);
+    }
+  }
+
+  function bubbleHearts(host){
+    if (reduceMotion) return;
+    const items = ["💖","💕","✨","⭐"];
+    for (let i = 0; i < 10; i++){
+      const b = document.createElement("div");
+      b.className = "bubble";
+      b.textContent = items[Math.floor(Math.random()*items.length)];
+      b.style.setProperty("--dx", (Math.random()*220 - 110).toFixed(0) + "px");
+      b.style.setProperty("--dy", (-120 - Math.random()*120).toFixed(0) + "px");
+      b.style.fontSize = (14 + Math.random()*18).toFixed(0) + "px";
+      host.appendChild(b);
+      setTimeout(() => b.remove(), 1120);
+    }
+  }
 
   function setRippleOnButton(btn, ev){
     const rect = btn.getBoundingClientRect();
@@ -1137,10 +1202,11 @@
     host.classList.remove("ambientGlow");
     void host.offsetWidth;
     host.classList.add("ambientGlow");
-    setTimeout(() => host.classList.remove("ambientGlow"), 750);
+    setTimeout(() => host.classList.remove("ambientGlow"), 780);
   }
 
   function toastParticlesFromButton(btn){
+    if (reduceMotion) return;
     const r = btn.getBoundingClientRect();
     const x = r.left + r.width/2;
     const y = r.top + r.height/2;
@@ -1163,6 +1229,7 @@
   }
 
   function champagneSprayFromButton(btn){
+    if (reduceMotion) return;
     const r = btn.getBoundingClientRect();
     const originX = r.left + r.width/2;
     const originY = r.top + r.height/2;
@@ -1185,10 +1252,11 @@
         const size = 6 + Math.random()*10;
         d.style.width = size.toFixed(0) + "px";
         d.style.height = size.toFixed(0) + "px";
-        d.style.boxShadow = isBubble ? "0 0 0 1px rgba(241,223,177,.22) inset" : "none";
+        d.style.boxShadow = isBubble
+          ? "0 0 0 1px rgba(241,223,177,.22) inset"
+          : "none";
       }
 
-      // più verticale
       const dx = (Math.random()*160 - 80);
       const dy = (-220 - Math.random()*180);
 
@@ -1204,49 +1272,6 @@
     }
   }
 
-  function sparkleBurst(host){
-    const symbols = ["✨","⭐","🌟","💫","🥂"];
-    for (let i = 0; i < 14; i++) {
-      const s = document.createElement("div");
-      s.className = "burstPiece";
-      s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-      s.style.setProperty("--dx", (Math.random()*220 - 110).toFixed(0) + "px");
-      s.style.setProperty("--dy", (Math.random()*170 - 85).toFixed(0) + "px");
-      s.style.fontSize = (12 + Math.random()*16).toFixed(0) + "px";
-      host.appendChild(s);
-      setTimeout(() => s.remove(), 950);
-    }
-  }
-
-  function foilConfetti(host){
-    const dots = 18;
-    for (let i = 0; i < dots; i++){
-      const d = document.createElement("div");
-      d.className = "burstPiece";
-      d.textContent = (Math.random() < 0.75) ? "•" : "✦";
-      d.style.color = (d.textContent === "•") ? "rgba(241,223,177,.95)" : "rgba(255,90,118,.80)";
-      d.style.setProperty("--dx", (Math.random()*240 - 120).toFixed(0) + "px");
-      d.style.setProperty("--dy", (Math.random()*160 - 80).toFixed(0) + "px");
-      d.style.fontSize = (14 + Math.random()*14).toFixed(0) + "px";
-      host.appendChild(d);
-      setTimeout(() => d.remove(), 940);
-    }
-  }
-
-  function bubbleHearts(host){
-    const items = ["💖","💕","✨","⭐"];
-    for (let i = 0; i < 10; i++){
-      const b = document.createElement("div");
-      b.className = "burstPiece";
-      b.textContent = items[Math.floor(Math.random()*items.length)];
-      b.style.setProperty("--dx", (Math.random()*220 - 110).toFixed(0) + "px");
-      b.style.setProperty("--dy", (-120 - Math.random()*120).toFixed(0) + "px");
-      b.style.fontSize = (14 + Math.random()*18).toFixed(0) + "px";
-      host.appendChild(b);
-      setTimeout(() => b.remove(), 1120);
-    }
-  }
-
   if (toastBtn) {
     toastBtn.addEventListener("click", (e) => {
       const now = Date.now();
@@ -1258,33 +1283,29 @@
 
       setRippleOnButton(toastBtn, e);
       pulseToastBtn(toastBtn);
+      ambientGlow(centralInvite);
 
-      if (!reduceMotion) ambientGlow(centralInvite);
-
-      if (canFx && !reduceMotion) {
+      if (canFx) {
         toastParticlesFromButton(toastBtn);
         champagneSprayFromButton(toastBtn);
       }
 
       toastMode = (toastMode + 1) % 3;
-      if (!reduceMotion) {
-        if (toastMode === 0) foilConfetti(centralInvite);
-        if (toastMode === 1) sparkleBurst(centralInvite);
-        if (toastMode === 2) bubbleHearts(centralInvite);
-      }
+      if (toastMode === 0) foilConfetti(centralInvite);
+      if (toastMode === 1) sparkleBurst(centralInvite);
+      if (toastMode === 2) bubbleHearts(centralInvite);
 
       vibrate(18);
     });
   }
 
-  // =========================
-  // Slider
-  // =========================
+  // Slider fill
   function paintLoveRange(){
     const v = Number(loveRange.value);
     loveRange.style.background =
       `linear-gradient(90deg, var(--rose) ${v}%, rgba(255,90,118,.16) ${v}%)`;
   }
+
   function updateLoveText(v) {
     if (v < 20) return "Mh, impossibile... hai sbagliato persona 😒";
     if (v < 40) return "Stai iniziando a convincerti… brava 😏";
@@ -1292,6 +1313,7 @@
     if (v < 80) return "Wow. Qua il livello è altissimo! 💕";
     return "Ngul, livello amore massimo. Ti amo! 🩶";
   }
+
   paintLoveRange();
   loveText.textContent = updateLoveText(Number(loveRange.value));
   loveRange.addEventListener("input", () => {
@@ -1299,9 +1321,7 @@
     paintLoveRange();
   });
 
-  // =========================
-  // Kiss counter
-  // =========================
+  /* ---------- KISS COUNTER ---------- */
   kissGoalEl.textContent = String(kissGoal);
 
   function setKissBig(){
@@ -1330,11 +1350,11 @@
   }
 
   function spawnKissFloat(){
+    if (reduceMotion) return;
     const el = document.createElement("div");
-    el.className = "burstPiece";
+    el.className = "kissFloat";
     el.textContent = ["💋","💕","💖","❤️","✨","⭐"][Math.floor(Math.random()*6)];
     el.style.setProperty("--dx", (Math.random()*120 - 60) + "px");
-    el.style.setProperty("--dy", (-120 - Math.random()*120) + "px");
     kissPanel.appendChild(el);
     setTimeout(() => el.remove(), 950);
   }
@@ -1346,7 +1366,7 @@
     vibrate(12);
     updateKissUI();
     kissPop();
-    if (!reduceMotion) spawnKissFloat();
+    spawnKissFloat();
   });
 
   resetKissBtn.addEventListener("click", () => {
@@ -1355,10 +1375,9 @@
     vibrate([20,20,20]);
   });
 
-  // =========================
-  // Scratch
-  // =========================
+  /* ---------- Scratch ---------- */
   function scratchBurst(){
+    if (reduceMotion) return;
     const symbols = ["✨","⭐","🌟","💫","❤️","🥂"];
     for (let i = 0; i < 22; i++) {
       const s = document.createElement("div");
@@ -1441,6 +1460,7 @@
     lastCheck = now;
 
     const img = ctx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height).data;
+
     const stride = 28;
     let cleared = 0, total = 0;
 
@@ -1458,7 +1478,7 @@
       scratchHint.textContent = "Svelato. 🥂✨ Si, è la stessa location di l'anno scorso perchè sono sempre senza mezzo e senza soldi 😄";
       vibrate([30, 30, 30]);
 
-      if (!reduceMotion) scratchBurst();
+      scratchBurst();
       if (reserved) reserved.classList.add("show");
     }
   }
@@ -1513,4 +1533,3 @@
 
 </body>
 </html>
-
