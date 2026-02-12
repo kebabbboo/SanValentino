@@ -440,7 +440,8 @@
       linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
     position: relative;
     z-index: 1;
-
+ overflow: hidden;     /* ✅ IMPORTANTISSIMO: taglia lo sbordo */
+  isolation: isolate;
     /* glow interno SEMPRE */
     box-shadow:
       0 0 0 1px rgba(241,223,177,.11) inset,
@@ -452,16 +453,18 @@
   .central::after{
     content:"";
     position:absolute;
-    inset:-30px;
-    border-radius: 26px;
+   inset: 0;                 /* ✅ niente più sbordo */
+  border-radius: 20px;      /* uguale al box */
+  filter: blur(10px) saturate(1.35);
+  transform: scale(1.12);
     background: radial-gradient(circle at 50% 35%,
       rgba(241,223,177,.36),
       rgba(216,182,122,.22),
       rgba(241,223,177,0) 62%);
     opacity: 0;
-    transform: scale(.98);
+  
     pointer-events:none;
-    filter: blur(7px) saturate(1.35);
+
   }
   .central.ambientGlow::after{ animation: ambientGlow 820ms ease-out both; }
   @keyframes ambientGlow{
@@ -1602,5 +1605,6 @@ const kissGoalEl = document.getElementById("kissGoal");
 
 </body>
 </html>
+
 
 
