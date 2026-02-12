@@ -487,17 +487,20 @@ body.goldAmbient.on::after{
     color: rgba(207,199,187,.90);
     font-size: 13px;
   }
+.scratchWrap{
+  position:relative;
+  border-radius: 18px;
+  overflow:hidden;
+  border: 1px solid rgba(241,223,177,.28);
+  background: rgba(0,0,0,.22);
 
-  .scratchWrap{
-    position:relative;
-    border-radius: 18px;
-    overflow:hidden;
-    border: 1px solid rgba(241,223,177,.28);
-    background: rgba(0,0,0,.22);
-    margin-left: 10px;
-    min-height: 185px;
-    box-shadow: 0 18px 40px rgba(0,0,0,.34);
-  }
+  margin-left: 10px;
+  width: calc(100% - 10px);   /* ✅ evita lo sbordo */
+
+  min-height: 185px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.34);
+}
+
 
   .scratchPrize{
     position: relative;
@@ -1609,6 +1612,7 @@ body.goldAmbient.on::after{
 
 </body>
 </html>
+
 
 
 
