@@ -85,11 +85,12 @@
   animation: ambientPulse 1.15s ease-in-out infinite;
 }
 
-@keyframes ambientPulse{
-  0%   { transform: scale(1.02); opacity: .60; }
-  50%  { transform: scale(1.08); opacity: 1; }
-  100% { transform: scale(1.02); opacity: .60; }
+@keyframes ambientGlow{
+  0%   { opacity:0; }
+  30%  { opacity:1; }
+  100% { opacity:0; }
 }
+
 
 
 
@@ -416,6 +417,7 @@
 
   /* ---------- Central Scratch ---------- */
   .central{
+   transform: translateZ(0);
     padding: 14px;
     border-radius: 20px;
     border: 1px solid rgba(241,223,177,.28);
@@ -435,22 +437,28 @@
   }
 
   /* glow “flash” quando brindiamo */
-  .central::after{
-    content:"";
-    position:absolute;
-   inset: 0;                 /* ✅ niente più sbordo */
-  border-radius: 20px;      /* uguale al box */
-  filter: blur(10px) saturate(1.35);
-  transform: scale(1.12);
-    background: radial-gradient(circle at 50% 35%,
-      rgba(241,223,177,.36),
-      rgba(216,182,122,.22),
-      rgba(241,223,177,0) 62%);
-    opacity: 0;
-  
-    pointer-events:none;
+.central::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events:none;
+  opacity: 0;
 
-  }
+  /* ✅ Safari: taglia SEMPRE il blur */
+  clip-path: inset(0 round 20px);
+  -webkit-clip-path: inset(0 round 20px);
+
+  /* ✅ evita che il blur “spinga fuori” */
+  filter: blur(10px) saturate(1.35);
+  transform: translateZ(0);
+
+  background: radial-gradient(circle at 50% 35%,
+    rgba(241,223,177,.36),
+    rgba(216,182,122,.22),
+    rgba(241,223,177,0) 62%);
+}
+
   .central.ambientGlow::after{ animation: ambientGlow 820ms ease-out both; }
   @keyframes ambientGlow{
     0%   { opacity:0; transform: scale(.97); }
@@ -1610,6 +1618,7 @@ function stopGoldVibes(){
 
 </body>
 </html>
+
 
 
 
