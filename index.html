@@ -56,8 +56,11 @@
   }
 
   /* =========================
-     💛 GOLD AMBIENT (SOLO quando musica ON)
+     💛 GOLD AMBIENT (SOLO con musica ON)
+     Nota: sta dietro alla card, ma la card con backdrop-filter lo “risucchia”.
+     Fix: quando ON rendiamo la card più opaca e riduciamo backdrop.
      ========================= */
+
   body.goldAmbient::before{
     content:"";
     position: fixed;
@@ -66,10 +69,10 @@
     z-index: 0;
     background:
       radial-gradient(1100px 860px at 50% 35%,
-        rgba(241,223,177,.16),
-        rgba(216,182,122,.10) 46%,
+        rgba(241,223,177,.18),
+        rgba(216,182,122,.12) 46%,
         rgba(0,0,0,0) 74%);
-    filter: blur(16px) saturate(1.25);
+    filter: blur(16px) saturate(1.35);
     opacity: 0;
     transform: scale(1.04);
     transition: opacity 520ms ease;
@@ -83,10 +86,10 @@
     z-index: 0;
     background:
       radial-gradient(780px 620px at 50% 34%,
-        rgba(241,223,177,.28),
-        rgba(216,182,122,.16) 42%,
+        rgba(241,223,177,.32),
+        rgba(216,182,122,.18) 42%,
         rgba(0,0,0,0) 70%);
-    filter: blur(12px) saturate(1.35);
+    filter: blur(12px) saturate(1.5);
     opacity: 0;
     transform: scale(1.02);
     transition: opacity 520ms ease;
@@ -100,21 +103,9 @@
   }
 
   @keyframes ambientPulse{
-    0%{
-      opacity: .55;
-      transform: scale(1.01);
-      filter: blur(12px) saturate(1.25);
-    }
-    50%{
-      opacity: 1;
-      transform: scale(1.07);
-      filter: blur(12px) saturate(1.55);
-    }
-    100%{
-      opacity: .55;
-      transform: scale(1.01);
-      filter: blur(12px) saturate(1.25);
-    }
+    0%   { opacity:.55; transform: scale(1.01); filter: blur(12px) saturate(1.35); }
+    50%  { opacity: 1;  transform: scale(1.07); filter: blur(12px) saturate(1.75); }
+    100% { opacity:.55; transform: scale(1.01); filter: blur(12px) saturate(1.35); }
   }
 
   .frame{
@@ -137,12 +128,28 @@
     padding: 18px 18px 16px;
     background: linear-gradient(180deg, var(--card1), var(--card2));
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     position: relative;
 
     max-height: 80vh;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+
+    isolation: isolate; /* stacking più pulito */
   }
+
+  /* ✅ FIX “sbordamento” su iPhone:
+     quando il glow ambient è ON, la card diventa più “solida”
+     e riduciamo l’effetto backdrop che mischia il glow dentro.
+  */
+  body.goldAmbient.on .card{
+    background: linear-gradient(180deg, rgba(14,15,22,.90), rgba(18,19,30,.82));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  /* Se vuoi “zero invasione” (più netto): decommenta queste 2 righe
+  body.goldAmbient.on .card{ backdrop-filter:none; -webkit-backdrop-filter:none; }
+  */
 
   .card::before{
     content:"";
@@ -155,7 +162,7 @@
     z-index: 0;
   }
 
-  /* ✅ FIX: inner glow della card SOLO quando musica ON (niente “sbordo”) */
+  /* ✨ inner glow nella card */
   .card::after{
     content:"";
     position:absolute;
@@ -164,13 +171,11 @@
     pointer-events:none;
     z-index: 0;
     box-shadow:
-      0 0 0 1px rgba(241,223,177,.08) inset,
-      0 0 26px rgba(241,223,177,.07) inset,
-      0 0 60px rgba(216,182,122,.05) inset;
-    opacity: 0;
-    transition: opacity 420ms ease;
+      0 0 0 1px rgba(241,223,177,.09) inset,
+      0 0 28px rgba(241,223,177,.08) inset,
+      0 0 70px rgba(216,182,122,.06) inset;
+    opacity: .95;
   }
-  body.goldAmbient.on .card::after{ opacity: .95; }
 
   .topRow{
     display:flex;
@@ -225,6 +230,8 @@
     height:1px;
     background: linear-gradient(90deg, transparent, rgba(216,182,122,.20), transparent);
     margin: 14px 0 12px;
+    position: relative;
+    z-index: 1;
   }
 
   .buttons{
@@ -301,6 +308,8 @@
     align-items:center;
     flex-wrap: wrap;
     margin: 10px 0 6px;
+    position: relative;
+    z-index: 1;
   }
 
   .ghostBtn{
@@ -318,6 +327,7 @@
     box-shadow: 0 16px 30px rgba(216,182,122,.16);
   }
 
+  /* ripple elegante sul toast */
   .toastBtn::after{
     content:"";
     position:absolute;
@@ -343,6 +353,8 @@
     font-size: 13.5px;
     color: rgba(207,199,187,.92);
     margin-top: 6px;
+    position: relative;
+    z-index: 1;
   }
 
   /* ✅ FIX immagine */
@@ -356,14 +368,17 @@
     box-shadow: 0 18px 35px rgba(0,0,0,.35);
     animation: photoIn 520ms ease both;
     image-rendering: auto;
+    -webkit-transform: translateZ(0);
     transform: translateZ(0);
+    position: relative;
+    z-index: 1;
   }
   @keyframes photoIn{
     from{ opacity:0; transform: translateY(8px) scale(.97); }
     to{ opacity:1; transform: translateY(0) scale(1); }
   }
 
-  .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+  .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; position:relative; z-index:1; }
 
   .panel{
     background: linear-gradient(180deg, var(--panel1), var(--panel2));
@@ -424,25 +439,24 @@
       radial-gradient(700px 260px at 85% 40%, rgba(255,90,118,.08), rgba(0,0,0,0)),
       linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
     position: relative;
-  }
+    z-index: 1;
 
-  /* ✅ glow interno del centrale SOLO quando musica ON */
-  body.goldAmbient.on .central{
+    /* glow interno SEMPRE */
     box-shadow:
-      0 0 0 1px rgba(241,223,177,.10) inset,
-      0 0 34px rgba(241,223,177,.08) inset,
-      0 0 80px rgba(216,182,122,.06) inset;
+      0 0 0 1px rgba(241,223,177,.11) inset,
+      0 0 36px rgba(241,223,177,.09) inset,
+      0 0 90px rgba(216,182,122,.06) inset;
   }
 
-  /* glow “burst” quando clicchi brindiamo */
+  /* glow “flash” quando brindiamo */
   .central::after{
     content:"";
     position:absolute;
     inset:-30px;
     border-radius: 26px;
     background: radial-gradient(circle at 50% 35%,
-      rgba(241,223,177,.34),
-      rgba(216,182,122,.20),
+      rgba(241,223,177,.36),
+      rgba(216,182,122,.22),
       rgba(241,223,177,0) 62%);
     opacity: 0;
     transform: scale(.98);
@@ -462,16 +476,12 @@
     letter-spacing: .35px;
     color: var(--gold2);
     margin: 0 0 6px 10px;
-    position: relative;
-    z-index: 1;
   }
 
   .centralSub{
     margin: 0 0 10px 10px;
     color: rgba(207,199,187,.90);
     font-size: 13px;
-    position: relative;
-    z-index: 1;
   }
 
   .scratchWrap{
@@ -483,7 +493,6 @@
     margin-left: 10px;
     min-height: 185px;
     box-shadow: 0 18px 40px rgba(0,0,0,.34);
-    z-index: 1;
   }
 
   .scratchPrize{
@@ -525,8 +534,6 @@
     text-align:center;
     opacity:.95;
     padding-left: 10px;
-    position: relative;
-    z-index: 1;
   }
 
   .reserved{
@@ -545,11 +552,10 @@
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 320ms ease, transform 320ms ease;
-    position: relative;
-    z-index: 1;
   }
   .reserved.show{ opacity: 1; transform: translateY(0); }
 
+  /* Sparkle burst */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -669,59 +675,66 @@
     }
   }
 
-  /* 💛 GOLD GLOW sul bottone “Brindiamo” (solo quando musica ON) */
+  /* 💛 Glow Brindiamo: esterno + interno */
   .toastBtn.goldGlow{
     box-shadow:
-      0 18px 44px rgba(216,182,122,.30),
+      0 18px 44px rgba(216,182,122,.34),
       0 0 0 1px rgba(241,223,177,.22) inset,
-      0 0 18px rgba(241,223,177,.14) inset,
-      0 0 34px rgba(241,223,177,.18);
+      0 0 18px rgba(241,223,177,.18) inset,
+      0 0 38px rgba(241,223,177,.22);
   }
   .toastBtn.goldGlow::before{
     content:"";
     position:absolute;
-    inset:-16px;
+    inset:-18px;
     border-radius:999px;
     background: radial-gradient(circle at 50% 50%,
-      rgba(241,223,177,.34),
-      rgba(241,223,177,0) 65%);
+      rgba(241,223,177,.40),
+      rgba(241,223,177,0) 66%);
     opacity:0;
     transform: scale(.95);
     pointer-events:none;
   }
-  .toastBtn.goldGlow.pulse{ animation: goldPulse 1.25s ease-in-out infinite; }
-  .toastBtn.goldGlow.pulse::before{ animation: goldHalo 1.25s ease-in-out infinite; }
+  .toastBtn.goldGlow.pulse{
+    animation: goldPulse 1.15s ease-in-out infinite;
+  }
+  .toastBtn.goldGlow.pulse::before{
+    animation: goldHalo 1.15s ease-in-out infinite;
+  }
 
   @keyframes goldPulse{
     0%{
       filter: brightness(1);
       box-shadow:
-        0 16px 30px rgba(216,182,122,.18),
-        0 0 0 1px rgba(241,223,177,.15) inset,
-        0 0 18px rgba(241,223,177,.10);
+        0 18px 44px rgba(216,182,122,.28),
+        0 0 0 1px rgba(241,223,177,.22) inset,
+        0 0 20px rgba(241,223,177,.18) inset,
+        0 0 32px rgba(241,223,177,.20);
     }
     50%{
-      filter: brightness(1.05);
+      filter: brightness(1.07);
       box-shadow:
-        0 18px 38px rgba(216,182,122,.30),
-        0 0 0 1px rgba(241,223,177,.22) inset,
-        0 0 36px rgba(241,223,177,.20);
+        0 22px 56px rgba(216,182,122,.42),
+        0 0 0 1px rgba(241,223,177,.30) inset,
+        0 0 28px rgba(241,223,177,.24) inset,
+        0 0 52px rgba(241,223,177,.30);
     }
     100%{
       filter: brightness(1);
       box-shadow:
-        0 16px 30px rgba(216,182,122,.18),
-        0 0 0 1px rgba(241,223,177,.15) inset,
-        0 0 18px rgba(241,223,177,.10);
+        0 18px 44px rgba(216,182,122,.28),
+        0 0 0 1px rgba(241,223,177,.22) inset,
+        0 0 20px rgba(241,223,177,.18) inset,
+        0 0 32px rgba(241,223,177,.20);
     }
   }
   @keyframes goldHalo{
-    0%   { opacity:.05; transform: scale(.96); }
-    50%  { opacity:.20; transform: scale(1.03); }
-    100% { opacity:.05; transform: scale(.96); }
+    0%   { opacity:.10; transform: scale(.96); }
+    50%  { opacity:.26; transform: scale(1.03); }
+    100% { opacity:.10; transform: scale(.96); }
   }
 
-  /* ===== Misuratore amore ===== */
+  /* Slider */
   .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
   #loveRange{
     width:100%;
@@ -763,7 +776,7 @@
       0 0 16px rgba(255,110,70,.36);
   }
 
-  /* ===== Kiss counter ===== */
+  /* Kiss counter */
   .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
   .kissTop{
     display:flex;
@@ -787,6 +800,7 @@
     font-weight: 700;
     letter-spacing: .2px;
   }
+
   .kissBar{
     width:100%;
     height: 10px;
@@ -802,6 +816,7 @@
     border-radius: 999px;
     transition: width 180ms ease;
   }
+
   .kissBtns{
     display:flex;
     gap: 8px;
@@ -819,6 +834,7 @@
     border: 1px solid rgba(241,223,177,.18);
     color: rgba(245,242,234,.92);
   }
+
   .pop{ animation: pop 220ms ease-out; }
   @keyframes pop{ 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
 
@@ -839,13 +855,11 @@
     100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
   }
 
-  /* ✅ riduci animazioni se richiesto dal sistema */
   @media (prefers-reduced-motion: reduce){
     body.goldAmbient.on::after{ animation:none !important; }
     .toastParticle, .champDrop, .burstPiece, .bubble, .foilDot, .floaty, .kissFloat { animation: none !important; opacity: 0 !important; }
     .toastBtn.toastPop, .toastBtn.goldGlow.pulse, .toastBtn.goldGlow.pulse::before { animation: none !important; }
     .central.ambientGlow::after { animation: none !important; opacity: 0 !important; }
-    .card::after{ transition:none !important; }
   }
 </style>
 </head>
@@ -954,7 +968,6 @@
     </div>
   </div>
 
-  <!-- 🎵 MUSICA -->
   <audio id="music" loop preload="auto">
     <source src="assets/song.mp3" type="audio/mpeg">
   </audio>
@@ -975,7 +988,7 @@
   const loveText = document.getElementById("loveText");
 
   const centralInvite = document.getElementById("centralInvite");
-  const scratchBox = document.getElementById("scratchBox");
+  const scratchBox = document.getElementBy Id("scratchBox");
   const scratchCanvas = document.getElementById("scratchCanvas");
   const scratchHint = document.getElementById("scratchHint");
   const reserved = document.getElementById("reserved");
@@ -1054,7 +1067,7 @@
   }
 
   /* =========================
-     💛 GOLD VIBES (pulsante + ambient + inner glow)
+     💛 GOLD VIBES (pulsante + ambient) -> SOLO con musica
      ========================= */
   function startGoldVibes(){
     document.body.classList.add("goldAmbient","on");
@@ -1100,8 +1113,10 @@
       await music.play();
       startGoldVibes();
 
+      // fade-in
       fadeVolumeTo(0.35, 800);
 
+      // micro-spray sincronizzato all’avvio
       if (!reduceMotion){
         setTimeout(() => {
           if (toastBtn) champagneSprayFromButton(toastBtn);
@@ -1125,6 +1140,7 @@
     showStatus("questa è la scelta giusta 😌");
     vibrate([40, 30, 40]);
 
+    // parte la musica -> parte glow ambient
     safePlayMusic();
     startFloaties();
     initScratch();
@@ -1155,6 +1171,7 @@
     }
   });
 
+  // Music toggle (con fade in/out)
   if (musicBtn) {
     musicBtn.addEventListener("click", async () => {
       if (music.paused) {
@@ -1167,6 +1184,7 @@
     });
   }
 
+  // Sicurezza: se cambi tab, spegni con fade
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) fadeOutAndPause();
   });
@@ -1252,7 +1270,7 @@
     host.classList.remove("ambientGlow");
     void host.offsetWidth;
     host.classList.add("ambientGlow");
-    setTimeout(() => host.classList.remove("ambientGlow"), 780);
+    setTimeout(() => host.classList.remove("ambientGlow"), 820);
   }
 
   function toastParticlesFromButton(btn){
@@ -1535,6 +1553,7 @@
 
   function initScratch() {
     if (ctx) return;
+    scratchedEnough = false;
     if (reserved) reserved.classList.remove("show");
 
     resizeCanvasToBox();
@@ -1583,3 +1602,4 @@
 
 </body>
 </html>
+
