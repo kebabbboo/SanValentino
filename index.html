@@ -61,52 +61,37 @@
      Fix: quando ON rendiamo la card più opaca e riduciamo backdrop.
      ========================= */
 
-  body.goldAmbient::before{
-    content:"";
-    position: fixed;
-    inset:-34vh -34vw;
-    pointer-events:none;
-    z-index: 0;
-    background:
-      radial-gradient(1100px 860px at 50% 35%,
-        rgba(241,223,177,.18),
-        rgba(216,182,122,.12) 46%,
-        rgba(0,0,0,0) 74%);
-    filter: blur(16px) saturate(1.35);
-    opacity: 0;
-    transform: scale(1.04);
-    transition: opacity 520ms ease;
-  }
+ #ambientGlow{
+  position: fixed;
+  inset: -35vh -35vw;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 420ms ease;
+  filter: blur(16px) saturate(1.35);
+  background:
+    radial-gradient(1100px 860px at 50% 35%,
+      rgba(241,223,177,.22),
+      rgba(216,182,122,.14) 46%,
+      rgba(0,0,0,0) 74%),
+    radial-gradient(780px 620px at 50% 34%,
+      rgba(241,223,177,.30),
+      rgba(216,182,122,.18) 42%,
+      rgba(0,0,0,0) 70%);
+}
 
-  body.goldAmbient::after{
-    content:"";
-    position: fixed;
-    inset:-24vh -24vw;
-    pointer-events:none;
-    z-index: 0;
-    background:
-      radial-gradient(780px 620px at 50% 34%,
-        rgba(241,223,177,.32),
-        rgba(216,182,122,.18) 42%,
-        rgba(0,0,0,0) 70%);
-    filter: blur(12px) saturate(1.5);
-    opacity: 0;
-    transform: scale(1.02);
-    transition: opacity 520ms ease;
-  }
+#ambientGlow.on{
+  opacity: 1;
+  animation: ambientPulse 1.15s ease-in-out infinite;
+}
 
-  body.goldAmbient.on::before{ opacity: 1; }
-  body.goldAmbient.on::after { opacity: 1; }
+@keyframes ambientPulse{
+  0%   { transform: scale(1.02); opacity: .60; }
+  50%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1.02); opacity: .60; }
+}
 
-  body.goldAmbient.on::after{
-    animation: ambientPulse 1.15s ease-in-out infinite;
-  }
 
-  @keyframes ambientPulse{
-    0%   { opacity:.55; transform: scale(1.01); filter: blur(12px) saturate(1.35); }
-    50%  { opacity: 1;  transform: scale(1.07); filter: blur(12px) saturate(1.75); }
-    100% { opacity:.55; transform: scale(1.01); filter: blur(12px) saturate(1.35); }
-  }
 
   .frame{
     width: 92%;
@@ -868,6 +853,8 @@
 </head>
 
 <body>
+ <div id="ambientGlow"></div>
+
   <div class="frame">
     <div class="card" id="card">
       <div class="topRow">
@@ -1072,14 +1059,14 @@ const kissGoalEl = document.getElementById("kissGoal");
   /* =========================
      💛 GOLD VIBES (pulsante + ambient) -> SOLO con musica
      ========================= */
-  function startGoldVibes(){
-    document.body.classList.add("goldAmbient","on");
-    if (toastBtn) toastBtn.classList.add("goldGlow","pulse");
-  }
-  function stopGoldVibes(){
-    document.body.classList.remove("on");
-    if (toastBtn) toastBtn.classList.remove("pulse");
-  }
+ const ambientGlow = document.getElementById("ambientGlow");
+
+function startGoldVibes(){
+  if (ambientGlow) ambientGlow.classList.add("on");
+
+function stopGoldVibes(){
+  if (ambientGlow) ambientGlow.classList.remove("on");
+
 
   /* =========================
      🎚️ Fade volume helper
@@ -1605,6 +1592,7 @@ const kissGoalEl = document.getElementById("kissGoal");
 
 </body>
 </html>
+
 
 
 
