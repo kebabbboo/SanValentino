@@ -437,34 +437,7 @@
   }
 
   /* glow “flash” quando brindiamo */
-.central::after{
-  content:"";
-  position:absolute;
-  inset: 0;
-  border-radius: 20px;
-  pointer-events:none;
-  opacity: 0;
 
-  /* ✅ Safari: taglia SEMPRE il blur */
-  clip-path: inset(0 round 20px);
-  -webkit-clip-path: inset(0 round 20px);
-
-  /* ✅ evita che il blur “spinga fuori” */
-  filter: blur(10px) saturate(1.35);
-  transform: translateZ(0);
-
-  background: radial-gradient(circle at 50% 35%,
-    rgba(241,223,177,.36),
-    rgba(216,182,122,.22),
-    rgba(241,223,177,0) 62%);
-}
-
-  .central.ambientGlow::after{ animation: ambientGlow 820ms ease-out both; }
-  @keyframes ambientGlow{
-    0%   { opacity:0; transform: scale(.97); }
-    30%  { opacity:1; transform: scale(1.02); }
-    100% { opacity:0; transform: scale(1.07); }
-  }
 
   .centralTitle{
     font-family: var(--font-title);
@@ -1618,6 +1591,7 @@ function stopGoldVibes(){
 
 </body>
 </html>
+
 
 
 
