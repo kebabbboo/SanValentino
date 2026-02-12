@@ -978,7 +978,9 @@ const toastLine = document.getElementById("toastLine");
 const loveRange = document.getElementById("loveRange");
 const loveText = document.getElementById("loveText");
 
-const centralInvite = document.getElementById("centralInvite");  // ✅ QUESTA
+const centralInvite = document.getElementById("centralInvite"); 
+ const scratchBox = document.getElementById("scratchBox"); // ✅ AGGIUNGI QUESTA
+const scratchCanvas = document.getElementById("scratchCanvas");// ✅ QUESTA
 const scratchCanvas = document.getElementById("scratchCanvas");
 const scratchHint = document.getElementById("scratchHint");
 const reserved = document.getElementById("reserved");
@@ -1063,10 +1065,23 @@ const kissGoalEl = document.getElementById("kissGoal");
  
 
 function startGoldVibes(){
+  // classi sul body (servono per il tuo CSS: body.goldAmbient.on .card)
+  document.body.classList.add("goldAmbient","on");
+
+  // accende il layer ambient
   if (ambientGlow) ambientGlow.classList.add("on");
 
+  // glow sul bottone brindiamo
+  if (toastBtn) toastBtn.classList.add("goldGlow","pulse");
+}
+
 function stopGoldVibes(){
+  document.body.classList.remove("on");
+
   if (ambientGlow) ambientGlow.classList.remove("on");
+  if (toastBtn) toastBtn.classList.remove("pulse");
+}
+
 
 
   /* =========================
@@ -1593,6 +1608,7 @@ function stopGoldVibes(){
 
 </body>
 </html>
+
 
 
 
