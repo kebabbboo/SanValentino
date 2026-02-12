@@ -11,11 +11,6 @@
 
 <style>
   *{ box-sizing:border-box; }
- html, body{
-  width: 100%;
-  overflow-x: hidden; /* ✅ evita lo “sbordo” laterale */
-}
-
 
   :root{
     --bg1:#0b0b10;
@@ -60,74 +55,67 @@
       linear-gradient(135deg, var(--bg1), var(--bg2));
   }
 
- /* =========================
-   💛 GOLD AMBIENT (più visibile, pulsa davvero)
-   ========================= */
-
-/* layer largo (soft) */
-/* layer largo (soft) - PIÙ FORTE */
-body.goldAmbient::before{
-  content:"";
-  position: fixed;
-  inset:-34vh -34vw;
-  pointer-events:none;
-  z-index: 0;
-  background:
-    radial-gradient(1100px 860px at 50% 35%,
-      rgba(241,223,177,.16),
-      rgba(216,182,122,.10) 46%,
-      rgba(0,0,0,0) 74%);
-  filter: blur(16px) saturate(1.25);
-  opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 520ms ease;
-}
-
-/* layer centrato (quello che pulsa) - PIÙ FORTE */
-body.goldAmbient::after{
-  content:"";
-  position: fixed;
-  inset:-24vh -24vw;
-  pointer-events:none;
-  z-index: 0;
-  background:
-    radial-gradient(780px 620px at 50% 34%,
-      rgba(241,223,177,.28),
-      rgba(216,182,122,.16) 42%,
-      rgba(0,0,0,0) 70%);
-  filter: blur(12px) saturate(1.35);
-  opacity: 0;
-  transform: scale(1.02);
-  transition: opacity 520ms ease;
-}
-
-
-/* accensione */
-body.goldAmbient.on::before{ opacity: 1; }
-body.goldAmbient.on::after { opacity: 1; }
-
-body.goldAmbient.on::after{
-  animation: ambientPulse 1.15s ease-in-out infinite;
-}
-
-@keyframes ambientPulse{
-  0%{
-    opacity: .55;
-    transform: scale(1.01);
-    filter: blur(12px) saturate(1.25);
+  /* =========================
+     💛 GOLD AMBIENT (SOLO quando musica ON)
+     ========================= */
+  body.goldAmbient::before{
+    content:"";
+    position: fixed;
+    inset:-34vh -34vw;
+    pointer-events:none;
+    z-index: 0;
+    background:
+      radial-gradient(1100px 860px at 50% 35%,
+        rgba(241,223,177,.16),
+        rgba(216,182,122,.10) 46%,
+        rgba(0,0,0,0) 74%);
+    filter: blur(16px) saturate(1.25);
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 520ms ease;
   }
-  50%{
-    opacity: 1;
-    transform: scale(1.07);
-    filter: blur(12px) saturate(1.55);
-  }
-  100%{
-    opacity: .55;
-    transform: scale(1.01);
-    filter: blur(12px) saturate(1.25);
-  }
-}
 
+  body.goldAmbient::after{
+    content:"";
+    position: fixed;
+    inset:-24vh -24vw;
+    pointer-events:none;
+    z-index: 0;
+    background:
+      radial-gradient(780px 620px at 50% 34%,
+        rgba(241,223,177,.28),
+        rgba(216,182,122,.16) 42%,
+        rgba(0,0,0,0) 70%);
+    filter: blur(12px) saturate(1.35);
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 520ms ease;
+  }
+
+  body.goldAmbient.on::before{ opacity: 1; }
+  body.goldAmbient.on::after { opacity: 1; }
+
+  body.goldAmbient.on::after{
+    animation: ambientPulse 1.15s ease-in-out infinite;
+  }
+
+  @keyframes ambientPulse{
+    0%{
+      opacity: .55;
+      transform: scale(1.01);
+      filter: blur(12px) saturate(1.25);
+    }
+    50%{
+      opacity: 1;
+      transform: scale(1.07);
+      filter: blur(12px) saturate(1.55);
+    }
+    100%{
+      opacity: .55;
+      transform: scale(1.01);
+      filter: blur(12px) saturate(1.25);
+    }
+  }
 
   .frame{
     width: 92%;
@@ -150,8 +138,7 @@ body.goldAmbient.on::after{
     background: linear-gradient(180deg, var(--card1), var(--card2));
     backdrop-filter: blur(14px);
     position: relative;
- 
-  isolation: isolate;
+
     max-height: 80vh;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -165,21 +152,25 @@ body.goldAmbient.on::after{
     background-size: 24px 24px;
     opacity:.05;
     pointer-events:none;
+    z-index: 0;
   }
-/* ✨ inner glow nella card */
-.card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius: 28px;
-  pointer-events:none;
-  z-index: 0;
-  box-shadow:
-    0 0 0 1px rgba(241,223,177,.08) inset,
-    0 0 26px rgba(241,223,177,.07) inset,
-    0 0 60px rgba(216,182,122,.05) inset;
-  opacity: .95;
-}
+
+  /* ✅ FIX: inner glow della card SOLO quando musica ON (niente “sbordo”) */
+  .card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius: 28px;
+    pointer-events:none;
+    z-index: 0;
+    box-shadow:
+      0 0 0 1px rgba(241,223,177,.08) inset,
+      0 0 26px rgba(241,223,177,.07) inset,
+      0 0 60px rgba(216,182,122,.05) inset;
+    opacity: 0;
+    transition: opacity 420ms ease;
+  }
+  body.goldAmbient.on .card::after{ opacity: .95; }
 
   .topRow{
     display:flex;
@@ -327,7 +318,6 @@ body.goldAmbient.on::after{
     box-shadow: 0 16px 30px rgba(216,182,122,.16);
   }
 
-  /* ripple elegante sul toast */
   .toastBtn::after{
     content:"";
     position:absolute;
@@ -355,10 +345,10 @@ body.goldAmbient.on::after{
     margin-top: 6px;
   }
 
-  /* ✅ FIX immagine: niente “granulosità” da scaling */
+  /* ✅ FIX immagine */
   .photo{
     width:100%;
-    height: 220px;           /* meglio di max-height per evitare stretching strano */
+    height: 220px;
     object-fit: cover;
     object-position: center;
     border-radius: 18px;
@@ -366,7 +356,6 @@ body.goldAmbient.on::after{
     box-shadow: 0 18px 35px rgba(0,0,0,.35);
     animation: photoIn 520ms ease both;
     image-rendering: auto;
-    -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
   @keyframes photoIn{
@@ -427,8 +416,6 @@ body.goldAmbient.on::after{
 
   /* ---------- Central Scratch ---------- */
   .central{
-    overflow: hidden;
-     isolation: isolate;
     padding: 14px;
     border-radius: 20px;
     border: 1px solid rgba(241,223,177,.28);
@@ -438,41 +425,36 @@ body.goldAmbient.on::after{
       linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
     position: relative;
   }
- /* ✨ inner glow dentro il box centrale */
-.central{
-  box-shadow:
-    0 0 0 1px rgba(241,223,177,.10) inset,
-    0 0 34px rgba(241,223,177,.08) inset,
-    0 0 80px rgba(216,182,122,.06) inset;
-}
 
+  /* ✅ glow interno del centrale SOLO quando musica ON */
+  body.goldAmbient.on .central{
+    box-shadow:
+      0 0 0 1px rgba(241,223,177,.10) inset,
+      0 0 34px rgba(241,223,177,.08) inset,
+      0 0 80px rgba(216,182,122,.06) inset;
+  }
 
-  /* glow locale quando brindiamo */
+  /* glow “burst” quando clicchi brindiamo */
   .central::after{
-  content:"";
-  position:absolute;
-  inset:-30px;
-  border-radius: 26px;
-  background: radial-gradient(circle at 50% 35%,
-    rgba(241,223,177,.34),
-    rgba(216,182,122,.20),
-    rgba(241,223,177,0) 62%);
-  opacity: 0;
-  transform: scale(.98);
-  pointer-events:none;
-  filter: blur(7px) saturate(1.35);
-}
-
-.central.ambientGlow::after{
-  animation: ambientGlow 820ms ease-out both;
-}
-
-@keyframes ambientGlow{
-  0%   { opacity:0; transform: scale(.97); }
-  30%  { opacity:1; transform: scale(1.02); }
-  100% { opacity:0; transform: scale(1.07); }
-}
-
+    content:"";
+    position:absolute;
+    inset:-30px;
+    border-radius: 26px;
+    background: radial-gradient(circle at 50% 35%,
+      rgba(241,223,177,.34),
+      rgba(216,182,122,.20),
+      rgba(241,223,177,0) 62%);
+    opacity: 0;
+    transform: scale(.98);
+    pointer-events:none;
+    filter: blur(7px) saturate(1.35);
+  }
+  .central.ambientGlow::after{ animation: ambientGlow 820ms ease-out both; }
+  @keyframes ambientGlow{
+    0%   { opacity:0; transform: scale(.97); }
+    30%  { opacity:1; transform: scale(1.02); }
+    100% { opacity:0; transform: scale(1.07); }
+  }
 
   .centralTitle{
     font-family: var(--font-title);
@@ -480,27 +462,29 @@ body.goldAmbient.on::after{
     letter-spacing: .35px;
     color: var(--gold2);
     margin: 0 0 6px 10px;
+    position: relative;
+    z-index: 1;
   }
 
   .centralSub{
     margin: 0 0 10px 10px;
     color: rgba(207,199,187,.90);
     font-size: 13px;
+    position: relative;
+    z-index: 1;
   }
-.scratchWrap{
-  position:relative;
-  border-radius: 18px;
-  overflow:hidden;
-  border: 1px solid rgba(241,223,177,.28);
-  background: rgba(0,0,0,.22);
 
-  margin-left: 10px;
-  width: calc(100% - 10px);   /* ✅ evita lo sbordo */
-
-  min-height: 185px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.34);
-}
-
+  .scratchWrap{
+    position:relative;
+    border-radius: 18px;
+    overflow:hidden;
+    border: 1px solid rgba(241,223,177,.28);
+    background: rgba(0,0,0,.22);
+    margin-left: 10px;
+    min-height: 185px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.34);
+    z-index: 1;
+  }
 
   .scratchPrize{
     position: relative;
@@ -541,6 +525,8 @@ body.goldAmbient.on::after{
     text-align:center;
     opacity:.95;
     padding-left: 10px;
+    position: relative;
+    z-index: 1;
   }
 
   .reserved{
@@ -559,10 +545,11 @@ body.goldAmbient.on::after{
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 320ms ease, transform 320ms ease;
+    position: relative;
+    z-index: 1;
   }
   .reserved.show{ opacity: 1; transform: translateY(0); }
 
-  /* Sparkle burst */
   .burstPiece{
     position:absolute;
     left: 50%;
@@ -580,7 +567,6 @@ body.goldAmbient.on::after{
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* Cuori + stelle che salgono */
   .floaty{
     position: fixed;
     bottom:-30px;
@@ -591,7 +577,6 @@ body.goldAmbient.on::after{
   }
   @keyframes floatUp{ to{ transform: translateY(-110vh); opacity:0; } }
 
-  /* Toast special effects */
   .foilDot{
     position: absolute;
     left: 50%;
@@ -626,7 +611,6 @@ body.goldAmbient.on::after{
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.25); }
   }
 
-  /* Toast pop */
   .toastBtn.toastPop{
     animation: toastPop 320ms ease-out;
     box-shadow: 0 18px 40px rgba(216,182,122,.22), 0 0 22px rgba(241,223,177,.18);
@@ -654,7 +638,6 @@ body.goldAmbient.on::after{
     100% { opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
   }
 
-  /* 🍾 Champagne spray (più elegante) */
   .champDrop{
     position: fixed;
     left: 0; top: 0;
@@ -686,15 +669,14 @@ body.goldAmbient.on::after{
     }
   }
 
-  /* 💛 GOLD GLOW sul bottone “Brindiamo” (doppio: halo + pulse) */
-.toastBtn.goldGlow{
-  box-shadow:
-    0 18px 44px rgba(216,182,122,.30),
-    0 0 0 1px rgba(241,223,177,.22) inset,
-    0 0 18px rgba(241,223,177,.14) inset,
-    0 0 34px rgba(241,223,177,.18);
-}
-
+  /* 💛 GOLD GLOW sul bottone “Brindiamo” (solo quando musica ON) */
+  .toastBtn.goldGlow{
+    box-shadow:
+      0 18px 44px rgba(216,182,122,.30),
+      0 0 0 1px rgba(241,223,177,.22) inset,
+      0 0 18px rgba(241,223,177,.14) inset,
+      0 0 34px rgba(241,223,177,.18);
+  }
   .toastBtn.goldGlow::before{
     content:"";
     position:absolute;
@@ -706,14 +688,10 @@ body.goldAmbient.on::after{
     opacity:0;
     transform: scale(.95);
     pointer-events:none;
-   
   }
-  .toastBtn.goldGlow.pulse{
-    animation: goldPulse 1.25s ease-in-out infinite;
-  }
-  .toastBtn.goldGlow.pulse::before{
-    animation: goldHalo 1.25s ease-in-out infinite;
-  }
+  .toastBtn.goldGlow.pulse{ animation: goldPulse 1.25s ease-in-out infinite; }
+  .toastBtn.goldGlow.pulse::before{ animation: goldHalo 1.25s ease-in-out infinite; }
+
   @keyframes goldPulse{
     0%{
       filter: brightness(1);
@@ -739,15 +717,12 @@ body.goldAmbient.on::after{
   }
   @keyframes goldHalo{
     0%   { opacity:.05; transform: scale(.96); }
-    50%  { opacity:.18; transform: scale(1.02); }
+    50%  { opacity:.20; transform: scale(1.03); }
     100% { opacity:.05; transform: scale(.96); }
   }
 
-  /* =========================
-     ✅ RIPRISTINO STILE: Misuratore amore + Kiss Counter
-     ========================= */
+  /* ===== Misuratore amore ===== */
   .sliderWrap{ display:grid; gap:8px; justify-items:center; padding-left:10px; }
-
   #loveRange{
     width:100%;
     -webkit-appearance:none;
@@ -759,7 +734,6 @@ body.goldAmbient.on::after{
   }
   #loveRange::-webkit-slider-runnable-track{ height:10px; border-radius:999px; background: transparent; }
   #loveRange::-moz-range-track{ height:10px; border-radius:999px; background: transparent; }
-
   #loveRange::-webkit-slider-thumb{
     -webkit-appearance:none;
     appearance:none;
@@ -777,7 +751,6 @@ body.goldAmbient.on::after{
       0 0 16px rgba(255,110,70,.36);
   }
   #loveRange:active::-webkit-slider-thumb{ transform: scale(1.06); }
-
   #loveRange::-moz-range-thumb{
     width: 30px; height:30px; border-radius:999px;
     border: 2px solid rgba(255,255,255,.72);
@@ -790,6 +763,7 @@ body.goldAmbient.on::after{
       0 0 16px rgba(255,110,70,.36);
   }
 
+  /* ===== Kiss counter ===== */
   .kissWrap{ padding-left: 10px; display:grid; gap: 10px; position:relative; }
   .kissTop{
     display:flex;
@@ -813,7 +787,6 @@ body.goldAmbient.on::after{
     font-weight: 700;
     letter-spacing: .2px;
   }
-
   .kissBar{
     width:100%;
     height: 10px;
@@ -829,7 +802,6 @@ body.goldAmbient.on::after{
     border-radius: 999px;
     transition: width 180ms ease;
   }
-
   .kissBtns{
     display:flex;
     gap: 8px;
@@ -847,7 +819,6 @@ body.goldAmbient.on::after{
     border: 1px solid rgba(241,223,177,.18);
     color: rgba(245,242,234,.92);
   }
-
   .pop{ animation: pop 220ms ease-out; }
   @keyframes pop{ 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
 
@@ -862,13 +833,19 @@ body.goldAmbient.on::after{
     z-index: 30;
     filter: drop-shadow(0 10px 16px rgba(0,0,0,.35));
   }
+  @keyframes kissFloat{
+    0%{ opacity:0; transform: translateX(-50%) translateY(0) scale(.9); }
+    15%{ opacity:1; }
+    100%{ opacity:0; transform: translateX(calc(-50% + var(--dx))) translateY(-110px) scale(1.15); }
+  }
 
   /* ✅ riduci animazioni se richiesto dal sistema */
   @media (prefers-reduced-motion: reduce){
-    body.goldAmbient.on{ animation:none !important; }
+    body.goldAmbient.on::after{ animation:none !important; }
     .toastParticle, .champDrop, .burstPiece, .bubble, .foilDot, .floaty, .kissFloat { animation: none !important; opacity: 0 !important; }
     .toastBtn.toastPop, .toastBtn.goldGlow.pulse, .toastBtn.goldGlow.pulse::before { animation: none !important; }
     .central.ambientGlow::after { animation: none !important; opacity: 0 !important; }
+    .card::after{ transition:none !important; }
   }
 </style>
 </head>
@@ -928,7 +905,6 @@ body.goldAmbient.on::after{
           <div id="reserved" class="reserved">🥂 Tavolo prenotato</div>
         </div>
 
-        <!-- ✅ FIX HTML immagine (prima era spezzata) -->
         <img class="photo" alt="Noi 🩶" src="assets/noi.webp" loading="lazy" decoding="async" />
 
         <p>
@@ -1078,7 +1054,7 @@ body.goldAmbient.on::after{
   }
 
   /* =========================
-     💛 GOLD VIBES (pulsante + ambient)
+     💛 GOLD VIBES (pulsante + ambient + inner glow)
      ========================= */
   function startGoldVibes(){
     document.body.classList.add("goldAmbient","on");
@@ -1115,7 +1091,6 @@ body.goldAmbient.on::after{
 
   async function safePlayMusic() {
     try {
-      // parte da “tot tempo”
       if (!musicStartedOnce) {
         music.currentTime = 12; // cambia qui (secondi)
         musicStartedOnce = true;
@@ -1125,10 +1100,8 @@ body.goldAmbient.on::after{
       await music.play();
       startGoldVibes();
 
-      // fade-in elegante
       fadeVolumeTo(0.35, 800);
 
-      // micro-spray sincronizzato all’avvio
       if (!reduceMotion){
         setTimeout(() => {
           if (toastBtn) champagneSprayFromButton(toastBtn);
@@ -1182,7 +1155,6 @@ body.goldAmbient.on::after{
     }
   });
 
-  // Music toggle (con fade in/out)
   if (musicBtn) {
     musicBtn.addEventListener("click", async () => {
       if (music.paused) {
@@ -1195,7 +1167,6 @@ body.goldAmbient.on::after{
     });
   }
 
-  // Sicurezza: se cambi tab, non blastare musica
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) fadeOutAndPause();
   });
@@ -1612,8 +1583,3 @@ body.goldAmbient.on::after{
 
 </body>
 </html>
-
-
-
-
-
