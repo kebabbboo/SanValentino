@@ -11,6 +11,11 @@
 
 <style>
   *{ box-sizing:border-box; }
+ html, body{
+  width: 100%;
+  overflow-x: hidden; /* ✅ evita lo “sbordo” laterale */
+}
+
 
   :root{
     --bg1:#0b0b10;
@@ -145,7 +150,8 @@ body.goldAmbient.on::after{
     background: linear-gradient(180deg, var(--card1), var(--card2));
     backdrop-filter: blur(14px);
     position: relative;
-
+ 
+  isolation: isolate;
     max-height: 80vh;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -421,6 +427,7 @@ body.goldAmbient.on::after{
 
   /* ---------- Central Scratch ---------- */
   .central{
+    overflow: hidden;
     padding: 14px;
     border-radius: 20px;
     border: 1px solid rgba(241,223,177,.28);
@@ -1601,5 +1608,6 @@ body.goldAmbient.on::after{
 
 </body>
 </html>
+
 
 
